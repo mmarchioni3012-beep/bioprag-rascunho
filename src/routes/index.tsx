@@ -156,7 +156,7 @@ const METHOD = [
   { icon: ShieldCheck, title: "Monitoramento", desc: "Acompanhamento contínuo e garantia de resultado." },
 ];
 
-const CITIES = ["Conchas", "Pereiras", "Laranjal Paulista", "Anhembi", "Botucatu", "Tatuí", "Itatinga", "Porangaba"];
+const REGIONS = ["Norte", "Nordeste", "Centro-Oeste", "Sudeste", "Sul"];
 
 const FAQ = [
   { q: "Como funciona o processo do início ao fim?", a: "Iniciamos com vistoria técnica gratuita, elaboramos um plano personalizado, executamos com produtos certificados e entregamos laudo + cronograma de monitoramento." },
