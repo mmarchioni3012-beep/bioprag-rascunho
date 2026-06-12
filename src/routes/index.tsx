@@ -974,7 +974,7 @@ function ContactSection() {
 function FinalCTA() {
   return (
     <section
-      id="contato"
+      id="cta-final"
       className="relative isolate overflow-hidden py-28 sm:py-36"
       style={{
         background: "linear-gradient(135deg, #0A1A0F 0%, #1A3D1F 50%, #0A1A0F 100%)",
