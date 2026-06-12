@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from "react";
 import {
   ArrowRight,
   Award,
-  Award,
   CheckCircle2,
   ChevronDown,
   ClipboardList,
