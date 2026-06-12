@@ -1113,6 +1113,7 @@ function HomePage() {
         <Cases />
         <Regional />
         <Faq />
+        <ContactSection />
         <FinalCTA />
       </main>
       <Footer />
