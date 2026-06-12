@@ -725,7 +725,7 @@ function Regional() {
             <img
               src={brazilMap.url}
               alt="Mapa do Brasil — atendimento nacional"
-              className="relative z-[1] h-full w-full object-contain [filter:drop-shadow(0_0_18px_rgba(46,204,113,0.35))_brightness(0)_invert(54%)_sepia(73%)_saturate(489%)_hue-rotate(89deg)]"
+              className="relative z-[1] h-full w-full object-contain [filter:drop-shadow(0_0_18px_rgba(46,204,113,0.45))_hue-rotate(-10deg)_saturate(1.4)_brightness(1.1)]"
               loading="lazy"
             />
             {/* Regional pulse dots positioned over the map (% based on viewBox) */}
