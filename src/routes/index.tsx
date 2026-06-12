@@ -863,14 +863,14 @@ function ContactSection() {
           <Reveal>
             <div className="overflow-hidden rounded-2xl border border-[#1C3D22]">
               <iframe
-                src="https://www.google.com/maps?q=Brasil&output=embed"
+                src="https://www.google.com/maps?q=Rua+Goi%C3%A1s+446+Centro+Conchas+SP+Bioprag&z=16&output=embed"
                 width="100%"
                 height="450"
-                style={{ border: 0 }}
+                style={{ border: 0, filter: "invert(0.92) hue-rotate(180deg) saturate(0.85) contrast(0.95)" }}
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title="Localização Bioprag"
+                title="Localização Bioprag — Rua Goiás, 446, Conchas/SP"
               />
             </div>
             <div className="mt-6 grid gap-3 sm:grid-cols-2">
