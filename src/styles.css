@@ -36,8 +36,8 @@
   --color-surface-elevated: var(--surface-elevated);
   --color-ink-soft: var(--ink-soft);
 
-  --font-display: "Syne", "Inter", system-ui, sans-serif;
-  --font-sans: "Inter", system-ui, sans-serif;
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-sans: "DM Sans", system-ui, sans-serif;
 }
 
 :root {

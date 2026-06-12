@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import {
   ArrowRight,
   Award,
+  Bug,
   CheckCircle2,
   ChevronDown,
   ClipboardList,
@@ -14,13 +15,17 @@ import {
   Menu,
   MessageCircle,
   Phone,
+  Plane,
+  Rat,
   Repeat,
   Search,
   Shield,
   ShieldCheck,
   Sparkles,
+  SprayCan,
   Star,
   Target,
+  TreePine,
   X,
   Youtube,
   Zap,
@@ -30,7 +35,7 @@ import img2953 from "@/assets/IMG_2953.jpg.asset.json";
 import img2955 from "@/assets/IMG_2955.jpg.asset.json";
 import img2956 from "@/assets/IMG_2956.jpg.asset.json";
 import img2957 from "@/assets/IMG_2957.jpg.asset.json";
-import img2958 from "@/assets/IMG_2958.jpg.asset.json";
+
 import img2962 from "@/assets/IMG_2962.jpg.asset.json";
 import img2963 from "@/assets/IMG_2963.jpg.asset.json";
 
@@ -43,7 +48,7 @@ const ADDRESS = "Rua Goiás, 446 — Centro, Conchas/SP";
 const META_TITLE =
   "BIOPRAG — Controle Integrado de Pragas, Saúde Ambiental e Biossegurança | Desde 1986";
 const META_DESC =
-  "Controle integrado de pragas, saúde ambiental e biossegurança com método técnico, auditável e 100% documentado. Atendimento em 8 municípios desde 1986.";
+  "Controle integrado de pragas, saúde ambiental e biossegurança com método técnico, auditável e 100% documentado. Atendimento em todo o Brasil desde 1986.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -120,19 +125,27 @@ const DIFFERENTIALS = [
   { icon: Leaf, title: "Produtos seguros", desc: "Soluções aprovadas pela ANVISA, mínimo impacto ambiental." },
   { icon: Zap, title: "Capacidade operacional", desc: "Estrutura para atender grandes volumes com agilidade e precisão." },
   { icon: Repeat, title: "Monitoramento contínuo", desc: "Acompanhamento pós-serviço e garantia de resultado." },
-  { icon: MapPin, title: "Presença regional", desc: "Atendimento consolidado em 8 municípios da região." },
+  { icon: MapPin, title: "Cobertura nacional", desc: "Atendemos empresas e indústrias em todo o território brasileiro." },
 ];
 
-const SERVICES = [
-  { title: "Controle de Insetos Rasteiros", img: "https://images.unsplash.com/photo-1559762717-99c81ac85459?w=900&q=70", desc: "Baratas, formigas, traças e outros." },
-  { title: "Controle de Insetos Voadores", img: "https://images.unsplash.com/photo-1567408498035-ebc6e09c5b16?w=900&q=70", desc: "Moscas, mosquitos e pernilongos." },
-  { title: "Controle de Roedores", img: "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=900&q=70", desc: "Desratização técnica com monitoramento." },
-  { title: "Descupinização", img: "https://images.unsplash.com/photo-1582719471384-894fbb16e074?w=900&q=70", desc: "Madeira, solo e estruturas." },
-  { title: "Sanitização de Ambientes", img: "https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?w=900&q=70", desc: "Desinfecção bactericida e viricida." },
-  { title: "Controle de Escorpiões", img: "https://images.unsplash.com/photo-1572376313095-49e07b3c5b3a?w=900&q=70", desc: "Plano técnico de prevenção e captura." },
-  { title: "Tratamento de Jardins", img: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=900&q=70", desc: "Pragas em gramados e plantas." },
-  { title: "Biossegurança / DDD", img: "https://images.unsplash.com/photo-1584432810601-6c7f27d2362b?w=900&q=70", desc: "Programas para indústrias e hospitais." },
-  { title: "Monitoramento Contínuo", img: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=900&q=70", desc: "Visitas técnicas programadas, relatórios e KPIs.", featured: true },
+type Service = {
+  title: string;
+  short: string;
+  desc: string;
+  img: string;
+  icon: typeof Bug;
+  large?: boolean;
+};
+
+const SERVICES: Service[] = [
+  { title: "Monitoramento Contínuo", short: "Visitas periódicas e laudos técnicos", desc: "Programa premium com visitas técnicas programadas, indicadores e relatórios.", img: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&q=70", icon: ClipboardList, large: true },
+  { title: "Controle de Insetos Rasteiros", short: "Baratas, formigas, cupins de solo", desc: "Eliminação técnica de pragas rasteiras em qualquer ambiente.", img: "https://images.unsplash.com/photo-1632927786429-b282ac3e1d7a?w=900&q=70", icon: Bug },
+  { title: "Controle de Insetos Voadores", short: "Mosquitos, moscas, mariposas", desc: "Manejo integrado de voadores com produtos certificados.", img: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=70", icon: Plane },
+  { title: "Controle de Roedores", short: "Ratos e camundongos", desc: "Desratização técnica com mapa de iscas e monitoramento.", img: "https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=900&q=70", icon: Rat },
+  { title: "Descupinização", short: "Cupins de madeira e estruturais", desc: "Tratamento estrutural com garantia contra cupins.", img: "https://images.unsplash.com/photo-1504309092620-4d0ec726efa4?w=900&q=70", icon: TreePine },
+  { title: "Sanitização de Ambientes", short: "Desinfecção e higienização", desc: "Sanitização bactericida e viricida para qualquer ambiente.", img: "https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?w=900&q=70", icon: SprayCan },
+  { title: "Controle de Escorpiões", short: "Prevenção e eliminação", desc: "Plano técnico de prevenção, captura e bloqueio de acessos.", img: "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=900&q=70", icon: Shield },
+  { title: "Biossegurança / DDD", short: "Desinfecção, desratização, dedetização", desc: "Programas completos para indústrias, hospitais e operações de grande porte.", img: "https://images.unsplash.com/photo-1631815587646-912b16cc0963?w=900&q=70", icon: ShieldCheck, large: true },
 ];
 
 const METHOD = [
@@ -143,7 +156,7 @@ const METHOD = [
   { icon: ShieldCheck, title: "Monitoramento", desc: "Acompanhamento contínuo e garantia de resultado." },
 ];
 
-const CITIES = ["Conchas", "Pereiras", "Laranjal Paulista", "Anhembi", "Botucatu", "Tatuí", "Itatinga", "Porangaba"];
+const REGIONS = ["Norte", "Nordeste", "Centro-Oeste", "Sudeste", "Sul"];
 
 const FAQ = [
   { q: "Como funciona o processo do início ao fim?", a: "Iniciamos com vistoria técnica gratuita, elaboramos um plano personalizado, executamos com produtos certificados e entregamos laudo + cronograma de monitoramento." },
@@ -319,20 +332,23 @@ function Hero() {
 
           <div className="mt-12 grid grid-cols-2 gap-6 sm:grid-cols-4 animate-fade-up" style={{ animationDelay: "1s" }}>
             {[
-              { v: 39, s: " anos", p: "+" },
-              { v: 10, s: "k+", p: "" },
-              { v: 8, s: "", p: "" },
-              { v: 100, s: "%", p: "" },
+              { v: 39, s: " anos", p: "+", label: "anos de operação" },
+              { v: 10, s: "k+", p: "", label: "atendimentos" },
+              { v: 100, s: "%", p: "", label: "documentado" },
             ].map((stat, i) => (
               <div key={i}>
                 <div className="font-display text-3xl font-bold text-[#2ECC71]">
                   {stat.p}<CountUp to={stat.v} suffix={stat.s} />
                 </div>
                 <div className="mt-1 text-xs uppercase tracking-wider text-[#8FA98F]">
-                  {["anos de operação", "atendimentos", "municípios", "documentado"][i]}
+                  {stat.label}
                 </div>
               </div>
             ))}
+            <div>
+              <div className="font-display text-2xl font-bold text-[#2ECC71]">Nacional</div>
+              <div className="mt-1 text-xs uppercase tracking-wider text-[#8FA98F]">Atendimento em todo o Brasil</div>
+            </div>
           </div>
         </div>
 
@@ -370,7 +386,7 @@ function ClientsMarquee() {
       <div className="relative overflow-hidden">
         <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-[#0F2415] to-transparent" />
         <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-[#0F2415] to-transparent" />
-        <div className="flex w-max animate-marquee gap-14 px-8">
+        <div className="flex w-max animate-marquee gap-24 px-10">
           {row.map((c, i) => (
             <div
               key={i}
@@ -499,38 +515,40 @@ function Services() {
           </a>
         </div>
 
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {SERVICES.map((s, i) => (
-            <Reveal key={i} delay={(i % 3) * 0.06}>
-              <a
-                href={WHATSAPP_URL}
-                target="_blank"
-                rel="noreferrer"
-                className={`group relative block overflow-hidden rounded-2xl border border-[#1C3D22] transition-all hover:border-[#2ECC71] ${
-                  s.featured ? "lg:col-span-2" : ""
-                }`}
-              >
-                <div className={`relative w-full ${s.featured ? "aspect-[16/9] lg:aspect-[21/9]" : "aspect-[4/5]"}`}>
+        <div className="mt-12 grid auto-rows-[280px] gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {SERVICES.map((s, i) => {
+            const Icon = s.icon;
+            return (
+              <Reveal key={i} delay={(i % 3) * 0.06} className={s.large ? "lg:col-span-2" : ""}>
+                <a
+                  href={WHATSAPP_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="group relative block h-[280px] w-full overflow-hidden rounded-2xl border border-[#1C3D22] transition-all hover:border-[#2ECC71]"
+                >
                   <img
                     src={s.img}
                     alt={s.title}
                     loading="lazy"
-                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A1A0F] via-[#0A1A0F]/40 to-transparent" />
-                </div>
-                <div className="absolute inset-x-0 bottom-0 p-6">
-                  <h3 className="font-display text-xl font-bold text-[#F0F4F0]">{s.title}</h3>
-                  <p className="mt-1 max-h-0 overflow-hidden text-sm text-[#8FA98F] opacity-0 transition-all duration-500 group-hover:max-h-20 group-hover:opacity-100">
-                    {s.desc}
-                  </p>
-                  <div className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-[#2ECC71]">
-                    Saiba mais <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+                  <div className="absolute inset-0 bg-[rgba(0,20,5,0.65)] transition-colors duration-500 group-hover:bg-[rgba(0,20,5,0.78)]" />
+                  <span className="absolute left-5 top-5 grid h-10 w-10 place-items-center rounded-md bg-[#2ECC71] text-[#06180D]">
+                    <Icon className="h-5 w-5" />
+                  </span>
+                  <div className="absolute inset-x-0 bottom-0 p-6">
+                    <h3 className="font-display text-xl font-bold text-[#F0F4F0] sm:text-2xl">{s.title}</h3>
+                    <p className="mt-1 max-h-0 overflow-hidden text-sm text-[#D5E5D5] opacity-0 transition-all duration-500 group-hover:max-h-20 group-hover:opacity-100">
+                      {s.short}
+                    </p>
+                    <div className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-[#2ECC71] opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                      Saiba mais <ArrowRight className="h-3.5 w-3.5" />
+                    </div>
                   </div>
-                </div>
-              </a>
-            </Reveal>
-          ))}
+                </a>
+              </Reveal>
+            );
+          })}
         </div>
       </div>
     </section>
@@ -671,14 +689,14 @@ function Regional() {
         <Reveal>
           <span className="eyebrow">Presença</span>
           <h2 className="mt-4 font-display text-4xl font-bold leading-tight text-[#F0F4F0] sm:text-5xl">
-            Atendimento consolidado na região.
+            Presença em todo o Brasil.
           </h2>
           <p className="mt-5 text-base text-[#8FA98F]">
-            Estrutura própria e equipes ativas em 8 municípios — pronta resposta para residências,
-            comércios e operações industriais.
+            Estrutura técnica e equipes prontas para atender empresas, indústrias e instituições em
+            todo o território brasileiro — com o mesmo padrão de método e documentação.
           </p>
           <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3">
-            {CITIES.map((c) => (
+            {REGIONS.map((c) => (
               <div key={c} className="flex items-center gap-2 rounded-lg border border-[#1C3D22] bg-[#0F2415] px-3 py-2.5">
                 <MapPin className="h-4 w-4 text-[#2ECC71]" />
                 <span className="text-sm font-medium text-[#F0F4F0]">{c}</span>
@@ -687,9 +705,9 @@ function Regional() {
           </div>
           <div className="mt-8 grid grid-cols-3 gap-4 border-t border-[#1C3D22] pt-6">
             {[
-              { v: 8, l: "municípios" },
+              { v: 5, l: "regiões" },
               { v: 39, l: "anos" },
-              { v: 6, l: "equipes ativas" },
+              { v: 100, l: "% documentado", s: "" },
             ].map((s, i) => (
               <div key={i}>
                 <div className="font-display text-3xl font-bold text-[#2ECC71]">
@@ -701,9 +719,43 @@ function Regional() {
           </div>
         </Reveal>
         <Reveal delay={0.15}>
-          <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-[#1C3D22] lg:aspect-[4/4]">
-            <img src={img2958.url} alt="Sede Bioprag" className="h-full w-full object-cover object-center" />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#0A1A0F] via-transparent to-transparent" />
+          <div className="relative aspect-square overflow-hidden rounded-2xl border border-[#1C3D22] bg-[#0F2415] p-8">
+            <svg viewBox="0 0 600 600" className="h-full w-full" aria-label="Mapa do Brasil — atendimento nacional">
+              <defs>
+                <radialGradient id="brGlow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stopColor="#2ECC71" stopOpacity="0.35" />
+                  <stop offset="100%" stopColor="#2ECC71" stopOpacity="0" />
+                </radialGradient>
+              </defs>
+              <circle cx="300" cy="300" r="240" fill="url(#brGlow)" />
+              <path
+                d="M205 95 L260 80 L320 88 L360 75 L405 95 L430 130 L470 160 L490 210 L505 270 L495 330 L470 385 L455 440 L420 485 L375 510 L320 525 L265 520 L220 495 L185 455 L160 405 L145 350 L150 295 L165 240 L180 185 L195 135 Z"
+                fill="#0A1A0F"
+                stroke="#2ECC71"
+                strokeWidth="2.5"
+              />
+              {[
+                { x: 250, y: 180, label: "N" },
+                { x: 380, y: 200, label: "NE" },
+                { x: 280, y: 320, label: "CO" },
+                { x: 360, y: 380, label: "SE" },
+                { x: 290, y: 460, label: "S" },
+              ].map((p) => (
+                <g key={p.label}>
+                  <circle cx={p.x} cy={p.y} r="10" fill="#2ECC71">
+                    <animate attributeName="r" values="10;14;10" dur="2.4s" repeatCount="indefinite" />
+                  </circle>
+                  <circle cx={p.x} cy={p.y} r="22" fill="none" stroke="#2ECC71" strokeOpacity="0.4">
+                    <animate attributeName="r" values="14;30;14" dur="2.4s" repeatCount="indefinite" />
+                    <animate attributeName="stroke-opacity" values="0.5;0;0.5" dur="2.4s" repeatCount="indefinite" />
+                  </circle>
+                </g>
+              ))}
+            </svg>
+            <div className="absolute bottom-5 left-5 right-5 rounded-xl border border-[#1C3D22] bg-[#0A1A0F]/90 p-4 backdrop-blur-md">
+              <div className="text-xs uppercase tracking-[0.18em] text-[#8FA98F]">Cobertura</div>
+              <div className="font-display text-lg font-bold text-[#F0F4F0]">Atendimento em todo o Brasil</div>
+            </div>
           </div>
         </Reveal>
       </div>
@@ -764,10 +816,165 @@ function Faq() {
   );
 }
 
+function ContactSection() {
+  const [form, setForm] = useState({
+    nome: "",
+    telefone: "",
+    email: "",
+    tipoAmbiente: "",
+    problema: "",
+    tamanho: "",
+    mensagem: "",
+  });
+
+  const update = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
+    setForm((f) => ({ ...f, [k]: e.target.value }));
+
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const msg = `Olá! Vim pelo site da Bioprag e gostaria de um orçamento.
+
+👤 Nome: ${form.nome}
+📱 Telefone: ${form.telefone}
+📧 Email: ${form.email || "Não informado"}
+🏢 Tipo de ambiente: ${form.tipoAmbiente}
+🐛 Problema: ${form.problema}
+📐 Tamanho do local: ${form.tamanho}
+💬 Mensagem: ${form.mensagem || "Não informada"}`;
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
+  };
+
+  const labelCls = "block font-sans text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8FA98F] mb-1.5";
+  const inputCls =
+    "w-full rounded-lg border border-[#1C3D22] bg-[#0A1A0F] px-4 py-3 text-sm text-[#F0F4F0] placeholder:text-[#8FA98F]/60 outline-none transition-colors focus:border-[#2ECC71]";
+
+  return (
+    <section id="contato" className="relative py-24 sm:py-32">
+      <div className="container-page">
+        <div className="max-w-2xl">
+          <span className="eyebrow">Contato</span>
+          <h2 className="mt-4 font-display text-4xl font-bold leading-tight text-[#F0F4F0] sm:text-5xl">
+            Fale com um especialista.
+          </h2>
+          <p className="mt-4 text-base text-[#8FA98F]">
+            Preencha abaixo e nossa equipe entra em contato pelo WhatsApp em até 1h.
+          </p>
+        </div>
+
+        <div className="mt-12 grid gap-8 lg:grid-cols-2">
+          <Reveal>
+            <div className="overflow-hidden rounded-2xl border border-[#1C3D22]">
+              <iframe
+                src="https://www.google.com/maps?q=Brasil&output=embed"
+                width="100%"
+                height="450"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Localização Bioprag"
+              />
+            </div>
+            <div className="mt-6 grid gap-3 sm:grid-cols-2">
+              <div className="flex items-start gap-3 rounded-lg border border-[#1C3D22] bg-[#0F2415] p-4">
+                <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-[#2ECC71]" />
+                <div>
+                  <div className="text-xs uppercase tracking-[0.14em] text-[#8FA98F]">Endereço</div>
+                  <div className="text-sm font-medium text-[#F0F4F0]">{ADDRESS}</div>
+                </div>
+              </div>
+              <div className="flex items-start gap-3 rounded-lg border border-[#1C3D22] bg-[#0F2415] p-4">
+                <MessageCircle className="mt-0.5 h-5 w-5 shrink-0 text-[#2ECC71]" />
+                <div>
+                  <div className="text-xs uppercase tracking-[0.14em] text-[#8FA98F]">WhatsApp</div>
+                  <div className="text-sm font-medium text-[#F0F4F0]">{WHATSAPP_DISPLAY}</div>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+
+          <Reveal delay={0.1}>
+            <form onSubmit={onSubmit} className="rounded-2xl border border-[#1C3D22] bg-[#0F2415] p-6 sm:p-8">
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div>
+                  <label className={labelCls}>Nome completo *</label>
+                  <input required value={form.nome} onChange={update("nome")} className={inputCls} placeholder="Seu nome" />
+                </div>
+                <div>
+                  <label className={labelCls}>Telefone (WhatsApp) *</label>
+                  <input required value={form.telefone} onChange={update("telefone")} className={inputCls} placeholder="(00) 00000-0000" />
+                </div>
+              </div>
+              <div className="mt-4">
+                <label className={labelCls}>E-mail</label>
+                <input type="email" value={form.email} onChange={update("email")} className={inputCls} placeholder="voce@email.com" />
+              </div>
+              <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                <div>
+                  <label className={labelCls}>Tipo de ambiente</label>
+                  <select required value={form.tipoAmbiente} onChange={update("tipoAmbiente")} className={inputCls}>
+                    <option value="">Selecione</option>
+                    <option>Residência</option>
+                    <option>Comércio / Loja</option>
+                    <option>Indústria / Fábrica</option>
+                    <option>Condomínio / Edifício</option>
+                    <option>Hospital / Clínica</option>
+                    <option>Escola / Instituição</option>
+                    <option>Outro</option>
+                  </select>
+                </div>
+                <div>
+                  <label className={labelCls}>Qual o problema?</label>
+                  <select required value={form.problema} onChange={update("problema")} className={inputCls}>
+                    <option value="">Selecione</option>
+                    <option>Baratas ou formigas</option>
+                    <option>Ratos ou roedores</option>
+                    <option>Cupins</option>
+                    <option>Moscas ou mosquitos</option>
+                    <option>Escorpiões</option>
+                    <option>Necessito de sanitização</option>
+                    <option>Monitoramento contínuo</option>
+                    <option>Outro / Não sei ao certo</option>
+                  </select>
+                </div>
+              </div>
+              <div className="mt-4">
+                <label className={labelCls}>Tamanho do local</label>
+                <select required value={form.tamanho} onChange={update("tamanho")} className={inputCls}>
+                  <option value="">Selecione</option>
+                  <option>Até 100m²</option>
+                  <option>100 a 500m²</option>
+                  <option>500 a 2.000m²</option>
+                  <option>Acima de 2.000m²</option>
+                </select>
+              </div>
+              <div className="mt-4">
+                <label className={labelCls}>Mensagem adicional</label>
+                <textarea rows={3} value={form.mensagem} onChange={update("mensagem")} className={inputCls} placeholder="Conte mais sobre sua situação (opcional)" />
+              </div>
+              <button
+                type="submit"
+                className="mt-6 inline-flex w-full items-center justify-center gap-2.5 rounded-lg bg-[#25D366] px-6 py-3.5 font-sans text-sm font-semibold text-white transition-all hover:brightness-110"
+              >
+                <MessageCircle className="h-5 w-5" />
+                Enviar para o WhatsApp
+                <ArrowRight className="h-4 w-4" />
+              </button>
+              <p className="mt-3 text-center text-xs text-[#8FA98F]">
+                Resposta em até 1 hora em horário comercial.
+              </p>
+            </form>
+          </Reveal>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function FinalCTA() {
   return (
     <section
-      id="contato"
+      id="cta-final"
       className="relative isolate overflow-hidden py-28 sm:py-36"
       style={{
         background: "linear-gradient(135deg, #0A1A0F 0%, #1A3D1F 50%, #0A1A0F 100%)",
@@ -906,6 +1113,7 @@ function HomePage() {
         <Cases />
         <Regional />
         <Faq />
+        <ContactSection />
         <FinalCTA />
       </main>
       <Footer />
