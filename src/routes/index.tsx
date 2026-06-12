@@ -816,6 +816,161 @@ function Faq() {
   );
 }
 
+function ContactSection() {
+  const [form, setForm] = useState({
+    nome: "",
+    telefone: "",
+    email: "",
+    tipoAmbiente: "",
+    problema: "",
+    tamanho: "",
+    mensagem: "",
+  });
+
+  const update = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
+    setForm((f) => ({ ...f, [k]: e.target.value }));
+
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const msg = `Olá! Vim pelo site da Bioprag e gostaria de um orçamento.
+
+👤 Nome: ${form.nome}
+📱 Telefone: ${form.telefone}
+📧 Email: ${form.email || "Não informado"}
+🏢 Tipo de ambiente: ${form.tipoAmbiente}
+🐛 Problema: ${form.problema}
+📐 Tamanho do local: ${form.tamanho}
+💬 Mensagem: ${form.mensagem || "Não informada"}`;
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
+  };
+
+  const labelCls = "block font-sans text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8FA98F] mb-1.5";
+  const inputCls =
+    "w-full rounded-lg border border-[#1C3D22] bg-[#0A1A0F] px-4 py-3 text-sm text-[#F0F4F0] placeholder:text-[#8FA98F]/60 outline-none transition-colors focus:border-[#2ECC71]";
+
+  return (
+    <section id="contato" className="relative py-24 sm:py-32">
+      <div className="container-page">
+        <div className="max-w-2xl">
+          <span className="eyebrow">Contato</span>
+          <h2 className="mt-4 font-display text-4xl font-bold leading-tight text-[#F0F4F0] sm:text-5xl">
+            Fale com um especialista.
+          </h2>
+          <p className="mt-4 text-base text-[#8FA98F]">
+            Preencha abaixo e nossa equipe entra em contato pelo WhatsApp em até 1h.
+          </p>
+        </div>
+
+        <div className="mt-12 grid gap-8 lg:grid-cols-2">
+          <Reveal>
+            <div className="overflow-hidden rounded-2xl border border-[#1C3D22]">
+              <iframe
+                src="https://www.google.com/maps?q=Brasil&output=embed"
+                width="100%"
+                height="450"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Localização Bioprag"
+              />
+            </div>
+            <div className="mt-6 grid gap-3 sm:grid-cols-2">
+              <div className="flex items-start gap-3 rounded-lg border border-[#1C3D22] bg-[#0F2415] p-4">
+                <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-[#2ECC71]" />
+                <div>
+                  <div className="text-xs uppercase tracking-[0.14em] text-[#8FA98F]">Endereço</div>
+                  <div className="text-sm font-medium text-[#F0F4F0]">{ADDRESS}</div>
+                </div>
+              </div>
+              <div className="flex items-start gap-3 rounded-lg border border-[#1C3D22] bg-[#0F2415] p-4">
+                <MessageCircle className="mt-0.5 h-5 w-5 shrink-0 text-[#2ECC71]" />
+                <div>
+                  <div className="text-xs uppercase tracking-[0.14em] text-[#8FA98F]">WhatsApp</div>
+                  <div className="text-sm font-medium text-[#F0F4F0]">{WHATSAPP_DISPLAY}</div>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+
+          <Reveal delay={0.1}>
+            <form onSubmit={onSubmit} className="rounded-2xl border border-[#1C3D22] bg-[#0F2415] p-6 sm:p-8">
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div>
+                  <label className={labelCls}>Nome completo *</label>
+                  <input required value={form.nome} onChange={update("nome")} className={inputCls} placeholder="Seu nome" />
+                </div>
+                <div>
+                  <label className={labelCls}>Telefone (WhatsApp) *</label>
+                  <input required value={form.telefone} onChange={update("telefone")} className={inputCls} placeholder="(00) 00000-0000" />
+                </div>
+              </div>
+              <div className="mt-4">
+                <label className={labelCls}>E-mail</label>
+                <input type="email" value={form.email} onChange={update("email")} className={inputCls} placeholder="voce@email.com" />
+              </div>
+              <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                <div>
+                  <label className={labelCls}>Tipo de ambiente</label>
+                  <select required value={form.tipoAmbiente} onChange={update("tipoAmbiente")} className={inputCls}>
+                    <option value="">Selecione</option>
+                    <option>Residência</option>
+                    <option>Comércio / Loja</option>
+                    <option>Indústria / Fábrica</option>
+                    <option>Condomínio / Edifício</option>
+                    <option>Hospital / Clínica</option>
+                    <option>Escola / Instituição</option>
+                    <option>Outro</option>
+                  </select>
+                </div>
+                <div>
+                  <label className={labelCls}>Qual o problema?</label>
+                  <select required value={form.problema} onChange={update("problema")} className={inputCls}>
+                    <option value="">Selecione</option>
+                    <option>Baratas ou formigas</option>
+                    <option>Ratos ou roedores</option>
+                    <option>Cupins</option>
+                    <option>Moscas ou mosquitos</option>
+                    <option>Escorpiões</option>
+                    <option>Necessito de sanitização</option>
+                    <option>Monitoramento contínuo</option>
+                    <option>Outro / Não sei ao certo</option>
+                  </select>
+                </div>
+              </div>
+              <div className="mt-4">
+                <label className={labelCls}>Tamanho do local</label>
+                <select required value={form.tamanho} onChange={update("tamanho")} className={inputCls}>
+                  <option value="">Selecione</option>
+                  <option>Até 100m²</option>
+                  <option>100 a 500m²</option>
+                  <option>500 a 2.000m²</option>
+                  <option>Acima de 2.000m²</option>
+                </select>
+              </div>
+              <div className="mt-4">
+                <label className={labelCls}>Mensagem adicional</label>
+                <textarea rows={3} value={form.mensagem} onChange={update("mensagem")} className={inputCls} placeholder="Conte mais sobre sua situação (opcional)" />
+              </div>
+              <button
+                type="submit"
+                className="mt-6 inline-flex w-full items-center justify-center gap-2.5 rounded-lg bg-[#25D366] px-6 py-3.5 font-sans text-sm font-semibold text-white transition-all hover:brightness-110"
+              >
+                <MessageCircle className="h-5 w-5" />
+                Enviar para o WhatsApp
+                <ArrowRight className="h-4 w-4" />
+              </button>
+              <p className="mt-3 text-center text-xs text-[#8FA98F]">
+                Resposta em até 1 hora em horário comercial.
+              </p>
+            </form>
+          </Reveal>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function FinalCTA() {
   return (
     <section
