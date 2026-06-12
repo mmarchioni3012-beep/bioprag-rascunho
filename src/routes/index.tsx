@@ -125,19 +125,27 @@ const DIFFERENTIALS = [
   { icon: Leaf, title: "Produtos seguros", desc: "Soluções aprovadas pela ANVISA, mínimo impacto ambiental." },
   { icon: Zap, title: "Capacidade operacional", desc: "Estrutura para atender grandes volumes com agilidade e precisão." },
   { icon: Repeat, title: "Monitoramento contínuo", desc: "Acompanhamento pós-serviço e garantia de resultado." },
-  { icon: MapPin, title: "Presença regional", desc: "Atendimento consolidado em 8 municípios da região." },
+  { icon: MapPin, title: "Cobertura nacional", desc: "Atendemos empresas e indústrias em todo o território brasileiro." },
 ];
 
-const SERVICES = [
-  { title: "Controle de Insetos Rasteiros", img: "https://images.unsplash.com/photo-1559762717-99c81ac85459?w=900&q=70", desc: "Baratas, formigas, traças e outros." },
-  { title: "Controle de Insetos Voadores", img: "https://images.unsplash.com/photo-1567408498035-ebc6e09c5b16?w=900&q=70", desc: "Moscas, mosquitos e pernilongos." },
-  { title: "Controle de Roedores", img: "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=900&q=70", desc: "Desratização técnica com monitoramento." },
-  { title: "Descupinização", img: "https://images.unsplash.com/photo-1582719471384-894fbb16e074?w=900&q=70", desc: "Madeira, solo e estruturas." },
-  { title: "Sanitização de Ambientes", img: "https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?w=900&q=70", desc: "Desinfecção bactericida e viricida." },
-  { title: "Controle de Escorpiões", img: "https://images.unsplash.com/photo-1572376313095-49e07b3c5b3a?w=900&q=70", desc: "Plano técnico de prevenção e captura." },
-  { title: "Tratamento de Jardins", img: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=900&q=70", desc: "Pragas em gramados e plantas." },
-  { title: "Biossegurança / DDD", img: "https://images.unsplash.com/photo-1584432810601-6c7f27d2362b?w=900&q=70", desc: "Programas para indústrias e hospitais." },
-  { title: "Monitoramento Contínuo", img: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=900&q=70", desc: "Visitas técnicas programadas, relatórios e KPIs.", featured: true },
+type Service = {
+  title: string;
+  short: string;
+  desc: string;
+  img: string;
+  icon: typeof Bug;
+  large?: boolean;
+};
+
+const SERVICES: Service[] = [
+  { title: "Monitoramento Contínuo", short: "Visitas periódicas e laudos técnicos", desc: "Programa premium com visitas técnicas programadas, indicadores e relatórios.", img: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&q=70", icon: ClipboardList, large: true },
+  { title: "Controle de Insetos Rasteiros", short: "Baratas, formigas, cupins de solo", desc: "Eliminação técnica de pragas rasteiras em qualquer ambiente.", img: "https://images.unsplash.com/photo-1632927786429-b282ac3e1d7a?w=900&q=70", icon: Bug },
+  { title: "Controle de Insetos Voadores", short: "Mosquitos, moscas, mariposas", desc: "Manejo integrado de voadores com produtos certificados.", img: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=70", icon: Plane },
+  { title: "Controle de Roedores", short: "Ratos e camundongos", desc: "Desratização técnica com mapa de iscas e monitoramento.", img: "https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=900&q=70", icon: Rat },
+  { title: "Descupinização", short: "Cupins de madeira e estruturais", desc: "Tratamento estrutural com garantia contra cupins.", img: "https://images.unsplash.com/photo-1504309092620-4d0ec726efa4?w=900&q=70", icon: TreePine },
+  { title: "Sanitização de Ambientes", short: "Desinfecção e higienização", desc: "Sanitização bactericida e viricida para qualquer ambiente.", img: "https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?w=900&q=70", icon: SprayCan },
+  { title: "Controle de Escorpiões", short: "Prevenção e eliminação", desc: "Plano técnico de prevenção, captura e bloqueio de acessos.", img: "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=900&q=70", icon: Shield },
+  { title: "Biossegurança / DDD", short: "Desinfecção, desratização, dedetização", desc: "Programas completos para indústrias, hospitais e operações de grande porte.", img: "https://images.unsplash.com/photo-1631815587646-912b16cc0963?w=900&q=70", icon: ShieldCheck, large: true },
 ];
 
 const METHOD = [
