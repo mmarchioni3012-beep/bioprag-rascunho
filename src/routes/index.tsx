@@ -689,14 +689,14 @@ function Regional() {
         <Reveal>
           <span className="eyebrow">Presença</span>
           <h2 className="mt-4 font-display text-4xl font-bold leading-tight text-[#F0F4F0] sm:text-5xl">
-            Atendimento consolidado na região.
+            Presença em todo o Brasil.
           </h2>
           <p className="mt-5 text-base text-[#8FA98F]">
-            Estrutura própria e equipes ativas em 8 municípios — pronta resposta para residências,
-            comércios e operações industriais.
+            Estrutura técnica e equipes prontas para atender empresas, indústrias e instituições em
+            todo o território brasileiro — com o mesmo padrão de método e documentação.
           </p>
           <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3">
-            {CITIES.map((c) => (
+            {REGIONS.map((c) => (
               <div key={c} className="flex items-center gap-2 rounded-lg border border-[#1C3D22] bg-[#0F2415] px-3 py-2.5">
                 <MapPin className="h-4 w-4 text-[#2ECC71]" />
                 <span className="text-sm font-medium text-[#F0F4F0]">{c}</span>
@@ -705,9 +705,9 @@ function Regional() {
           </div>
           <div className="mt-8 grid grid-cols-3 gap-4 border-t border-[#1C3D22] pt-6">
             {[
-              { v: 8, l: "municípios" },
+              { v: 5, l: "regiões" },
               { v: 39, l: "anos" },
-              { v: 6, l: "equipes ativas" },
+              { v: 100, l: "% documentado", s: "" },
             ].map((s, i) => (
               <div key={i}>
                 <div className="font-display text-3xl font-bold text-[#2ECC71]">
@@ -719,9 +719,43 @@ function Regional() {
           </div>
         </Reveal>
         <Reveal delay={0.15}>
-          <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-[#1C3D22] lg:aspect-[4/4]">
-            <img src={img2958.url} alt="Sede Bioprag" className="h-full w-full object-cover object-center" />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#0A1A0F] via-transparent to-transparent" />
+          <div className="relative aspect-square overflow-hidden rounded-2xl border border-[#1C3D22] bg-[#0F2415] p-8">
+            <svg viewBox="0 0 600 600" className="h-full w-full" aria-label="Mapa do Brasil — atendimento nacional">
+              <defs>
+                <radialGradient id="brGlow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stopColor="#2ECC71" stopOpacity="0.35" />
+                  <stop offset="100%" stopColor="#2ECC71" stopOpacity="0" />
+                </radialGradient>
+              </defs>
+              <circle cx="300" cy="300" r="240" fill="url(#brGlow)" />
+              <path
+                d="M205 95 L260 80 L320 88 L360 75 L405 95 L430 130 L470 160 L490 210 L505 270 L495 330 L470 385 L455 440 L420 485 L375 510 L320 525 L265 520 L220 495 L185 455 L160 405 L145 350 L150 295 L165 240 L180 185 L195 135 Z"
+                fill="#0A1A0F"
+                stroke="#2ECC71"
+                strokeWidth="2.5"
+              />
+              {[
+                { x: 250, y: 180, label: "N" },
+                { x: 380, y: 200, label: "NE" },
+                { x: 280, y: 320, label: "CO" },
+                { x: 360, y: 380, label: "SE" },
+                { x: 290, y: 460, label: "S" },
+              ].map((p) => (
+                <g key={p.label}>
+                  <circle cx={p.x} cy={p.y} r="10" fill="#2ECC71">
+                    <animate attributeName="r" values="10;14;10" dur="2.4s" repeatCount="indefinite" />
+                  </circle>
+                  <circle cx={p.x} cy={p.y} r="22" fill="none" stroke="#2ECC71" strokeOpacity="0.4">
+                    <animate attributeName="r" values="14;30;14" dur="2.4s" repeatCount="indefinite" />
+                    <animate attributeName="stroke-opacity" values="0.5;0;0.5" dur="2.4s" repeatCount="indefinite" />
+                  </circle>
+                </g>
+              ))}
+            </svg>
+            <div className="absolute bottom-5 left-5 right-5 rounded-xl border border-[#1C3D22] bg-[#0A1A0F]/90 p-4 backdrop-blur-md">
+              <div className="text-xs uppercase tracking-[0.18em] text-[#8FA98F]">Cobertura</div>
+              <div className="font-display text-lg font-bold text-[#F0F4F0]">Atendimento em todo o Brasil</div>
+            </div>
           </div>
         </Reveal>
       </div>
