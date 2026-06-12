@@ -332,20 +332,23 @@ function Hero() {
 
           <div className="mt-12 grid grid-cols-2 gap-6 sm:grid-cols-4 animate-fade-up" style={{ animationDelay: "1s" }}>
             {[
-              { v: 39, s: " anos", p: "+" },
-              { v: 10, s: "k+", p: "" },
-              { v: 8, s: "", p: "" },
-              { v: 100, s: "%", p: "" },
+              { v: 39, s: " anos", p: "+", label: "anos de operação" },
+              { v: 10, s: "k+", p: "", label: "atendimentos" },
+              { v: 100, s: "%", p: "", label: "documentado" },
             ].map((stat, i) => (
               <div key={i}>
                 <div className="font-display text-3xl font-bold text-[#2ECC71]">
                   {stat.p}<CountUp to={stat.v} suffix={stat.s} />
                 </div>
                 <div className="mt-1 text-xs uppercase tracking-wider text-[#8FA98F]">
-                  {["anos de operação", "atendimentos", "municípios", "documentado"][i]}
+                  {stat.label}
                 </div>
               </div>
             ))}
+            <div>
+              <div className="font-display text-2xl font-bold text-[#2ECC71]">Nacional</div>
+              <div className="mt-1 text-xs uppercase tracking-wider text-[#8FA98F]">Atendimento em todo o Brasil</div>
+            </div>
           </div>
         </div>
 
