@@ -32,12 +32,13 @@ import {
 } from "lucide-react";
 
 import img2953 from "@/assets/IMG_2953.jpg.asset.json";
-
+import img2955 from "@/assets/IMG_2955.jpg.asset.json";
 import img2956 from "@/assets/IMG_2956.jpg.asset.json";
 import img2957 from "@/assets/IMG_2957.jpg.asset.json";
 import img2958 from "@/assets/IMG_2958.jpg.asset.json";
 import img2962 from "@/assets/IMG_2962.jpg.asset.json";
 import img2963 from "@/assets/IMG_2963.jpg.asset.json";
+import brazilMap from "@/assets/brazil-map.svg.asset.json";
 
 const WHATSAPP_NUMBER = "5514981752595";
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
@@ -139,12 +140,12 @@ type Service = {
 
 const SERVICES: Service[] = [
   { title: "Monitoramento Contínuo", short: "Visitas periódicas e laudos técnicos", desc: "Programa premium com visitas técnicas programadas, indicadores e relatórios.", img: img2963.url, icon: ClipboardList, large: true },
-  { title: "Controle de Insetos Rasteiros", short: "Baratas, formigas, cupins de solo", desc: "Eliminação técnica de pragas rasteiras em qualquer ambiente.", img: "https://images.unsplash.com/photo-1567427361984-0cbe7396fc6c?w=900&q=70&auto=format&fit=crop", icon: Bug },
-  { title: "Controle de Insetos Voadores", short: "Mosquitos, moscas, mariposas", desc: "Manejo integrado de voadores com produtos certificados.", img: "https://images.unsplash.com/photo-1591389703635-e15a07b842d7?w=900&q=70&auto=format&fit=crop", icon: Plane },
-  { title: "Controle de Roedores", short: "Ratos e camundongos", desc: "Desratização técnica com mapa de iscas e monitoramento.", img: "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=900&q=70&auto=format&fit=crop", icon: Rat },
-  { title: "Descupinização", short: "Cupins de madeira e estruturais", desc: "Tratamento estrutural com garantia contra cupins.", img: "https://images.unsplash.com/photo-1605152276897-4f618f831968?w=900&q=70&auto=format&fit=crop", icon: TreePine },
+  { title: "Controle de Insetos Rasteiros", short: "Baratas, formigas, cupins de solo", desc: "Eliminação técnica de pragas rasteiras em qualquer ambiente.", img: img2955.url, icon: Bug },
+  { title: "Controle de Insetos Voadores", short: "Mosquitos, moscas, mariposas", desc: "Manejo integrado de voadores com produtos certificados.", img: img2956.url, icon: Plane },
+  { title: "Controle de Roedores", short: "Ratos e camundongos", desc: "Desratização técnica com mapa de iscas e monitoramento.", img: img2962.url, icon: Rat },
+  { title: "Descupinização", short: "Cupins de madeira e estruturais", desc: "Tratamento estrutural com garantia contra cupins.", img: img2953.url, icon: TreePine },
   { title: "Sanitização de Ambientes", short: "Desinfecção e higienização", desc: "Sanitização bactericida e viricida para qualquer ambiente.", img: img2958.url, icon: SprayCan },
-  { title: "Controle de Escorpiões", short: "Prevenção e eliminação", desc: "Plano técnico de prevenção, captura e bloqueio de acessos.", img: "https://images.unsplash.com/photo-1599839619722-39751411ea63?w=900&q=70&auto=format&fit=crop", icon: Shield },
+  { title: "Controle de Escorpiões", short: "Prevenção e eliminação", desc: "Plano técnico de prevenção, captura e bloqueio de acessos.", img: img2955.url, icon: Shield },
   { title: "Biossegurança / DDD", short: "Desinfecção, desratização, dedetização", desc: "Programas completos para indústrias, hospitais e operações de grande porte.", img: img2957.url, icon: ShieldCheck, large: true },
 ];
 
@@ -720,39 +721,36 @@ function Regional() {
         </Reveal>
         <Reveal delay={0.15}>
           <div className="relative aspect-square overflow-hidden rounded-2xl border border-[#1C3D22] bg-[#0F2415] p-8">
-            <svg viewBox="0 0 600 600" className="h-full w-full" aria-label="Mapa do Brasil — atendimento nacional">
-              <defs>
-                <radialGradient id="brGlow" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stopColor="#2ECC71" stopOpacity="0.35" />
-                  <stop offset="100%" stopColor="#2ECC71" stopOpacity="0" />
-                </radialGradient>
-              </defs>
-              <circle cx="300" cy="300" r="240" fill="url(#brGlow)" />
-              <path
-                d="M205 95 L260 80 L320 88 L360 75 L405 95 L430 130 L470 160 L490 210 L505 270 L495 330 L470 385 L455 440 L420 485 L375 510 L320 525 L265 520 L220 495 L185 455 L160 405 L145 350 L150 295 L165 240 L180 185 L195 135 Z"
-                fill="#0A1A0F"
-                stroke="#2ECC71"
-                strokeWidth="2.5"
-              />
+            <div className="pointer-events-none absolute inset-0 [background:radial-gradient(ellipse_at_center,rgba(46,204,113,0.18),transparent_65%)]" />
+            <img
+              src={brazilMap.url}
+              alt="Mapa do Brasil — atendimento nacional"
+              className="relative z-[1] h-full w-full object-contain [filter:drop-shadow(0_0_24px_rgba(46,204,113,0.45))]"
+              loading="lazy"
+            />
+            {/* Regional pulse dots positioned over the map (% based on viewBox) */}
+            <div className="absolute inset-8 z-[2]">
               {[
-                { x: 250, y: 180, label: "N" },
-                { x: 380, y: 200, label: "NE" },
-                { x: 280, y: 320, label: "CO" },
-                { x: 360, y: 380, label: "SE" },
-                { x: 290, y: 460, label: "S" },
+                { x: "28%", y: "30%", label: "Norte" },
+                { x: "70%", y: "32%", label: "Nordeste" },
+                { x: "48%", y: "55%", label: "Centro-Oeste" },
+                { x: "65%", y: "67%", label: "Sudeste" },
+                { x: "52%", y: "82%", label: "Sul" },
               ].map((p) => (
-                <g key={p.label}>
-                  <circle cx={p.x} cy={p.y} r="10" fill="#2ECC71">
-                    <animate attributeName="r" values="10;14;10" dur="2.4s" repeatCount="indefinite" />
-                  </circle>
-                  <circle cx={p.x} cy={p.y} r="22" fill="none" stroke="#2ECC71" strokeOpacity="0.4">
-                    <animate attributeName="r" values="14;30;14" dur="2.4s" repeatCount="indefinite" />
-                    <animate attributeName="stroke-opacity" values="0.5;0;0.5" dur="2.4s" repeatCount="indefinite" />
-                  </circle>
-                </g>
+                <span
+                  key={p.label}
+                  className="absolute -translate-x-1/2 -translate-y-1/2"
+                  style={{ left: p.x, top: p.y }}
+                  aria-label={p.label}
+                >
+                  <span className="relative flex h-3 w-3">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#2ECC71] opacity-60" />
+                    <span className="relative inline-flex h-3 w-3 rounded-full bg-[#2ECC71] ring-2 ring-[#0A1A0F]" />
+                  </span>
+                </span>
               ))}
-            </svg>
-            <div className="absolute bottom-5 left-5 right-5 rounded-xl border border-[#1C3D22] bg-[#0A1A0F]/90 p-4 backdrop-blur-md">
+            </div>
+            <div className="absolute bottom-5 left-5 right-5 z-[3] rounded-xl border border-[#1C3D22] bg-[#0A1A0F]/90 p-4 backdrop-blur-md">
               <div className="text-xs uppercase tracking-[0.18em] text-[#8FA98F]">Cobertura</div>
               <div className="font-display text-lg font-bold text-[#F0F4F0]">Atendimento em todo o Brasil</div>
             </div>
@@ -865,14 +863,14 @@ function ContactSection() {
           <Reveal>
             <div className="overflow-hidden rounded-2xl border border-[#1C3D22]">
               <iframe
-                src="https://www.google.com/maps?q=Brasil&output=embed"
+                src="https://www.google.com/maps?q=Rua+Goi%C3%A1s+446+Centro+Conchas+SP+Bioprag&z=16&output=embed"
                 width="100%"
                 height="450"
-                style={{ border: 0 }}
+                style={{ border: 0, filter: "invert(0.92) hue-rotate(180deg) saturate(0.85) contrast(0.95)" }}
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title="Localização Bioprag"
+                title="Localização Bioprag — Rua Goiás, 446, Conchas/SP"
               />
             </div>
             <div className="mt-6 grid gap-3 sm:grid-cols-2">
