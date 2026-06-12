@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import {
   ArrowRight,
   Award,
-  Bug,
+  Award,
   CheckCircle2,
   ChevronDown,
   ClipboardList,
@@ -469,7 +469,7 @@ function WhyChoose() {
         <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {DIFFERENTIALS.map((d, i) => (
             <Reveal key={i} delay={i * 0.05}>
-              <div className="card-bp group h-full p-6 hover:[&]:card-bp-hover">
+              <div className="card-bp group h-full p-6 hover:card-bp-hover">
                 <span className="grid h-12 w-12 place-items-center rounded-lg bg-[#2ECC71] text-[#06180D] transition-transform group-hover:scale-110">
                   <d.icon className="h-5 w-5" />
                 </span>
