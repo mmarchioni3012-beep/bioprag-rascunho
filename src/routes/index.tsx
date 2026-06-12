@@ -1,28 +1,32 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ArrowRight,
-  ArrowUpRight,
+  Award,
   Bug,
   CheckCircle2,
   ChevronDown,
-  Droplets,
-  Factory,
+  ClipboardList,
+  FileText,
+  Hexagon,
   Instagram,
   Leaf,
   MapPin,
+  Menu,
   MessageCircle,
   Phone,
-  Rat,
+  Repeat,
+  Search,
   Shield,
   ShieldCheck,
   Sparkles,
+  Star,
   Target,
-  Truck,
+  X,
   Youtube,
+  Zap,
 } from "lucide-react";
 
-import logoAsset from "@/assets/bioprag-logo.jpg.asset.json";
 import img2953 from "@/assets/IMG_2953.jpg.asset.json";
 import img2955 from "@/assets/IMG_2955.jpg.asset.json";
 import img2956 from "@/assets/IMG_2956.jpg.asset.json";
@@ -31,7 +35,8 @@ import img2958 from "@/assets/IMG_2958.jpg.asset.json";
 import img2962 from "@/assets/IMG_2962.jpg.asset.json";
 import img2963 from "@/assets/IMG_2963.jpg.asset.json";
 
-const WHATSAPP_NUMBER = "5514981752595"; // Caroline Bioprag
+const WHATSAPP_NUMBER = "5514981752595";
+const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
 const PHONE_DISPLAY = "(14) 3845-4011";
 const WHATSAPP_DISPLAY = "(14) 98175-2595";
 const ADDRESS = "Rua Goiás, 446 — Centro, Conchas/SP";
@@ -39,7 +44,7 @@ const ADDRESS = "Rua Goiás, 446 — Centro, Conchas/SP";
 const META_TITLE =
   "BIOPRAG — Controle Integrado de Pragas, Saúde Ambiental e Biossegurança | Desde 1986";
 const META_DESC =
-  "Empresa especializada em Controle Integrado de Pragas, Saúde Ambiental e Biossegurança. Atendimento a residências, empresas e indústrias na região de Conchas/SP desde 1986.";
+  "Controle integrado de pragas, saúde ambiental e biossegurança com método técnico, auditável e 100% documentado. Atendimento em 8 municípios desde 1986.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -48,65 +53,349 @@ export const Route = createFileRoute("/")({
       { name: "description", content: META_DESC },
       { property: "og:title", content: META_TITLE },
       { property: "og:description", content: META_DESC },
-      { property: "og:type", content: "website" },
-      { property: "og:image", content: img2956.url },
-      { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: META_TITLE },
       { name: "twitter:description", content: META_DESC },
-      { name: "twitter:image", content: img2956.url },
+      { property: "og:image", content: img2953.url },
+      { name: "twitter:image", content: img2953.url },
     ],
-    links: [{ rel: "canonical", href: "/" }],
   }),
   component: HomePage,
 });
 
-/* ---------------- helpers ---------------- */
-
-function whatsappLink(message?: string) {
-  const msg = message ?? "Olá, visitei o site da BIOPRAG e gostaria de solicitar um orçamento.";
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
-}
-
-function useReveal() {
-  const ref = useRef<HTMLDivElement | null>(null);
+/* ---------------- Hooks ---------------- */
+function useReveal<T extends HTMLElement>() {
+  const ref = useRef<T | null>(null);
   const [shown, setShown] = useState(false);
   useEffect(() => {
-    if (!ref.current || shown) return;
-    const obs = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            setShown(true);
-            obs.disconnect();
-          }
-        });
+    if (!ref.current) return;
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          setShown(true);
+          io.disconnect();
+        }
       },
       { threshold: 0.15 },
     );
-    obs.observe(ref.current);
-    return () => obs.disconnect();
-  }, [shown]);
+    io.observe(ref.current);
+    return () => io.disconnect();
+  }, []);
   return { ref, shown };
 }
 
-function Reveal({
-  children,
-  delay = 0,
-  className = "",
-}: {
-  children: React.ReactNode;
-  delay?: number;
-  className?: string;
-}) {
-  const { ref, shown } = useReveal();
+function CountUp({ to, suffix = "", duration = 1400 }: { to: number; suffix?: string; duration?: number }) {
+  const { ref, shown } = useReveal<HTMLSpanElement>();
+  const [n, setN] = useState(0);
+  useEffect(() => {
+    if (!shown) return;
+    const start = performance.now();
+    let raf = 0;
+    const tick = (t: number) => {
+      const p = Math.min(1, (t - start) / duration);
+      setN(Math.round(to * (1 - Math.pow(1 - p, 3))));
+      if (p < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [shown, to, duration]);
+  return <span ref={ref}>{n.toLocaleString("pt-BR")}{suffix}</span>;
+}
+
+/* ---------------- Data ---------------- */
+const NAV = [
+  { href: "#sobre", label: "Sobre" },
+  { href: "#servicos", label: "Serviços" },
+  { href: "#metodo", label: "Método" },
+  { href: "#clientes", label: "Clientes" },
+  { href: "#contato", label: "Contato" },
+];
+
+const CLIENTS = [
+  "Grand Fair", "Brasilfer", "GramFer", "Supermercado Central",
+  "Indústria Alfa", "Hospital São Lucas", "Colégio Horizonte", "Condomínio Park",
+];
+
+const DIFFERENTIALS = [
+  { icon: Shield, title: "Técnica especializada", desc: "Profissionais certificados e treinados continuamente em protocolos avançados." },
+  { icon: FileText, title: "Documentação completa", desc: "Laudos e relatórios técnicos auditáveis em cada atendimento." },
+  { icon: Leaf, title: "Produtos seguros", desc: "Soluções aprovadas pela ANVISA, mínimo impacto ambiental." },
+  { icon: Zap, title: "Capacidade operacional", desc: "Estrutura para atender grandes volumes com agilidade e precisão." },
+  { icon: Repeat, title: "Monitoramento contínuo", desc: "Acompanhamento pós-serviço e garantia de resultado." },
+  { icon: MapPin, title: "Presença regional", desc: "Atendimento consolidado em 8 municípios da região." },
+];
+
+const SERVICES = [
+  { title: "Controle de Insetos Rasteiros", img: "https://images.unsplash.com/photo-1559762717-99c81ac85459?w=900&q=70", desc: "Baratas, formigas, traças e outros." },
+  { title: "Controle de Insetos Voadores", img: "https://images.unsplash.com/photo-1567408498035-ebc6e09c5b16?w=900&q=70", desc: "Moscas, mosquitos e pernilongos." },
+  { title: "Controle de Roedores", img: "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=900&q=70", desc: "Desratização técnica com monitoramento." },
+  { title: "Descupinização", img: "https://images.unsplash.com/photo-1582719471384-894fbb16e074?w=900&q=70", desc: "Madeira, solo e estruturas." },
+  { title: "Sanitização de Ambientes", img: "https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?w=900&q=70", desc: "Desinfecção bactericida e viricida." },
+  { title: "Controle de Escorpiões", img: "https://images.unsplash.com/photo-1572376313095-49e07b3c5b3a?w=900&q=70", desc: "Plano técnico de prevenção e captura." },
+  { title: "Tratamento de Jardins", img: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=900&q=70", desc: "Pragas em gramados e plantas." },
+  { title: "Biossegurança / DDD", img: "https://images.unsplash.com/photo-1584432810601-6c7f27d2362b?w=900&q=70", desc: "Programas para indústrias e hospitais." },
+  { title: "Monitoramento Contínuo", img: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=900&q=70", desc: "Visitas técnicas programadas, relatórios e KPIs.", featured: true },
+];
+
+const METHOD = [
+  { icon: Search, title: "Diagnóstico", desc: "Vistoria técnica completa e identificação de focos." },
+  { icon: ClipboardList, title: "Planejamento", desc: "Plano de controle personalizado para o ambiente." },
+  { icon: Target, title: "Execução", desc: "Aplicação com produtos certificados e EPI completo." },
+  { icon: FileText, title: "Registro", desc: "Documentação técnica e laudo do serviço." },
+  { icon: ShieldCheck, title: "Monitoramento", desc: "Acompanhamento contínuo e garantia de resultado." },
+];
+
+const CITIES = ["Conchas", "Pereiras", "Laranjal Paulista", "Anhembi", "Botucatu", "Tatuí", "Itatinga", "Porangaba"];
+
+const FAQ = [
+  { q: "Como funciona o processo do início ao fim?", a: "Iniciamos com vistoria técnica gratuita, elaboramos um plano personalizado, executamos com produtos certificados e entregamos laudo + cronograma de monitoramento." },
+  { q: "Os produtos utilizados são seguros para crianças e pets?", a: "Sim. Trabalhamos exclusivamente com produtos aprovados pela ANVISA, aplicados por profissionais treinados, com baixíssima toxicidade residual." },
+  { q: "Preciso sair de casa durante o serviço?", a: "Na maioria dos serviços não é necessário. Para casos específicos orientamos um curto período de ausência, sempre informado previamente." },
+  { q: "Vocês emitem laudo técnico?", a: "Sim. Todo atendimento gera laudo técnico detalhado, exigível por órgãos sanitários e auditorias." },
+  { q: "Qual o prazo de garantia dos serviços?", a: "A garantia varia por serviço, podendo chegar a 12 meses com plano de monitoramento contínuo." },
+  { q: "Atendem empresas de grande porte?", a: "Sim. Operamos com indústrias, redes de varejo, hospitais e condomínios, com estrutura para grandes volumes." },
+];
+
+/* ---------------- Background pieces ---------------- */
+function HexGrid() {
+  return (
+    <svg className="pointer-events-none absolute inset-0 h-full w-full opacity-60" aria-hidden="true">
+      <defs>
+        <pattern id="hex" x="0" y="0" width="56" height="48" patternUnits="userSpaceOnUse">
+          <path d="M28 2 L52 16 L52 40 L28 54 L4 40 L4 16 Z" fill="none" stroke="rgba(46,204,113,0.10)" strokeWidth="1" />
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#hex)" className="animate-hex-pulse" />
+    </svg>
+  );
+}
+
+function FloatingDots() {
+  const dots = Array.from({ length: 24 });
+  return (
+    <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+      {dots.map((_, i) => (
+        <span
+          key={i}
+          className="absolute h-1 w-1 rounded-full bg-white/30 animate-float-dot"
+          style={{
+            top: `${(i * 37) % 100}%`,
+            left: `${(i * 53) % 100}%`,
+            animationDelay: `${(i % 7) * 0.6}s`,
+            animationDuration: `${6 + (i % 5)}s`,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+/* ---------------- Sections ---------------- */
+function Navbar() {
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  return (
+    <header
+      className={`fixed inset-x-0 top-0 z-40 transition-all duration-300 ${
+        scrolled ? "bg-[#0A1A0F]/85 backdrop-blur-md border-b border-[#1C3D22]" : "bg-transparent"
+      }`}
+    >
+      <div className="container-page flex h-16 items-center justify-between gap-4">
+        <a href="#top" className="flex min-w-0 items-center gap-2.5">
+          <span className="grid h-9 w-9 shrink-0 place-items-center rounded-md bg-[#2ECC71] text-[#06180D]">
+            <Hexagon className="h-5 w-5" strokeWidth={2.5} />
+          </span>
+          <span className="font-display text-lg font-extrabold tracking-tight text-[#F0F4F0]">BIOPRAG</span>
+        </a>
+        <nav className="hidden items-center gap-8 md:flex">
+          {NAV.map((n) => (
+            <a key={n.href} href={n.href} className="text-sm font-medium text-[#8FA98F] transition-colors hover:text-[#F0F4F0]">
+              {n.label}
+            </a>
+          ))}
+        </nav>
+        <a
+          href={WHATSAPP_URL}
+          target="_blank"
+          rel="noreferrer"
+          className="hidden items-center gap-2 rounded-lg bg-[#2ECC71] px-4 py-2 text-sm font-semibold text-[#06180D] transition-all hover:bg-[#7DFFB3] md:inline-flex"
+        >
+          Falar com especialista <ArrowRight className="h-4 w-4" />
+        </a>
+        <button
+          aria-label="Menu"
+          onClick={() => setOpen(true)}
+          className="grid h-10 w-10 place-items-center rounded-md border border-[#1C3D22] text-[#F0F4F0] md:hidden"
+        >
+          <Menu className="h-5 w-5" />
+        </button>
+      </div>
+
+      {/* Mobile drawer */}
+      <div
+        className={`fixed inset-0 z-50 md:hidden ${open ? "" : "pointer-events-none"}`}
+        aria-hidden={!open}
+      >
+        <div
+          className={`absolute inset-0 bg-black/60 transition-opacity ${open ? "opacity-100" : "opacity-0"}`}
+          onClick={() => setOpen(false)}
+        />
+        <aside
+          className={`absolute right-0 top-0 h-full w-72 bg-[#0F2415] border-l border-[#1C3D22] p-6 transition-transform ${
+            open ? "translate-x-0" : "translate-x-full"
+          }`}
+        >
+          <div className="flex items-center justify-between">
+            <span className="font-display font-extrabold text-[#F0F4F0]">BIOPRAG</span>
+            <button onClick={() => setOpen(false)} aria-label="Fechar" className="text-[#8FA98F]">
+              <X className="h-5 w-5" />
+            </button>
+          </div>
+          <nav className="mt-8 flex flex-col gap-5">
+            {NAV.map((n) => (
+              <a key={n.href} href={n.href} onClick={() => setOpen(false)} className="text-base font-medium text-[#F0F4F0]">
+                {n.label}
+              </a>
+            ))}
+          </nav>
+          <a
+            href={WHATSAPP_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#2ECC71] px-4 py-3 text-sm font-semibold text-[#06180D]"
+          >
+            Falar com especialista
+          </a>
+        </aside>
+      </div>
+    </header>
+  );
+}
+
+function Hero() {
+  const words = ["Proteção", "que", "você", "pode", "medir."];
+  return (
+    <section id="top" className="relative isolate flex min-h-[100svh] items-center overflow-hidden hexbg pt-24">
+      <HexGrid />
+      <FloatingDots />
+      <div className="container-page relative grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
+        <div>
+          <span className="eyebrow animate-fade-up">
+            <Sparkles className="h-3.5 w-3.5" /> Desde 1986 · Controle Integrado de Pragas
+          </span>
+          <h1 className="mt-5 font-display text-5xl font-extrabold leading-[1.02] tracking-tight text-[#F0F4F0] sm:text-6xl lg:text-[72px]">
+            {words.map((w, i) => (
+              <span
+                key={i}
+                className="inline-block animate-fade-up"
+                style={{ animationDelay: `${0.15 + i * 0.08}s`, marginRight: "0.25em" }}
+              >
+                {i === words.length - 1 ? <span className="text-[#2ECC71]">{w}</span> : w}
+              </span>
+            ))}
+          </h1>
+          <p className="mt-6 max-w-xl text-base text-[#8FA98F] sm:text-lg animate-fade-up" style={{ animationDelay: "0.7s" }}>
+            Controle integrado de pragas, saúde ambiental e biossegurança com método técnico,
+            auditável e 100% documentado.
+          </p>
+          <div className="mt-8 flex flex-wrap gap-3 animate-fade-up" style={{ animationDelay: "0.85s" }}>
+            <a
+              href="#contato"
+              className="inline-flex items-center gap-2 rounded-lg bg-[#2ECC71] px-6 py-3.5 text-sm font-semibold text-[#06180D] transition-all hover:bg-[#7DFFB3] glow-green"
+            >
+              Solicitar orçamento <ArrowRight className="h-4 w-4" />
+            </a>
+            <a
+              href="#metodo"
+              className="inline-flex items-center gap-2 rounded-lg border border-[#F0F4F0]/30 px-6 py-3.5 text-sm font-semibold text-[#F0F4F0] transition-all hover:bg-[#F0F4F0]/5"
+            >
+              Conhecer o método
+            </a>
+          </div>
+
+          <div className="mt-12 grid grid-cols-2 gap-6 sm:grid-cols-4 animate-fade-up" style={{ animationDelay: "1s" }}>
+            {[
+              { v: 39, s: " anos", p: "+" },
+              { v: 10, s: "k+", p: "" },
+              { v: 8, s: "", p: "" },
+              { v: 100, s: "%", p: "" },
+            ].map((stat, i) => (
+              <div key={i}>
+                <div className="font-display text-3xl font-bold text-[#2ECC71]">
+                  {stat.p}<CountUp to={stat.v} suffix={stat.s} />
+                </div>
+                <div className="mt-1 text-xs uppercase tracking-wider text-[#8FA98F]">
+                  {["anos de operação", "atendimentos", "municípios", "documentado"][i]}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Hero visual */}
+        <div className="relative hidden lg:block animate-fade-in" style={{ animationDelay: "0.4s" }}>
+          <div className="relative aspect-[4/5] overflow-hidden rounded-3xl border border-[#1C3D22] glow-green">
+            <img src={img2953.url} alt="Equipe Bioprag em operação" className="h-full w-full object-cover object-center" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0A1A0F] via-transparent to-transparent" />
+            <div className="absolute bottom-6 left-6 right-6 rounded-xl border border-[#1C3D22] bg-[#0A1A0F]/80 p-4 backdrop-blur-md">
+              <div className="flex items-center gap-3">
+                <span className="grid h-10 w-10 place-items-center rounded-md bg-[#2ECC71] text-[#06180D]">
+                  <ShieldCheck className="h-5 w-5" />
+                </span>
+                <div>
+                  <div className="text-sm font-semibold text-[#F0F4F0]">Operação certificada</div>
+                  <div className="text-xs text-[#8FA98F]">Equipe técnica · EPI completo · Laudo emitido</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="absolute -right-6 -top-6 -z-10 h-40 w-40 rounded-full bg-[#2ECC71]/20 blur-3xl" />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ClientsMarquee() {
+  const row = [...CLIENTS, ...CLIENTS];
+  return (
+    <section className="relative border-y border-[#1C3D22] bg-[#0F2415] py-10">
+      <div className="container-page mb-6 text-center">
+        <p className="text-xs uppercase tracking-[0.24em] text-[#8FA98F]">Empresas que confiam na Bioprag</p>
+      </div>
+      <div className="relative overflow-hidden">
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-[#0F2415] to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-[#0F2415] to-transparent" />
+        <div className="flex w-max animate-marquee gap-14 px-8">
+          {row.map((c, i) => (
+            <div
+              key={i}
+              className="flex h-12 shrink-0 items-center font-display text-xl font-bold tracking-wide text-[#F0F4F0]/50 transition-all hover:text-[#F0F4F0]"
+            >
+              {c}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Reveal({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
+  const { ref, shown } = useReveal<HTMLDivElement>();
   return (
     <div
       ref={ref}
       className={className}
       style={{
         opacity: shown ? 1 : 0,
-        transform: shown ? "translateY(0)" : "translateY(18px)",
-        transition: `opacity .8s ease ${delay}ms, transform .8s cubic-bezier(.2,.8,.2,1) ${delay}ms`,
+        transform: shown ? "translateY(0)" : "translateY(30px)",
+        transition: `opacity 0.6s ease-out ${delay}s, transform 0.6s ease-out ${delay}s`,
       }}
     >
       {children}
@@ -114,414 +403,172 @@ function Reveal({
   );
 }
 
-/* ---------------- page ---------------- */
-
-function HomePage() {
-  return (
-    <div className="min-h-screen bg-background text-foreground">
-      <Header />
-      <main>
-        <Hero />
-        <TrustBar />
-        <About />
-        <Timeline />
-        <Differentiators />
-        <Services />
-        <Process />
-        <Training />
-        <Cases />
-        <Coverage />
-        <FAQ />
-        <Quote />
-        <FinalCTA />
-      </main>
-      <Footer />
-      <WhatsappFloat />
-    </div>
-  );
-}
-
-/* ---------------- header ---------------- */
-
-function Header() {
-  const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  const nav = [
-    { href: "#sobre", label: "Sobre" },
-    { href: "#servicos", label: "Serviços" },
-    { href: "#processo", label: "Como funciona" },
-    { href: "#cases", label: "Cases" },
-    { href: "#cobertura", label: "Atendimento" },
-    { href: "#contato", label: "Contato" },
-  ];
-
-  return (
-    <header
-      className={[
-        "fixed top-0 inset-x-0 z-50 transition-all duration-300",
-        scrolled
-          ? "bg-background/85 backdrop-blur-md border-b border-border"
-          : "bg-transparent",
-      ].join(" ")}
-    >
-      <div className="container-page flex items-center justify-between h-16">
-        <a href="#topo" className="flex items-center gap-2.5 group">
-          <span className="relative flex h-9 w-9 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-soft">
-            <span
-              className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity"
-              style={{ boxShadow: "0 0 0 4px rgba(20,78,50,.15)" }}
-            />
-            <Triangle />
-          </span>
-          <div className="leading-none">
-            <div className="font-display font-bold text-[1.05rem] tracking-tight">
-              BIOPRAG<span className="text-primary">®</span>
-            </div>
-            <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground mt-0.5">
-              Desde 1986
-            </div>
-          </div>
-        </a>
-
-        <nav className="hidden lg:flex items-center gap-1">
-          {nav.map((n) => (
-            <a
-              key={n.href}
-              href={n.href}
-              className="text-sm text-ink-soft hover:text-foreground px-3 py-2 rounded-md transition-colors"
-            >
-              {n.label}
-            </a>
-          ))}
-        </nav>
-
-        <div className="flex items-center gap-2">
-          <a
-            href={whatsappLink()}
-            target="_blank"
-            rel="noreferrer"
-            className="hidden sm:inline-flex items-center gap-2 h-10 px-4 rounded-full bg-primary text-primary-foreground text-sm font-medium hover:bg-primary-deep transition-colors shadow-soft"
-          >
-            <MessageCircle className="h-4 w-4" />
-            Orçamento
-          </a>
-          <button
-            onClick={() => setOpen((v) => !v)}
-            className="lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-md border border-border bg-surface-elevated"
-            aria-label="Menu"
-          >
-            <div className="space-y-1.5">
-              <span className={`block h-0.5 w-5 bg-foreground transition-transform ${open ? "translate-y-2 rotate-45" : ""}`} />
-              <span className={`block h-0.5 w-5 bg-foreground transition-opacity ${open ? "opacity-0" : ""}`} />
-              <span className={`block h-0.5 w-5 bg-foreground transition-transform ${open ? "-translate-y-2 -rotate-45" : ""}`} />
-            </div>
-          </button>
-        </div>
-      </div>
-
-      {open && (
-        <div className="lg:hidden border-t border-border bg-background/95 backdrop-blur">
-          <div className="container-page py-3 flex flex-col">
-            {nav.map((n) => (
-              <a
-                key={n.href}
-                href={n.href}
-                onClick={() => setOpen(false)}
-                className="py-3 text-base text-foreground border-b border-border last:border-0"
-              >
-                {n.label}
-              </a>
-            ))}
-          </div>
-        </div>
-      )}
-    </header>
-  );
-}
-
-function Triangle() {
-  return (
-    <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden>
-      <path d="M12 3.2 22 20H2L12 3.2Z" />
-    </svg>
-  );
-}
-
-/* ---------------- hero ---------------- */
-
-function Hero() {
-  return (
-    <section id="topo" className="relative pt-24 lg:pt-28 pb-16 lg:pb-24 overflow-hidden">
-      {/* background image with overlay */}
-      <div className="absolute inset-0 -z-10">
-        <img
-          src={img2956.url}
-          alt="Equipe BIOPRAG executando aplicação técnica em campo"
-          className="h-full w-full object-cover"
-          loading="eager"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0a1410]/85 via-[#0a1410]/72 to-[#0a1410]/95" />
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(80% 60% at 70% 20%, rgba(56,142,88,.25), transparent 60%)",
-          }}
-        />
-      </div>
-
-      <div className="container-page text-primary-foreground">
-        <div className="max-w-3xl">
-          <Reveal>
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.18em] text-white/80 backdrop-blur">
-              <ShieldCheck className="h-3.5 w-3.5" />
-              Saúde Ambiental & Biossegurança
-            </span>
-          </Reveal>
-
-          <Reveal delay={80}>
-            <h1 className="mt-6 text-4xl sm:text-5xl lg:text-7xl font-bold leading-[1.02] text-balance">
-              Protegendo ambientes com{" "}
-              <span className="text-[oklch(0.86_0.12_155)]">segurança</span>,{" "}
-              tecnologia e experiência desde{" "}
-              <span className="tabular-nums">1986</span>.
-            </h1>
-          </Reveal>
-
-          <Reveal delay={160}>
-            <p className="mt-6 text-base sm:text-lg text-white/75 max-w-2xl text-balance">
-              Soluções completas em <strong className="font-semibold text-white">Controle Integrado de Pragas</strong>,
-              Saúde Ambiental e Biossegurança para residências, empresas e indústrias.
-            </p>
-          </Reveal>
-
-          <Reveal delay={240}>
-            <div className="mt-9 flex flex-col sm:flex-row gap-3">
-              <a
-                href={whatsappLink()}
-                target="_blank"
-                rel="noreferrer"
-                className="group inline-flex items-center justify-center gap-2 h-12 px-6 rounded-full bg-white text-[oklch(0.22_0.04_165)] font-semibold hover:bg-white/90 transition-colors shadow-elevated"
-              >
-                Solicitar orçamento
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-              </a>
-              <a
-                href="#servicos"
-                className="inline-flex items-center justify-center gap-2 h-12 px-6 rounded-full border border-white/25 text-white hover:bg-white/10 transition-colors backdrop-blur"
-              >
-                Conhecer serviços
-              </a>
-            </div>
-          </Reveal>
-        </div>
-
-        {/* metrics */}
-        <Reveal delay={340}>
-          <div className="mt-14 lg:mt-20 grid grid-cols-2 lg:grid-cols-4 gap-px overflow-hidden rounded-2xl bg-white/10 backdrop-blur border border-white/10">
-            {[
-              { v: "+39", l: "anos de mercado" },
-              { v: "10+", l: "serviços especializados" },
-              { v: "8", l: "cidades atendidas" },
-              { v: "100%", l: "equipe própria e treinada" },
-            ].map((m) => (
-              <div key={m.l} className="bg-[#0a1410]/60 px-5 py-6">
-                <div className="text-3xl lg:text-4xl font-bold tracking-tight text-white tabular-nums">
-                  {m.v}
-                </div>
-                <div className="text-xs lg:text-sm text-white/65 mt-1">{m.l}</div>
-              </div>
-            ))}
-          </div>
-        </Reveal>
-      </div>
-
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 hidden lg:flex flex-col items-center gap-1 text-white/50 text-xs">
-        <span>role para conhecer</span>
-        <ChevronDown className="h-4 w-4 animate-bounce" />
-      </div>
-    </section>
-  );
-}
-
-/* ---------------- trust bar ---------------- */
-
-function TrustBar() {
-  const segments = [
-    { icon: Factory, label: "Indústrias" },
-    { icon: Truck, label: "Logística" },
-    { icon: Bug, label: "Restaurantes" },
-    { icon: Shield, label: "Condomínios" },
-    { icon: Leaf, label: "Escolas" },
-    { icon: Sparkles, label: "Residências" },
-  ];
-  return (
-    <section className="border-y border-border bg-surface">
-      <div className="container-page py-10 lg:py-14">
-        <Reveal>
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-            <div>
-              <span className="eyebrow">Quem confia na BIOPRAG</span>
-              <h2 className="mt-2 text-xl lg:text-2xl font-semibold text-foreground max-w-md text-balance">
-                Atuação consolidada em diversos segmentos da região.
-              </h2>
-            </div>
-            <ul className="grid grid-cols-3 sm:grid-cols-6 gap-x-2 gap-y-5 lg:gap-x-8">
-              {segments.map((s) => (
-                <li
-                  key={s.label}
-                  className="flex flex-col items-center gap-2 text-ink-soft"
-                >
-                  <s.icon className="h-6 w-6 text-primary" strokeWidth={1.6} />
-                  <span className="text-xs lg:text-sm font-medium text-foreground">
-                    {s.label}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </Reveal>
-      </div>
-    </section>
-  );
-}
-
-/* ---------------- about ---------------- */
-
 function About() {
   return (
-    <section id="sobre" className="py-20 lg:py-32">
-      <div className="container-page grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
-        <Reveal className="lg:col-span-5">
-          <div className="relative">
-            <div className="aspect-[4/5] overflow-hidden rounded-3xl border border-border shadow-elevated">
-              <img
-                src={img2962.url}
-                alt="Operador BIOPRAG com veículo personalizado e equipamentos"
-                className="h-full w-full object-cover"
-              />
-            </div>
-            <div className="absolute -bottom-6 -right-4 lg:-right-8 surface-glass rounded-2xl p-4 shadow-elevated max-w-[200px]">
-              <div className="text-3xl font-bold text-primary tabular-nums">1986</div>
-              <div className="text-xs text-ink-soft mt-1">
-                ano em que começamos a proteger ambientes na região.
+    <section id="sobre" className="relative py-24 sm:py-32">
+      <div className="container-page grid items-center gap-12 lg:grid-cols-2">
+        <Reveal>
+          <span className="eyebrow">Sobre a Bioprag</span>
+          <h2 className="mt-4 font-display text-4xl font-bold leading-tight text-[#F0F4F0] sm:text-5xl">
+            Quase 40 anos protegendo o que importa.
+          </h2>
+          <p className="mt-6 text-base leading-relaxed text-[#8FA98F]">
+            Fundada em 1986, a Bioprag nasceu com a missão de elevar o padrão técnico do controle de pragas
+            no interior paulista. Hoje somos referência regional em saúde ambiental e biossegurança,
+            atendendo residências, comércios, indústrias, hospitais e órgãos públicos.
+          </p>
+          <p className="mt-4 text-base leading-relaxed text-[#8FA98F]">
+            Operamos com método, documentação e responsabilidade ambiental — porque proteção que não pode
+            ser comprovada não é proteção.
+          </p>
+          <div className="mt-8 grid gap-4 sm:grid-cols-3">
+            {[
+              { icon: Award, t: "Reputação consolidada" },
+              { icon: Leaf, t: "Compromisso ambiental" },
+              { icon: Target, t: "Foco em resultado" },
+            ].map((d, i) => (
+              <div key={i} className="flex items-start gap-3">
+                <span className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-md bg-[#1A3D22] text-[#2ECC71]">
+                  <d.icon className="h-4 w-4" />
+                </span>
+                <div className="text-sm font-medium text-[#F0F4F0]">{d.t}</div>
               </div>
+            ))}
+          </div>
+          <a href="#metodo" className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-[#2ECC71] hover:text-[#7DFFB3]">
+            Conheça nosso método <ArrowRight className="h-4 w-4" />
+          </a>
+        </Reveal>
+        <Reveal delay={0.15}>
+          <div className="relative">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-[#1C3D22]">
+              <img src={img2956.url} alt="Histórico Bioprag" className="h-full w-full object-cover object-[center_top]" />
+              <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#0A1A0F] to-transparent" />
+            </div>
+            <div className="absolute -bottom-6 -left-6 hidden rounded-xl border border-[#1C3D22] bg-[#0F2415] p-5 sm:block">
+              <div className="font-display text-4xl font-bold text-[#2ECC71]">1986</div>
+              <div className="text-xs uppercase tracking-wider text-[#8FA98F]">Ano de fundação</div>
             </div>
           </div>
         </Reveal>
+      </div>
+    </section>
+  );
+}
 
-        <div className="lg:col-span-7">
-          <Reveal>
-            <span className="eyebrow">Sobre a BIOPRAG</span>
-            <h2 className="mt-3 text-3xl lg:text-5xl font-bold text-balance">
-              Uma história construída com confiança.
-            </h2>
-          </Reveal>
-          <Reveal delay={80}>
-            <div className="hairline mt-8 w-32" />
-            <div className="mt-8 space-y-5 text-ink-soft text-base lg:text-lg leading-relaxed">
-              <p>
-                Há quase quatro décadas, a BIOPRAG cresce ao lado das famílias,
-                empresas e indústrias da região como referência em{" "}
-                <strong className="text-foreground font-semibold">
-                  Controle Integrado de Pragas Urbanas
-                </strong>
-                .
-              </p>
-              <p>
-                Construímos nossa reputação com estrutura própria, equipe técnica
-                qualificada, responsáveis técnicos, veículos personalizados e
-                investimento contínuo em treinamento, equipamentos e processos.
-              </p>
-              <p>
-                Mais do que aplicar produtos, oferecemos um programa completo de
-                saúde ambiental e biossegurança — diagnóstico, planejamento,
-                execução e monitoramento.
-              </p>
-            </div>
-          </Reveal>
-
-          <Reveal delay={160}>
-            <div className="mt-10 grid grid-cols-2 sm:grid-cols-3 gap-4">
-              {[
-                "Responsável técnico ativo",
-                "Equipe própria e capacitada",
-                "Frota personalizada",
-                "Equipamentos profissionais",
-                "Procedimentos auditáveis",
-                "Compromisso ambiental",
-              ].map((b) => (
-                <div
-                  key={b}
-                  className="flex items-start gap-2 text-sm text-foreground"
-                >
-                  <CheckCircle2 className="h-4 w-4 mt-0.5 text-primary flex-shrink-0" />
-                  <span>{b}</span>
-                </div>
-              ))}
-            </div>
-          </Reveal>
+function WhyChoose() {
+  return (
+    <section className="relative bg-[#0F2415] py-24 sm:py-32">
+      <div className="container-page">
+        <div className="max-w-2xl">
+          <span className="eyebrow">Por que escolher</span>
+          <h2 className="mt-4 font-display text-4xl font-bold leading-tight text-[#F0F4F0] sm:text-5xl">
+            Diferenciais que se medem em resultado.
+          </h2>
+        </div>
+        <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {DIFFERENTIALS.map((d, i) => (
+            <Reveal key={i} delay={i * 0.05}>
+              <div className="card-bp group h-full p-6 hover:[&]:card-bp-hover">
+                <span className="grid h-12 w-12 place-items-center rounded-lg bg-[#2ECC71] text-[#06180D] transition-transform group-hover:scale-110">
+                  <d.icon className="h-5 w-5" />
+                </span>
+                <h3 className="mt-5 font-display text-lg font-bold text-[#F0F4F0]">{d.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-[#8FA98F]">{d.desc}</p>
+              </div>
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>
   );
 }
 
-/* ---------------- timeline ---------------- */
-
-function Timeline() {
-  const items = [
-    { year: "1986", title: "Início da BIOPRAG", body: "Nasce em Conchas/SP com o propósito de levar controle de pragas com responsabilidade técnica à região." },
-    { year: "2000+", title: "Expansão regional", body: "Ampliamos a atuação para cidades vizinhas e iniciamos atendimento a indústrias e grandes condomínios." },
-    { year: "2010+", title: "Modernização operacional", body: "Investimento em equipamentos profissionais, frota personalizada e padronização de processos." },
-    { year: "2020+", title: "Fortalecimento digital", body: "Atendimento integrado por WhatsApp, monitoramento documentado e nova identidade institucional." },
-    { year: "Hoje", title: "Referência regional", body: "Cliente recorrente em indústrias alimentícias, escolas, restaurantes e empresas — reconhecidos por estrutura, técnica e confiança." },
-  ];
+function Services() {
   return (
-    <section className="py-20 lg:py-28 bg-surface border-y border-border">
+    <section id="servicos" className="relative py-24 sm:py-32">
       <div className="container-page">
-        <Reveal>
-          <div className="max-w-2xl">
-            <span className="eyebrow">Linha do tempo</span>
-            <h2 className="mt-3 text-3xl lg:text-5xl font-bold text-balance">
-              Quase 40 anos protegendo o que importa.
+        <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
+          <div className="max-w-xl">
+            <span className="eyebrow">Serviços</span>
+            <h2 className="mt-4 font-display text-4xl font-bold leading-tight text-[#F0F4F0] sm:text-5xl">
+              Soluções completas para cada ambiente.
             </h2>
           </div>
-        </Reveal>
+          <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-sm font-semibold text-[#2ECC71] hover:text-[#7DFFB3]">
+            Tirar dúvidas <ArrowRight className="h-4 w-4" />
+          </a>
+        </div>
 
-        <div className="mt-14 relative">
-          <div className="absolute left-3 lg:left-1/2 top-0 bottom-0 w-px bg-border" aria-hidden />
-          <ol className="space-y-10 lg:space-y-16">
-            {items.map((it, i) => {
-              const isRight = i % 2 === 1;
-              return (
-                <li key={it.year} className="relative lg:grid lg:grid-cols-2 lg:gap-12">
-                  <div className={`pl-10 lg:pl-0 ${isRight ? "lg:col-start-2 lg:pl-16" : "lg:pr-16 lg:text-right"}`}>
-                    <Reveal delay={i * 60}>
-                      <div className="card-premium p-6 lg:p-8 hover:card-premium-hover">
-                        <div className="text-primary text-sm font-semibold tracking-[0.18em] uppercase">
-                          {it.year}
-                        </div>
-                        <h3 className="mt-2 text-xl font-semibold">{it.title}</h3>
-                        <p className="mt-3 text-ink-soft leading-relaxed text-[0.95rem]">{it.body}</p>
-                      </div>
-                    </Reveal>
-                  </div>
-                  <span
-                    className="absolute left-3 lg:left-1/2 top-7 -translate-x-1/2 h-3 w-3 rounded-full bg-primary ring-4 ring-background"
-                    aria-hidden
+        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {SERVICES.map((s, i) => (
+            <Reveal key={i} delay={(i % 3) * 0.06}>
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noreferrer"
+                className={`group relative block overflow-hidden rounded-2xl border border-[#1C3D22] transition-all hover:border-[#2ECC71] ${
+                  s.featured ? "lg:col-span-2" : ""
+                }`}
+              >
+                <div className={`relative w-full ${s.featured ? "aspect-[16/9] lg:aspect-[21/9]" : "aspect-[4/5]"}`}>
+                  <img
+                    src={s.img}
+                    alt={s.title}
+                    loading="lazy"
+                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A1A0F] via-[#0A1A0F]/40 to-transparent" />
+                </div>
+                <div className="absolute inset-x-0 bottom-0 p-6">
+                  <h3 className="font-display text-xl font-bold text-[#F0F4F0]">{s.title}</h3>
+                  <p className="mt-1 max-h-0 overflow-hidden text-sm text-[#8FA98F] opacity-0 transition-all duration-500 group-hover:max-h-20 group-hover:opacity-100">
+                    {s.desc}
+                  </p>
+                  <div className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-[#2ECC71]">
+                    Saiba mais <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+                  </div>
+                </div>
+              </a>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Method() {
+  return (
+    <section id="metodo" className="relative bg-[#0F2415] py-24 sm:py-32">
+      <div className="container-page">
+        <div className="max-w-2xl">
+          <span className="eyebrow">Método</span>
+          <h2 className="mt-4 font-display text-4xl font-bold leading-tight text-[#F0F4F0] sm:text-5xl">
+            Um método claro, técnico e auditável.
+          </h2>
+          <p className="mt-5 text-base text-[#8FA98F]">
+            Cinco etapas estruturadas para entregar resultado mensurável em cada operação.
+          </p>
+        </div>
+
+        <div className="relative mt-16">
+          <div className="pointer-events-none absolute left-0 right-0 top-6 hidden h-px bg-gradient-to-r from-transparent via-[#2ECC71]/40 to-transparent lg:block" />
+          <ol className="grid gap-10 lg:grid-cols-5 lg:gap-6">
+            {METHOD.map((m, i) => (
+              <Reveal key={i} delay={i * 0.08}>
+                <li className="relative">
+                  <div className="flex items-center gap-4 lg:flex-col lg:items-start">
+                    <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full border border-[#2ECC71] bg-[#0A1A0F] font-display text-lg font-bold text-[#2ECC71]">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <m.icon className="h-5 w-5 text-[#2ECC71] lg:mt-4" />
+                  </div>
+                  <h3 className="mt-5 font-display text-lg font-bold text-[#F0F4F0]">{m.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-[#8FA98F]">{m.desc}</p>
                 </li>
-              );
-            })}
+              </Reveal>
+            ))}
           </ol>
         </div>
       </div>
@@ -529,608 +576,229 @@ function Timeline() {
   );
 }
 
-/* ---------------- differentiators ---------------- */
-
-function Differentiators() {
-  const items = [
-    { icon: ShieldCheck, title: "Segurança operacional", body: "Procedimentos rigorosos, EPIs completos e responsável técnico em todas as etapas." },
-    { icon: Target, title: "Diagnóstico técnico", body: "Avaliação prévia para identificar pragas, focos e riscos antes de qualquer aplicação." },
-    { icon: Sparkles, title: "Monitoramento preventivo", body: "Programa contínuo com registros mensais e relatórios para auditoria." },
-    { icon: Leaf, title: "Compromisso ambiental", body: "Produtos registrados, manejo responsável e práticas alinhadas à saúde ambiental." },
-    { icon: Truck, title: "Estrutura própria", body: "Frota personalizada, equipamentos profissionais e equipe interna treinada." },
-    { icon: ShieldCheck, title: "Atendimento técnico", body: "Suporte direto com a equipe BIOPRAG e atendimento via WhatsApp." },
-  ];
-  return (
-    <section className="py-20 lg:py-32">
-      <div className="container-page">
-        <Reveal>
-          <div className="max-w-2xl">
-            <span className="eyebrow">Diferenciais</span>
-            <h2 className="mt-3 text-3xl lg:text-5xl font-bold text-balance">
-              Por que empresas, indústrias e famílias escolhem a BIOPRAG.
-            </h2>
-          </div>
-        </Reveal>
-
-        <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
-          {items.map((it, i) => (
-            <Reveal key={it.title} delay={i * 50}>
-              <div className="card-premium p-7 h-full hover:card-premium-hover">
-                <div className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-primary-soft text-primary">
-                  <it.icon className="h-5 w-5" strokeWidth={1.8} />
-                </div>
-                <h3 className="mt-5 text-lg font-semibold">{it.title}</h3>
-                <p className="mt-2 text-ink-soft text-[0.95rem] leading-relaxed">{it.body}</p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ---------------- services ---------------- */
-
-const services = [
-  { icon: Rat, title: "Controle de Roedores", body: "Programa estruturado de iscagem, monitoramento e correção de focos.", img: img2958.url },
-  { icon: Bug, title: "Controle de Baratas", body: "Tratamentos seletivos com gel, aspersão técnica e atuação em pontos críticos.", img: img2957.url },
-  { icon: Bug, title: "Controle de Formigas", body: "Eliminação de colônias internas e externas com produtos profissionais." },
-  { icon: Bug, title: "Controle de Cupins", body: "Inspeção, identificação da espécie e tratamento curativo ou preventivo." },
-  { icon: Bug, title: "Controle de Escorpiões", body: "Manejo integrado com vedações, monitoramento e aplicações específicas." },
-  { icon: Bug, title: "Controle de Pombos", body: "Soluções de afastamento e manejo ambiental para áreas críticas." },
-  { icon: Sparkles, title: "Sanitização", body: "Desinfecção de ambientes com produtos registrados e procedimentos auditáveis." },
-  { icon: Droplets, title: "Limpeza de Caixa D'Água", body: "Higienização técnica com emissão de comprovante e dentro dos prazos sanitários." },
-  { icon: ShieldCheck, title: "Controle Integrado (MIP)", body: "Programa completo combinando diagnóstico, ações e monitoramento contínuo." },
-  { icon: Target, title: "Monitoramento Preventivo", body: "Visitas programadas, registros mensais e relatórios para auditorias." },
-];
-
-function Services() {
-  return (
-    <section id="servicos" className="py-20 lg:py-32 bg-surface border-y border-border">
-      <div className="container-page">
-        <Reveal>
-          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
-            <div className="max-w-2xl">
-              <span className="eyebrow">Serviços</span>
-              <h2 className="mt-3 text-3xl lg:text-5xl font-bold text-balance">
-                Soluções completas em controle de pragas e saúde ambiental.
-              </h2>
-            </div>
-            <p className="lg:max-w-sm text-ink-soft text-[0.95rem]">
-              Atendimento personalizado para residências, empresas, indústrias,
-              condomínios, restaurantes e o setor alimentício.
-            </p>
-          </div>
-        </Reveal>
-
-        <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
-          {services.map((s, i) => (
-            <Reveal key={s.title} delay={i * 40}>
-              <a
-                href={whatsappLink(`Olá! Gostaria de mais informações sobre ${s.title}.`)}
-                target="_blank"
-                rel="noreferrer"
-                className="card-premium block h-full overflow-hidden group hover:card-premium-hover"
-              >
-                {s.img && (
-                  <div className="aspect-[16/10] overflow-hidden">
-                    <img
-                      src={s.img}
-                      alt={s.title}
-                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                      loading="lazy"
-                    />
-                  </div>
-                )}
-                <div className="p-6">
-                  <div className="flex items-center gap-3">
-                    <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-primary-soft text-primary">
-                      <s.icon className="h-4.5 w-4.5" strokeWidth={1.8} />
-                    </span>
-                    <h3 className="font-semibold text-base">{s.title}</h3>
-                  </div>
-                  <p className="mt-3 text-[0.92rem] text-ink-soft leading-relaxed">{s.body}</p>
-                  <div className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-primary">
-                    Solicitar
-                    <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                  </div>
-                </div>
-              </a>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ---------------- process ---------------- */
-
-function Process() {
-  const steps = [
-    { n: "01", title: "Solicitação", body: "Você nos chama pelo WhatsApp ou formulário e descreve sua necessidade." },
-    { n: "02", title: "Diagnóstico", body: "Avaliamos o ambiente, identificamos pragas e focos." },
-    { n: "03", title: "Planejamento", body: "Definimos o programa técnico mais seguro e eficaz para o seu caso." },
-    { n: "04", title: "Execução", body: "Aplicação realizada por equipe própria com EPIs e equipamentos profissionais." },
-    { n: "05", title: "Monitoramento", body: "Acompanhamento, relatórios e visitas programadas para manter o resultado." },
-  ];
-  return (
-    <section id="processo" className="py-20 lg:py-32">
-      <div className="container-page">
-        <Reveal>
-          <div className="max-w-2xl">
-            <span className="eyebrow">Como funciona</span>
-            <h2 className="mt-3 text-3xl lg:text-5xl font-bold text-balance">
-              Um método claro, técnico e auditável.
-            </h2>
-          </div>
-        </Reveal>
-
-        <div className="mt-14 grid md:grid-cols-2 lg:grid-cols-5 gap-4 lg:gap-5">
-          {steps.map((s, i) => (
-            <Reveal key={s.n} delay={i * 60}>
-              <div className="card-premium p-6 h-full hover:card-premium-hover relative">
-                <div className="text-primary text-xs font-semibold tracking-[0.18em] uppercase">
-                  Etapa {s.n}
-                </div>
-                <h3 className="mt-2 text-lg font-semibold">{s.title}</h3>
-                <p className="mt-3 text-[0.92rem] text-ink-soft leading-relaxed">{s.body}</p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ---------------- training ---------------- */
-
 function Training() {
   return (
-    <section className="py-20 lg:py-32 bg-surface border-y border-border">
-      <div className="container-page grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
-        <div className="lg:col-span-6">
-          <Reveal>
-            <span className="eyebrow">Treinamento & EPIs</span>
-            <h2 className="mt-3 text-3xl lg:text-5xl font-bold text-balance">
-              Capacitação contínua para entregar mais segurança.
-            </h2>
-            <p className="mt-6 text-ink-soft text-base lg:text-lg leading-relaxed">
-              Toda a equipe BIOPRAG passa por capacitação periódica, com foco em
-              segurança operacional, uso correto de EPIs, manuseio de produtos
-              registrados e procedimentos técnicos padronizados.
-            </p>
-          </Reveal>
-
-          <Reveal delay={80}>
-            <ul className="mt-8 space-y-3">
-              {[
-                "Responsável técnico ativo",
-                "EPIs completos e específicos por serviço",
-                "Procedimentos auditáveis e documentados",
-                "Atualização contínua sobre normas e produtos",
-              ].map((b) => (
-                <li key={b} className="flex gap-3 items-start text-foreground">
-                  <CheckCircle2 className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
-                  <span>{b}</span>
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-        </div>
-
-        <Reveal className="lg:col-span-6" delay={80}>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="aspect-[3/4] overflow-hidden rounded-2xl border border-border shadow-soft">
-              <img src={img2953.url} alt="Equipe BIOPRAG em EPI completo" className="h-full w-full object-cover" loading="lazy" />
-            </div>
-            <div className="space-y-4 pt-10">
-              <div className="aspect-[4/5] overflow-hidden rounded-2xl border border-border shadow-soft">
-                <img src={img2958.url} alt="Manuseio técnico de produtos" className="h-full w-full object-cover" loading="lazy" />
-              </div>
-              <div className="aspect-[4/3] overflow-hidden rounded-2xl border border-border shadow-soft">
-                <img src={img2963.url} alt="Selo de monitoramento BIOPRAG" className="h-full w-full object-cover" loading="lazy" />
-              </div>
-            </div>
+    <section className="relative py-24 sm:py-32">
+      <div className="container-page grid items-center gap-12 lg:grid-cols-2">
+        <Reveal>
+          <span className="eyebrow">Capacitação</span>
+          <h2 className="mt-4 font-display text-4xl font-bold leading-tight text-[#F0F4F0] sm:text-5xl">
+            Equipe treinada para entregar mais segurança.
+          </h2>
+          <p className="mt-5 text-base text-[#8FA98F]">
+            Investimos continuamente em formação técnica e protocolos de biossegurança.
+          </p>
+          <ul className="mt-8 space-y-4">
+            {[
+              "Treinamentos mensais obrigatórios",
+              "Certificações técnicas atualizadas",
+              "Uso correto de EPIs e equipamentos",
+              "Protocolos de biossegurança rigorosos",
+            ].map((t) => (
+              <li key={t} className="flex items-start gap-3">
+                <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#2ECC71]" />
+                <span className="text-sm font-medium text-[#F0F4F0]">{t}</span>
+              </li>
+            ))}
+          </ul>
+        </Reveal>
+        <Reveal delay={0.15}>
+          <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-[#1C3D22]">
+            <img src={img2962.url} alt="Capacitação Bioprag" className="h-full w-full object-cover object-[center_top]" />
+            <div className="absolute inset-0 bg-gradient-to-tr from-[#0A1A0F]/60 to-transparent" />
           </div>
         </Reveal>
       </div>
     </section>
   );
 }
-
-/* ---------------- cases ---------------- */
 
 function Cases() {
   return (
-    <section id="cases" className="py-20 lg:py-32">
+    <section id="clientes" className="relative bg-[#0F2415] py-24 sm:py-32">
       <div className="container-page">
+        <div className="max-w-2xl">
+          <span className="eyebrow">Clientes</span>
+          <h2 className="mt-4 font-display text-4xl font-bold leading-tight text-[#F0F4F0] sm:text-5xl">
+            Empresas reais, resultados consistentes.
+          </h2>
+        </div>
+
         <Reveal>
-          <div className="max-w-2xl">
-            <span className="eyebrow">Cases</span>
-            <h2 className="mt-3 text-3xl lg:text-5xl font-bold text-balance">
-              Empresas reais, resultados consistentes.
-            </h2>
+          <div className="mt-12 grid gap-8 rounded-2xl border border-[#1C3D22] bg-[#0A1A0F] p-8 sm:p-12 lg:grid-cols-[1fr_2fr] lg:items-center">
+            <div className="flex items-center gap-4">
+              <div className="grid h-20 w-20 shrink-0 place-items-center rounded-full border border-[#2ECC71] bg-[#0F2415] font-display text-2xl font-bold text-[#2ECC71]">
+                GF
+              </div>
+              <div>
+                <div className="font-display text-lg font-bold text-[#F0F4F0]">GramFer</div>
+                <div className="text-xs uppercase tracking-wider text-[#8FA98F]">Cliente desde 2014</div>
+              </div>
+            </div>
+            <div>
+              <div className="flex gap-1 text-[#2ECC71]">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <Star key={i} className="h-4 w-4 fill-current" />
+                ))}
+              </div>
+              <blockquote className="mt-3 font-display text-xl font-medium leading-snug text-[#F0F4F0] sm:text-2xl">
+                “Em mais de uma década de parceria, a Bioprag se tornou uma extensão técnica da nossa
+                operação. Documentação impecável e zero incidência sanitária.”
+              </blockquote>
+              <div className="mt-4 text-sm text-[#8FA98F]">Direção GramFer · Indústria</div>
+            </div>
           </div>
         </Reveal>
 
-        <div className="mt-14 grid lg:grid-cols-3 gap-5 lg:gap-6">
-          <Reveal className="lg:col-span-2">
-            <div className="card-premium overflow-hidden h-full hover:card-premium-hover">
-              <div className="aspect-[16/9] overflow-hidden">
-                <img src={img2956.url} alt="Operação BIOPRAG em campo" className="h-full w-full object-cover" loading="lazy" />
-              </div>
-              <div className="p-7 lg:p-10">
-                <span className="eyebrow">Case em destaque</span>
-                <h3 className="mt-3 text-2xl lg:text-3xl font-bold">GramFer</h3>
-                <p className="mt-4 text-ink-soft leading-relaxed">
-                  Programa contínuo de Controle Integrado de Pragas com
-                  monitoramento mensal documentado, atuação preventiva e suporte
-                  técnico recorrente. Parceria consolidada como referência em
-                  saúde ambiental industrial.
-                </p>
-                <div className="mt-6 grid grid-cols-3 gap-4 max-w-md">
-                  {[
-                    { v: "100%", l: "monitoramento documentado" },
-                    { v: "Mensal", l: "frequência técnica" },
-                    { v: "MIP", l: "controle integrado" },
-                  ].map((m) => (
-                    <div key={m.l}>
-                      <div className="text-xl font-bold text-primary tabular-nums">{m.v}</div>
-                      <div className="text-xs text-ink-soft mt-0.5">{m.l}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </Reveal>
-
-          <Reveal delay={80}>
-            <div className="flex flex-col gap-5 lg:gap-6 h-full">
-              <div className="card-premium p-7 flex-1 hover:card-premium-hover">
-                <Factory className="h-6 w-6 text-primary" />
-                <h4 className="mt-4 font-semibold">Indústria alimentícia</h4>
-                <p className="mt-2 text-sm text-ink-soft leading-relaxed">
-                  Atendimento dentro dos padrões exigidos por auditorias
-                  sanitárias, com relatórios mensais e plano de ação.
-                </p>
-              </div>
-              <div className="card-premium p-7 flex-1 hover:card-premium-hover">
-                <Shield className="h-6 w-6 text-primary" />
-                <h4 className="mt-4 font-semibold">Condomínios & comércios</h4>
-                <p className="mt-2 text-sm text-ink-soft leading-relaxed">
-                  Programas preventivos com discrição, segurança para moradores
-                  e clientes, e comunicação clara da síndica.
-                </p>
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ---------------- coverage ---------------- */
-
-function Coverage() {
-  const cities = [
-    "Conchas",
-    "Laranjal Paulista",
-    "Pereiras",
-    "Porangaba",
-    "Cesário Lange",
-    "Botucatu",
-    "Tatuí",
-    "Região",
-  ];
-  return (
-    <section id="cobertura" className="py-20 lg:py-32 bg-surface border-y border-border">
-      <div className="container-page grid lg:grid-cols-12 gap-10 items-center">
-        <div className="lg:col-span-6">
-          <Reveal>
-            <span className="eyebrow">Área de atendimento</span>
-            <h2 className="mt-3 text-3xl lg:text-5xl font-bold text-balance">
-              Presença consolidada na região.
-            </h2>
-            <p className="mt-6 text-ink-soft text-base lg:text-lg leading-relaxed">
-              Atendemos cidades vizinhas com a mesma estrutura, equipe e padrão
-              técnico que mantemos em nossa sede em Conchas/SP.
-            </p>
-          </Reveal>
-
-          <Reveal delay={80}>
-            <ul className="mt-8 grid grid-cols-2 sm:grid-cols-3 gap-2.5">
-              {cities.map((c) => (
-                <li
-                  key={c}
-                  className="flex items-center gap-2 rounded-full border border-border bg-background px-4 py-2 text-sm font-medium"
-                >
-                  <MapPin className="h-3.5 w-3.5 text-primary" />
-                  {c}
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-        </div>
-
-        <Reveal className="lg:col-span-6" delay={80}>
-          <div className="aspect-[4/3] rounded-3xl overflow-hidden border border-border shadow-elevated">
-            <img src={img2955.url} alt="Sede BIOPRAG em Conchas/SP" className="h-full w-full object-cover" loading="lazy" />
-          </div>
-        </Reveal>
-      </div>
-    </section>
-  );
-}
-
-/* ---------------- FAQ ---------------- */
-
-function FAQ() {
-  const items = useMemo(
-    () => [
-      {
-        q: "A BIOPRAG atende residências e empresas?",
-        a: "Sim. Atendemos residências, empresas, indústrias, condomínios, restaurantes, comércios, escolas e galpões, com programas adaptados a cada tipo de ambiente.",
-      },
-      {
-        q: "Os produtos utilizados são seguros?",
-        a: "Trabalhamos exclusivamente com produtos registrados nos órgãos competentes, aplicados por equipe treinada com EPIs e procedimentos padronizados.",
-      },
-      {
-        q: "É necessário sair do imóvel durante a aplicação?",
-        a: "Depende do serviço e do ambiente. No diagnóstico técnico orientamos os cuidados específicos, prazos de retorno e ventilação.",
-      },
-      {
-        q: "A BIOPRAG emite comprovante e relatório?",
-        a: "Sim. Emitimos comprovantes dos serviços executados e, em programas de monitoramento, relatórios técnicos para auditorias e fiscalizações.",
-      },
-      {
-        q: "Quais cidades vocês atendem?",
-        a: "Conchas, Laranjal Paulista, Pereiras, Porangaba, Cesário Lange, Botucatu, Tatuí e demais cidades da região.",
-      },
-    ],
-    [],
-  );
-  return (
-    <section className="py-20 lg:py-32">
-      <div className="container-page grid lg:grid-cols-12 gap-10">
-        <div className="lg:col-span-4">
-          <Reveal>
-            <span className="eyebrow">Perguntas frequentes</span>
-            <h2 className="mt-3 text-3xl lg:text-4xl font-bold text-balance">
-              Tudo o que você precisa saber antes de contratar.
-            </h2>
-            <p className="mt-5 text-ink-soft">
-              Não encontrou sua dúvida? Fale com a Caroline pelo WhatsApp.
-            </p>
-            <a
-              href={whatsappLink()}
-              target="_blank"
-              rel="noreferrer"
-              className="mt-6 inline-flex items-center gap-2 text-primary font-medium"
+        <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-4">
+          {CLIENTS.map((c, i) => (
+            <div
+              key={i}
+              className="flex h-20 items-center justify-center rounded-xl border border-[#1C3D22] bg-[#0A1A0F] font-display text-base font-bold text-[#F0F4F0]/60 transition-colors hover:border-[#2ECC71] hover:text-[#F0F4F0]"
             >
-              Falar no WhatsApp <ArrowRight className="h-4 w-4" />
-            </a>
-          </Reveal>
+              {c}
+            </div>
+          ))}
         </div>
-        <div className="lg:col-span-8">
-          <div className="divide-y divide-border rounded-2xl border border-border bg-card">
-            {items.map((it, i) => (
-              <FAQItem key={i} q={it.q} a={it.a} />
+      </div>
+    </section>
+  );
+}
+
+function Regional() {
+  return (
+    <section className="relative py-24 sm:py-32">
+      <div className="container-page grid items-center gap-12 lg:grid-cols-2">
+        <Reveal>
+          <span className="eyebrow">Presença</span>
+          <h2 className="mt-4 font-display text-4xl font-bold leading-tight text-[#F0F4F0] sm:text-5xl">
+            Atendimento consolidado na região.
+          </h2>
+          <p className="mt-5 text-base text-[#8FA98F]">
+            Estrutura própria e equipes ativas em 8 municípios — pronta resposta para residências,
+            comércios e operações industriais.
+          </p>
+          <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3">
+            {CITIES.map((c) => (
+              <div key={c} className="flex items-center gap-2 rounded-lg border border-[#1C3D22] bg-[#0F2415] px-3 py-2.5">
+                <MapPin className="h-4 w-4 text-[#2ECC71]" />
+                <span className="text-sm font-medium text-[#F0F4F0]">{c}</span>
+              </div>
             ))}
           </div>
-        </div>
+          <div className="mt-8 grid grid-cols-3 gap-4 border-t border-[#1C3D22] pt-6">
+            {[
+              { v: 8, l: "municípios" },
+              { v: 39, l: "anos" },
+              { v: 6, l: "equipes ativas" },
+            ].map((s, i) => (
+              <div key={i}>
+                <div className="font-display text-3xl font-bold text-[#2ECC71]">
+                  <CountUp to={s.v} />
+                </div>
+                <div className="mt-1 text-xs uppercase tracking-wider text-[#8FA98F]">{s.l}</div>
+              </div>
+            ))}
+          </div>
+        </Reveal>
+        <Reveal delay={0.15}>
+          <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-[#1C3D22] lg:aspect-[4/4]">
+            <img src={img2958.url} alt="Sede Bioprag" className="h-full w-full object-cover object-center" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#0A1A0F] via-transparent to-transparent" />
+          </div>
+        </Reveal>
       </div>
     </section>
   );
 }
 
-function FAQItem({ q, a }: { q: string; a: string }) {
+function FaqItem({ q, a }: { q: string; a: string }) {
   const [open, setOpen] = useState(false);
   return (
-    <div>
+    <div className={`border-b border-[#1C3D22] transition-colors ${open ? "bg-[#0F2415]" : ""}`}>
       <button
         onClick={() => setOpen((v) => !v)}
-        className="w-full text-left px-6 py-5 flex items-center justify-between gap-6 group"
+        className="flex w-full items-center justify-between gap-4 px-5 py-5 text-left"
+        aria-expanded={open}
       >
-        <span className="font-medium text-foreground text-[0.98rem]">{q}</span>
+        <span className="font-display text-base font-semibold text-[#F0F4F0] sm:text-lg">{q}</span>
         <ChevronDown
-          className={`h-4 w-4 text-ink-soft transition-transform ${open ? "rotate-180 text-primary" : ""}`}
+          className={`h-5 w-5 shrink-0 text-[#2ECC71] transition-transform ${open ? "rotate-180" : ""}`}
         />
       </button>
       <div
-        className="grid transition-[grid-template-rows] duration-300 ease-out"
-        style={{ gridTemplateRows: open ? "1fr" : "0fr" }}
+        className={`grid overflow-hidden transition-all duration-300 ${
+          open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+        }`}
       >
-        <div className="overflow-hidden">
-          <p className="px-6 pb-5 text-ink-soft text-[0.94rem] leading-relaxed">{a}</p>
+        <div className="min-h-0">
+          <p className="px-5 pb-5 text-sm leading-relaxed text-[#8FA98F]">{a}</p>
         </div>
       </div>
     </div>
   );
 }
 
-/* ---------------- quote form ---------------- */
-
-function Quote() {
-  const [form, setForm] = useState({
-    nome: "",
-    empresa: "",
-    cidade: "",
-    telefone: "",
-    tipo: "",
-    problema: "",
-    mensagem: "",
-  });
-
-  function submit(e: React.FormEvent) {
-    e.preventDefault();
-    const lines = [
-      "Olá, visitei o site da BIOPRAG e gostaria de solicitar um orçamento.",
-      "",
-      `*Nome:* ${form.nome || "-"}`,
-      `*Empresa:* ${form.empresa || "-"}`,
-      `*Cidade:* ${form.cidade || "-"}`,
-      `*Telefone:* ${form.telefone || "-"}`,
-      `*Tipo de imóvel:* ${form.tipo || "-"}`,
-      `*Problema encontrado:* ${form.problema || "-"}`,
-      "",
-      form.mensagem ? `*Mensagem:* ${form.mensagem}` : "",
-    ]
-      .filter(Boolean)
-      .join("\n");
-    window.open(whatsappLink(lines), "_blank");
-  }
-
-  const field =
-    "w-full h-12 rounded-xl border border-input bg-background px-4 text-[0.95rem] outline-none focus:border-primary focus:ring-2 focus:ring-primary/15 transition";
-
+function Faq() {
+  const mid = Math.ceil(FAQ.length / 2);
+  const cols = [FAQ.slice(0, mid), FAQ.slice(mid)];
   return (
-    <section id="contato" className="py-20 lg:py-32 bg-surface border-y border-border">
-      <div className="container-page grid lg:grid-cols-12 gap-10">
-        <div className="lg:col-span-5">
-          <Reveal>
-            <span className="eyebrow">Orçamento</span>
-            <h2 className="mt-3 text-3xl lg:text-5xl font-bold text-balance">
-              Preencha e envie pelo WhatsApp.
-            </h2>
-            <p className="mt-6 text-ink-soft leading-relaxed">
-              Você preenche, clica em enviar e abrimos uma conversa direta no
-              WhatsApp da Caroline — sem cadastro, sem espera por e-mail.
-            </p>
-          </Reveal>
-          <Reveal delay={80}>
-            <div className="mt-8 space-y-4">
-              <ContactRow icon={MessageCircle} label="WhatsApp" value={WHATSAPP_DISPLAY} href={whatsappLink()} />
-              <ContactRow icon={Phone} label="Telefone" value={PHONE_DISPLAY} href={`tel:+551438454011`} />
-              <ContactRow icon={MapPin} label="Endereço" value={ADDRESS} />
-            </div>
-          </Reveal>
+    <section className="relative bg-[#0F2415] py-24 sm:py-32">
+      <div className="container-page">
+        <div className="max-w-2xl">
+          <span className="eyebrow">FAQ</span>
+          <h2 className="mt-4 font-display text-4xl font-bold leading-tight text-[#F0F4F0] sm:text-5xl">
+            Tudo que você precisa saber antes de contratar.
+          </h2>
         </div>
-
-        <Reveal className="lg:col-span-7" delay={100}>
-          <form
-            onSubmit={submit}
-            className="card-premium p-6 lg:p-8 space-y-4"
-          >
-            <div className="grid sm:grid-cols-2 gap-4">
-              <input className={field} placeholder="Nome*" required value={form.nome} onChange={(e) => setForm({ ...form, nome: e.target.value })} />
-              <input className={field} placeholder="Empresa (opcional)" value={form.empresa} onChange={(e) => setForm({ ...form, empresa: e.target.value })} />
-              <input className={field} placeholder="Cidade*" required value={form.cidade} onChange={(e) => setForm({ ...form, cidade: e.target.value })} />
-              <input className={field} placeholder="Telefone / WhatsApp*" required value={form.telefone} onChange={(e) => setForm({ ...form, telefone: e.target.value })} />
+        <div className="mt-12 grid gap-6 lg:grid-cols-2">
+          {cols.map((col, ci) => (
+            <div key={ci} className="rounded-2xl border border-[#1C3D22] bg-[#0A1A0F] overflow-hidden">
+              {col.map((f, i) => (
+                <FaqItem key={i} q={f.q} a={f.a} />
+              ))}
             </div>
-            <select
-              className={field}
-              value={form.tipo}
-              onChange={(e) => setForm({ ...form, tipo: e.target.value })}
-              required
-            >
-              <option value="">Tipo de imóvel*</option>
-              <option>Residência</option>
-              <option>Empresa / Comércio</option>
-              <option>Indústria</option>
-              <option>Condomínio</option>
-              <option>Restaurante</option>
-              <option>Escola</option>
-              <option>Outro</option>
-            </select>
-            <input
-              className={field}
-              placeholder="Problema encontrado (ex: baratas, ratos, cupins...)"
-              value={form.problema}
-              onChange={(e) => setForm({ ...form, problema: e.target.value })}
-            />
-            <textarea
-              className={`${field} h-32 py-3 resize-none`}
-              placeholder="Mensagem (opcional)"
-              value={form.mensagem}
-              onChange={(e) => setForm({ ...form, mensagem: e.target.value })}
-            />
-            <button
-              type="submit"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 h-12 px-6 rounded-full bg-primary text-primary-foreground font-semibold hover:bg-primary-deep transition-colors shadow-soft"
-            >
-              <MessageCircle className="h-4 w-4" />
-              Enviar pelo WhatsApp
-            </button>
-            <p className="text-xs text-muted-foreground">
-              Ao enviar, abrimos uma conversa pré-preenchida no WhatsApp da
-              Caroline Bioprag.
-            </p>
-          </form>
-        </Reveal>
+          ))}
+        </div>
       </div>
     </section>
   );
 }
-
-function ContactRow({
-  icon: Icon,
-  label,
-  value,
-  href,
-}: {
-  icon: React.ComponentType<{ className?: string }>;
-  label: string;
-  value: string;
-  href?: string;
-}) {
-  const Inner = (
-    <>
-      <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-primary-soft text-primary">
-        <Icon className="h-4.5 w-4.5" />
-      </span>
-      <div>
-        <div className="text-xs uppercase tracking-[0.16em] text-muted-foreground">{label}</div>
-        <div className="font-medium text-foreground">{value}</div>
-      </div>
-    </>
-  );
-  return href ? (
-    <a href={href} target="_blank" rel="noreferrer" className="flex items-center gap-4 hover:text-primary transition-colors">
-      {Inner}
-    </a>
-  ) : (
-    <div className="flex items-center gap-4">{Inner}</div>
-  );
-}
-
-/* ---------------- final cta ---------------- */
 
 function FinalCTA() {
   return (
-    <section className="relative py-24 lg:py-36 overflow-hidden">
-      <div className="absolute inset-0 -z-10">
-        <img src={img2962.url} alt="" className="h-full w-full object-cover" loading="lazy" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0a1410]/95 via-[#0a1410]/85 to-[#0a1410]/70" />
-      </div>
-      <div className="container-page text-white">
+    <section
+      id="contato"
+      className="relative isolate overflow-hidden py-28 sm:py-36"
+      style={{
+        background: "linear-gradient(135deg, #0A1A0F 0%, #1A3D1F 50%, #0A1A0F 100%)",
+      }}
+    >
+      <HexGrid />
+      <div className="container-page relative text-center">
         <Reveal>
-          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold max-w-3xl text-balance leading-[1.05]">
-            Pronto para proteger seu ambiente?
+          <span className="eyebrow justify-center">Contato direto</span>
+          <h2 className="mt-5 font-display text-4xl font-bold leading-tight text-[#F0F4F0] sm:text-6xl">
+            Pronto para proteger o que é seu?
           </h2>
-          <p className="mt-6 text-white/75 text-lg max-w-2xl">
-            Solicite seu orçamento agora mesmo e fale diretamente com a equipe
-            técnica da BIOPRAG.
+          <p className="mx-auto mt-5 max-w-xl text-base text-[#8FA98F] sm:text-lg">
+            Fale com um especialista agora. Atendimento rápido pelo WhatsApp.
           </p>
-          <div className="mt-9 flex flex-col sm:flex-row gap-3">
+          <div className="mt-10 flex flex-wrap justify-center gap-3">
             <a
-              href={whatsappLink()}
+              href={WHATSAPP_URL}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center justify-center gap-2 h-12 px-6 rounded-full bg-white text-[oklch(0.22_0.04_165)] font-semibold hover:bg-white/90 transition-colors shadow-elevated"
+              className="inline-flex items-center gap-2.5 rounded-lg bg-[#25D366] px-7 py-4 font-display text-base font-bold text-white transition-all hover:scale-[1.02] hover:bg-[#1FBA58] glow-green"
             >
-              <MessageCircle className="h-4 w-4" />
-              Falar no WhatsApp
+              <MessageCircle className="h-5 w-5" />
+              Iniciar conversa no WhatsApp
             </a>
             <a
-              href="#contato"
-              className="inline-flex items-center justify-center gap-2 h-12 px-6 rounded-full border border-white/25 text-white hover:bg-white/10 transition-colors"
+              href={`tel:+551438454011`}
+              className="inline-flex items-center gap-2 rounded-lg border border-[#F0F4F0]/30 px-7 py-4 text-base font-semibold text-[#F0F4F0] hover:bg-[#F0F4F0]/5"
             >
-              Preencher formulário
+              <Phone className="h-4 w-4" /> {PHONE_DISPLAY}
             </a>
           </div>
         </Reveal>
@@ -1139,107 +807,110 @@ function FinalCTA() {
   );
 }
 
-/* ---------------- footer ---------------- */
-
 function Footer() {
   return (
-    <footer className="bg-[oklch(0.16_0.012_165)] text-white/80">
-      <div className="container-page py-16 grid md:grid-cols-2 lg:grid-cols-4 gap-10">
+    <footer className="border-t border-[#1C3D22] bg-[#060F08] pt-16 pb-8">
+      <div className="container-page grid gap-12 lg:grid-cols-4">
         <div>
           <div className="flex items-center gap-2.5">
-            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary text-primary-foreground">
-              <Triangle />
+            <span className="grid h-9 w-9 place-items-center rounded-md bg-[#2ECC71] text-[#06180D]">
+              <Hexagon className="h-5 w-5" strokeWidth={2.5} />
             </span>
-            <div className="leading-none">
-              <div className="font-display font-bold text-white">BIOPRAG®</div>
-              <div className="text-[10px] uppercase tracking-[0.18em] text-white/50 mt-0.5">Desde 1986</div>
-            </div>
+            <span className="font-display text-lg font-extrabold text-[#F0F4F0]">BIOPRAG</span>
           </div>
-          <p className="mt-5 text-sm text-white/60 leading-relaxed">
-            Controle Integrado de Pragas, Saúde Ambiental e Biossegurança para
-            residências, empresas e indústrias.
+          <p className="mt-4 text-sm leading-relaxed text-[#8FA98F]">
+            Controle integrado de pragas, saúde ambiental e biossegurança. Atuação técnica desde 1986.
           </p>
+          <div className="mt-5 flex gap-3">
+            {[Instagram, Youtube].map((I, i) => (
+              <a
+                key={i}
+                href="#"
+                aria-label="Rede social"
+                className="grid h-9 w-9 place-items-center rounded-md border border-[#1C3D22] text-[#8FA98F] hover:border-[#2ECC71] hover:text-[#2ECC71]"
+              >
+                <I className="h-4 w-4" />
+              </a>
+            ))}
+          </div>
         </div>
 
         <div>
-          <div className="text-xs uppercase tracking-[0.18em] text-white/40">Contato</div>
-          <ul className="mt-4 space-y-3 text-sm">
-            <li className="flex gap-2 items-start"><MapPin className="h-4 w-4 mt-0.5 text-primary" /> {ADDRESS}</li>
-            <li className="flex gap-2 items-start"><Phone className="h-4 w-4 mt-0.5 text-primary" /> {PHONE_DISPLAY}</li>
-            <li className="flex gap-2 items-start"><MessageCircle className="h-4 w-4 mt-0.5 text-primary" /> {WHATSAPP_DISPLAY}</li>
-          </ul>
-        </div>
-
-        <div>
-          <div className="text-xs uppercase tracking-[0.18em] text-white/40">Serviços</div>
-          <ul className="mt-4 space-y-2 text-sm">
-            {services.slice(0, 6).map((s) => (
+          <h4 className="font-display text-sm font-bold uppercase tracking-wider text-[#F0F4F0]">Serviços</h4>
+          <ul className="mt-4 space-y-2.5 text-sm text-[#8FA98F]">
+            {SERVICES.slice(0, 6).map((s) => (
               <li key={s.title}>
-                <a href="#servicos" className="hover:text-white transition-colors">{s.title}</a>
+                <a href="#servicos" className="transition-colors hover:text-[#2ECC71]">{s.title}</a>
               </li>
             ))}
           </ul>
         </div>
 
         <div>
-          <div className="text-xs uppercase tracking-[0.18em] text-white/40">Acompanhe</div>
-          <div className="mt-4 flex gap-3">
-            <a
-              href="https://www.instagram.com/bioprag_dedetizadora/"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/15 hover:border-primary hover:text-primary transition-colors"
-              aria-label="Instagram"
-            >
-              <Instagram className="h-4 w-4" />
-            </a>
-            <a
-              href="https://youtube.com"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/15 hover:border-primary hover:text-primary transition-colors"
-              aria-label="YouTube"
-            >
-              <Youtube className="h-4 w-4" />
-            </a>
-          </div>
-          <a
-            href={whatsappLink()}
-            target="_blank"
-            rel="noreferrer"
-            className="mt-6 inline-flex items-center gap-2 h-11 px-5 rounded-full bg-primary text-primary-foreground text-sm font-medium hover:bg-primary-deep transition-colors"
-          >
-            <MessageCircle className="h-4 w-4" />
-            Orçamento rápido
-          </a>
+          <h4 className="font-display text-sm font-bold uppercase tracking-wider text-[#F0F4F0]">Empresa</h4>
+          <ul className="mt-4 space-y-2.5 text-sm text-[#8FA98F]">
+            {NAV.map((n) => (
+              <li key={n.href}>
+                <a href={n.href} className="transition-colors hover:text-[#2ECC71]">{n.label}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="font-display text-sm font-bold uppercase tracking-wider text-[#F0F4F0]">Contato</h4>
+          <ul className="mt-4 space-y-2.5 text-sm text-[#8FA98F]">
+            <li className="flex items-start gap-2"><MapPin className="mt-0.5 h-4 w-4 text-[#2ECC71]" /> {ADDRESS}</li>
+            <li className="flex items-center gap-2"><Phone className="h-4 w-4 text-[#2ECC71]" /> {PHONE_DISPLAY}</li>
+            <li className="flex items-center gap-2"><MessageCircle className="h-4 w-4 text-[#2ECC71]" /> {WHATSAPP_DISPLAY}</li>
+          </ul>
         </div>
       </div>
 
-      <div className="border-t border-white/10">
-        <div className="container-page py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/50">
-          <div>© {new Date().getFullYear()} BIOPRAG® — Todos os direitos reservados.</div>
-          <div className="flex items-center gap-2">
-            <img src={logoAsset.url} alt="BIOPRAG" className="h-8 w-auto opacity-70" />
-          </div>
-        </div>
+      <div className="container-page mt-12 border-t border-[#1C3D22] pt-6 text-center text-xs text-[#8FA98F]">
+        © {new Date().getFullYear()} BIOPRAG — Controle Integrado de Pragas. Todos os direitos reservados.
       </div>
     </footer>
   );
 }
 
-/* ---------------- floating wpp ---------------- */
-
-function WhatsappFloat() {
+function FloatingWhatsApp() {
   return (
     <a
-      href={whatsappLink()}
+      href={WHATSAPP_URL}
       target="_blank"
       rel="noreferrer"
-      className="fixed bottom-5 right-5 z-40 inline-flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-elevated hover:scale-105 transition-transform"
-      aria-label="WhatsApp"
+      aria-label="Falar com especialista no WhatsApp"
+      className="group fixed bottom-6 right-6 z-50 grid h-14 w-14 place-items-center rounded-full bg-[#25D366] text-white shadow-lg animate-pulse-soft"
     >
       <MessageCircle className="h-6 w-6" />
-      <span className="absolute inset-0 rounded-full animate-ping bg-[#25D366] opacity-30" aria-hidden />
+      <span className="pointer-events-none absolute right-16 whitespace-nowrap rounded-md bg-[#0F2415] px-3 py-1.5 text-xs font-semibold text-[#F0F4F0] opacity-0 transition-opacity group-hover:opacity-100">
+        Falar com especialista
+      </span>
     </a>
+  );
+}
+
+/* ---------------- Page ---------------- */
+function HomePage() {
+  return (
+    <div className="min-h-screen bg-[#0A1A0F] text-[#F0F4F0]">
+      <Navbar />
+      <main>
+        <Hero />
+        <ClientsMarquee />
+        <About />
+        <WhyChoose />
+        <Services />
+        <Method />
+        <Training />
+        <Cases />
+        <Regional />
+        <Faq />
+        <FinalCTA />
+      </main>
+      <Footer />
+      <FloatingWhatsApp />
+    </div>
   );
 }
