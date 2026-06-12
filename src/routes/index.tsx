@@ -48,7 +48,7 @@ const ADDRESS = "Rua Goiás, 446 — Centro, Conchas/SP";
 const META_TITLE =
   "BIOPRAG — Controle Integrado de Pragas, Saúde Ambiental e Biossegurança | Desde 1986";
 const META_DESC =
-  "Controle integrado de pragas, saúde ambiental e biossegurança com método técnico, auditável e 100% documentado. Atendimento em 8 municípios desde 1986.";
+  "Controle integrado de pragas, saúde ambiental e biossegurança com método técnico, auditável e 100% documentado. Atendimento em todo o Brasil desde 1986.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
