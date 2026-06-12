@@ -32,7 +32,7 @@ import {
 } from "lucide-react";
 
 import img2953 from "@/assets/IMG_2953.jpg.asset.json";
-import img2955 from "@/assets/IMG_2955.jpg.asset.json";
+
 import img2956 from "@/assets/IMG_2956.jpg.asset.json";
 import img2957 from "@/assets/IMG_2957.jpg.asset.json";
 import img2958 from "@/assets/IMG_2958.jpg.asset.json";
