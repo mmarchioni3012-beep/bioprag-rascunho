@@ -39,6 +39,9 @@ import img2958 from "@/assets/IMG_2958.jpg.asset.json";
 import img2962 from "@/assets/IMG_2962.jpg.asset.json";
 import img2963 from "@/assets/IMG_2963.jpg.asset.json";
 import brazilMap from "@/assets/brazil-map.svg.asset.json";
+import bioprágLogo from "@/assets/bioprag-logo.jpeg.asset.json";
+import bioprágSelo from "@/assets/bioprag-selo.png.asset.json";
+import bioprágFachada from "@/assets/bioprag-fachada.png.asset.json";
 
 const WHATSAPP_NUMBER = "5514981752595";
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
