@@ -915,12 +915,12 @@ function ContactSection() {
                 title="Localização Bioprag — Rua Goiás, 446, Centro, Conchas/SP — CEP 18570-043"
               />
               <a
-                href="https://www.google.com/maps/dir/?api=1&destination=Rua+Goi%C3%A1s+446+Centro+Conchas+SP+18570-043"
+                href={MAPS_URL}
                 target="_blank"
                 rel="noreferrer"
-                className="absolute bottom-4 left-4 inline-flex items-center gap-2 rounded-lg bg-[#0A1A0F]/90 px-3 py-2 text-xs font-semibold text-[#F0F4F0] backdrop-blur-md ring-1 ring-[#2ECC71]/40 hover:bg-[#0A1A0F]"
+                className="absolute bottom-4 left-4 inline-flex items-center gap-2 rounded-lg bg-[#2ECC71] px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-[#06180D] shadow-lg transition-all hover:bg-[#7DFFB3]"
               >
-                <MapPin className="h-3.5 w-3.5 text-[#2ECC71]" /> Como chegar
+                <Navigation className="h-3.5 w-3.5" /> Como chegar
               </a>
             </div>
             <div className="mt-6 grid gap-3 sm:grid-cols-2">
