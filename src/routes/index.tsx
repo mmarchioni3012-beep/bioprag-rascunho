@@ -550,16 +550,16 @@ function Services() {
           </a>
         </div>
 
-        <div className="mt-12 grid auto-rows-[280px] gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {SERVICES.map((s, i) => {
             const Icon = s.icon;
             return (
-              <Reveal key={i} delay={(i % 3) * 0.06} className={s.large ? "lg:col-span-2" : ""}>
+              <Reveal key={i} delay={(i % 4) * 0.06}>
                 <a
                   href={WHATSAPP_URL}
                   target="_blank"
                   rel="noreferrer"
-                  className="group relative block h-[280px] w-full overflow-hidden rounded-2xl border border-[#1C3D22] transition-all hover:border-[#2ECC71]"
+                  className="group relative block h-[260px] w-full overflow-hidden rounded-2xl border border-[#1C3D22] transition-all hover:border-[#2ECC71]"
                 >
                   <img
                     src={s.img}
@@ -567,17 +567,15 @@ function Services() {
                     loading="lazy"
                     className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-[rgba(0,20,5,0.65)] transition-colors duration-500 group-hover:bg-[rgba(0,20,5,0.78)]" />
-                  <span className="absolute left-5 top-5 grid h-10 w-10 place-items-center rounded-md bg-[#2ECC71] text-[#06180D]">
-                    <Icon className="h-5 w-5" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[rgba(0,20,5,0.92)] via-[rgba(0,20,5,0.55)] to-[rgba(0,20,5,0.25)] transition-colors duration-500 group-hover:from-[rgba(0,20,5,0.95)]" />
+                  <span className="absolute left-4 top-4 grid h-9 w-9 place-items-center rounded-md bg-[#2ECC71] text-[#06180D]">
+                    <Icon className="h-4.5 w-4.5" />
                   </span>
-                  <div className="absolute inset-x-0 bottom-0 p-6">
-                    <h3 className="font-display text-xl font-bold text-[#F0F4F0] sm:text-2xl">{s.title}</h3>
-                    <p className="mt-1 max-h-0 overflow-hidden text-sm text-[#D5E5D5] opacity-0 transition-all duration-500 group-hover:max-h-20 group-hover:opacity-100">
-                      {s.short}
-                    </p>
-                    <div className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-[#2ECC71] opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-                      Saiba mais <ArrowRight className="h-3.5 w-3.5" />
+                  <div className="absolute inset-x-0 bottom-0 p-5">
+                    <h3 className="font-display text-base font-bold leading-tight text-[#F0F4F0]">{s.title}</h3>
+                    <p className="mt-1 text-xs text-[#D5E5D5]/85">{s.short}</p>
+                    <div className="mt-2 inline-flex items-center gap-1.5 text-[11px] font-semibold text-[#2ECC71] opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                      Saiba mais <ArrowRight className="h-3 w-3" />
                     </div>
                   </div>
                 </a>
