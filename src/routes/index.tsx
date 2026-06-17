@@ -39,9 +39,9 @@ import img2958 from "@/assets/IMG_2958.jpg.asset.json";
 import img2962 from "@/assets/IMG_2962.jpg.asset.json";
 import img2963 from "@/assets/IMG_2963.jpg.asset.json";
 import brazilMap from "@/assets/brazil-map.svg.asset.json";
-import bioprágLogo from "@/assets/bioprag-logo.jpeg.asset.json";
-import bioprágSelo from "@/assets/bioprag-selo.png.asset.json";
-import bioprágFachada from "@/assets/bioprag-fachada.png.asset.json";
+import biopragLogo from "@/assets/bioprag-logo.jpeg.asset.json";
+import biopragSelo from "@/assets/bioprag-selo.png.asset.json";
+import biopragFachada from "@/assets/bioprag-fachada.png.asset.json";
 
 const WHATSAPP_NUMBER = "5514981752595";
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
@@ -251,7 +251,7 @@ function Navbar() {
       <div className="container-page flex h-16 items-center justify-between gap-4">
         <a href="#top" className="flex min-w-0 items-center gap-2.5">
           <span className="grid h-10 w-10 shrink-0 place-items-center overflow-hidden rounded-md bg-white p-1">
-            <img src={bioprágLogo.url} alt="Bioprag" className="h-full w-full object-contain" />
+            <img src={biopragLogo.url} alt="Bioprag" className="h-full w-full object-contain" />
           </span>
           <span className="font-display text-lg font-extrabold tracking-tight text-[#F0F4F0]">BIOPRAG</span>
         </a>
@@ -329,7 +329,7 @@ function Hero() {
       <div className="container-page relative grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
         <div>
           <div className="mb-6 inline-flex items-center gap-3 rounded-xl border border-[#1C3D22] bg-white/95 p-2.5 pr-4 animate-fade-up">
-            <img src={bioprágLogo.url} alt="Bioprag — Controle Integrado de Pragas Urbanas, desde 1986" className="h-12 w-auto object-contain" />
+            <img src={biopragLogo.url} alt="Bioprag — Controle Integrado de Pragas Urbanas, desde 1986" className="h-12 w-auto object-contain" />
           </div>
           <span className="eyebrow animate-fade-up">
             <Sparkles className="h-3.5 w-3.5" /> Desde 1986 · Controle Integrado de Pragas
@@ -492,7 +492,7 @@ function About() {
         <Reveal delay={0.15}>
           <div className="relative">
             <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-[#1C3D22]">
-              <img src={bioprágFachada.url} alt="Fachada da sede Bioprag em Conchas/SP" className="h-full w-full object-cover object-center" />
+              <img src={biopragFachada.url} alt="Fachada da sede Bioprag em Conchas/SP" className="h-full w-full object-cover object-center" />
               <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#0A1A0F] to-transparent" />
             </div>
             <div className="absolute -bottom-6 -left-6 hidden rounded-xl border border-[#1C3D22] bg-[#0F2415] p-5 sm:block">
@@ -946,7 +946,7 @@ function ContactSection() {
                 <div className="grid items-center gap-5 sm:grid-cols-[160px_1fr]">
                   <div className="relative mx-auto w-full max-w-[180px] rounded-xl border-2 border-[#2ECC71]/40 bg-white p-2 shadow-[0_0_40px_-10px_rgba(46,204,113,0.6)]">
                     <img
-                      src={bioprágSelo.url}
+                      src={biopragSelo.url}
                       alt="Selo Bioprag de Segurança — Estabelecimento protegido contra pragas"
                       className="h-auto w-full rounded-md object-contain"
                     />
