@@ -492,7 +492,7 @@ function About() {
         <Reveal delay={0.15}>
           <div className="relative">
             <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-[#1C3D22]">
-              <img src={img2956.url} alt="Histórico Bioprag" className="h-full w-full object-cover object-[center_top]" />
+              <img src={bioprágFachada.url} alt="Fachada da sede Bioprag em Conchas/SP" className="h-full w-full object-cover object-center" />
               <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#0A1A0F] to-transparent" />
             </div>
             <div className="absolute -bottom-6 -left-6 hidden rounded-xl border border-[#1C3D22] bg-[#0F2415] p-5 sm:block">
