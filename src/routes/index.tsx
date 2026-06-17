@@ -945,47 +945,48 @@ function ContactSection() {
                   <div className="text-sm font-medium text-[#F0F4F0]">{WHATSAPP_DISPLAY}</div>
                 </div>
               </div>
-              <a
-                href={`mailto:${EMAIL}`}
-                className="flex items-start gap-3 rounded-lg border border-[#1C3D22] bg-[#0F2415] p-4 transition-colors hover:border-[#2ECC71] sm:col-span-2"
-              >
+              <div className="flex items-start gap-3 rounded-lg border border-[#1C3D22] bg-[#0F2415] p-4 sm:col-span-2">
                 <Mail className="mt-0.5 h-5 w-5 shrink-0 text-[#2ECC71]" />
                 <div className="min-w-0">
                   <div className="text-xs uppercase tracking-[0.14em] text-[#8FA98F]">E-mail comercial</div>
-                  <div className="truncate text-sm font-medium text-[#F0F4F0]">{EMAIL}</div>
+                  <a href={`mailto:${EMAIL}`} className="block truncate text-sm font-medium text-[#F0F4F0] hover:text-[#2ECC71] transition-colors">
+                    {EMAIL}
+                  </a>
                 </div>
-              </a>
+              </div>
             </div>
           </Reveal>
 
-          <Reveal delay={0.1}>
-            <form onSubmit={onSubmit} className="rounded-2xl border border-[#1C3D22] bg-[#0F2415] p-6 sm:p-8">
-              <div>
-                <label className={labelCls}>Nome *</label>
-                <input required value={form.nome} onChange={update("nome")} className={inputCls} placeholder="Seu nome completo" />
-              </div>
-              <div className="mt-4">
-                <label className={labelCls}>Cidade *</label>
-                <input required value={form.cidade} onChange={update("cidade")} className={inputCls} placeholder="Cidade / Estado" />
-              </div>
-              <div className="mt-4">
-                <label className={labelCls}>Tipo de serviço *</label>
-                <select required value={form.servico} onChange={update("servico")} className={inputCls}>
-                  <option value="">Selecione</option>
-                  <option>Monitoramento Contínuo</option>
-                  <option>Controle de Insetos Rasteiros</option>
-                  <option>Controle de Insetos Voadores</option>
-                  <option>Controle de Roedores</option>
-                  <option>Descupinização</option>
-                  <option>Sanitização de Ambientes</option>
-                  <option>Controle de Escorpiões</option>
-                  <option>Biossegurança / DDD</option>
-                  <option>Outro / Não sei ao certo</option>
-                </select>
-              </div>
-              <div className="mt-4">
-                <label className={labelCls}>Mensagem</label>
-                <textarea rows={4} value={form.mensagem} onChange={update("mensagem")} className={inputCls} placeholder="Conte mais sobre sua situação (opcional)" />
+          <Reveal delay={0.1} className="h-full">
+            <form onSubmit={onSubmit} className="flex h-full flex-col rounded-2xl border border-[#1C3D22] bg-[#0F2415] p-6 sm:p-8">
+              <div className="flex flex-1 flex-col gap-4">
+                <div>
+                  <label className={labelCls}>Nome *</label>
+                  <input required value={form.nome} onChange={update("nome")} className={inputCls} placeholder="Seu nome completo" />
+                </div>
+                <div>
+                  <label className={labelCls}>Cidade *</label>
+                  <input required value={form.cidade} onChange={update("cidade")} className={inputCls} placeholder="Cidade / Estado" />
+                </div>
+                <div>
+                  <label className={labelCls}>Tipo de serviço *</label>
+                  <select required value={form.servico} onChange={update("servico")} className={inputCls}>
+                    <option value="">Selecione</option>
+                    <option>Monitoramento Contínuo</option>
+                    <option>Controle de Insetos Rasteiros</option>
+                    <option>Controle de Insetos Voadores</option>
+                    <option>Controle de Roedores</option>
+                    <option>Descupinização</option>
+                    <option>Sanitização de Ambientes</option>
+                    <option>Controle de Escorpiões</option>
+                    <option>Biossegurança / DDD</option>
+                    <option>Outro / Não sei ao certo</option>
+                  </select>
+                </div>
+                <div className="flex flex-1 flex-col">
+                  <label className={labelCls}>Mensagem</label>
+                  <textarea value={form.mensagem} onChange={update("mensagem")} className={`${inputCls} min-h-0 flex-1`} placeholder="Conte mais sobre sua situação (opcional)" />
+                </div>
               </div>
               <button
                 type="submit"
@@ -1044,12 +1045,6 @@ function ContactSection() {
                       className="inline-flex items-center gap-2 rounded-lg bg-[#2ECC71] px-7 py-4 font-display text-sm font-bold uppercase tracking-wider text-[#06180D] transition-all hover:bg-[#7DFFB3] glow-green"
                     >
                       Falar com especialista <ArrowRight className="h-4 w-4" />
-                    </a>
-                    <a
-                      href={`mailto:${EMAIL}`}
-                      className="inline-flex items-center gap-2 rounded-lg border border-[#2ECC71]/40 px-7 py-4 font-display text-sm font-bold uppercase tracking-wider text-[#F0F4F0] transition-colors hover:border-[#2ECC71] hover:bg-[#2ECC71]/10"
-                    >
-                      <Mail className="h-4 w-4" /> Enviar e-mail
                     </a>
                   </div>
                 </div>
@@ -1253,6 +1248,7 @@ function Footer() {
             <li className="flex items-start gap-2"><MapPin className="mt-0.5 h-4 w-4 text-[#2ECC71]" /> {ADDRESS}</li>
             <li className="flex items-center gap-2"><Phone className="h-4 w-4 text-[#2ECC71]" /> {PHONE_DISPLAY}</li>
             <li className="flex items-center gap-2"><MessageCircle className="h-4 w-4 text-[#2ECC71]" /> {WHATSAPP_DISPLAY}</li>
+            <li className="flex items-center gap-2"><Mail className="h-4 w-4 text-[#2ECC71]" /> <a href={`mailto:${EMAIL}`} className="hover:text-[#2ECC71] transition-colors">{EMAIL}</a></li>
           </ul>
         </div>
       </div>
