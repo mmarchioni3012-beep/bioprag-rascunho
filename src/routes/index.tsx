@@ -250,8 +250,8 @@ function Navbar() {
     >
       <div className="container-page flex h-16 items-center justify-between gap-4">
         <a href="#top" className="flex min-w-0 items-center gap-2.5">
-          <span className="grid h-9 w-9 shrink-0 place-items-center rounded-md bg-[#2ECC71] text-[#06180D]">
-            <Hexagon className="h-5 w-5" strokeWidth={2.5} />
+          <span className="grid h-10 w-10 shrink-0 place-items-center overflow-hidden rounded-md bg-white p-1">
+            <img src={bioprágLogo.url} alt="Bioprag" className="h-full w-full object-contain" />
           </span>
           <span className="font-display text-lg font-extrabold tracking-tight text-[#F0F4F0]">BIOPRAG</span>
         </a>
