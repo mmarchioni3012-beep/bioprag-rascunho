@@ -328,6 +328,9 @@ function Hero() {
       <FloatingDots />
       <div className="container-page relative grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
         <div>
+          <div className="mb-6 inline-flex items-center gap-3 rounded-xl border border-[#1C3D22] bg-white/95 p-2.5 pr-4 animate-fade-up">
+            <img src={bioprágLogo.url} alt="Bioprag — Controle Integrado de Pragas Urbanas, desde 1986" className="h-12 w-auto object-contain" />
+          </div>
           <span className="eyebrow animate-fade-up">
             <Sparkles className="h-3.5 w-3.5" /> Desde 1986 · Controle Integrado de Pragas
           </span>
