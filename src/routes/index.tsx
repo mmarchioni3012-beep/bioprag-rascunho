@@ -120,6 +120,33 @@ const CLIENTS = [
   "Indústria Alfa", "Hospital São Lucas", "Colégio Horizonte", "Condomínio Park",
 ];
 
+const TESTIMONIALS = [
+  {
+    initials: "GF",
+    name: "GramFer",
+    role: "Indústria · Cliente desde 2014",
+    quote:
+      "Em mais de uma década de parceria, a Bioprag se tornou uma extensão técnica da nossa operação. Documentação impecável e zero incidência sanitária.",
+    author: "Direção GramFer",
+  },
+  {
+    initials: "GF",
+    name: "Grand Fair",
+    role: "Varejo · Cliente desde 2018",
+    quote:
+      "Atendimento técnico de altíssimo nível. Os laudos da Bioprag passam com folga em qualquer auditoria sanitária — e a equipe é extremamente atenciosa.",
+    author: "Gerência Operacional Grand Fair",
+  },
+  {
+    initials: "BF",
+    name: "Brasilfer",
+    role: "Indústria · Cliente desde 2020",
+    quote:
+      "Profissionalismo, pontualidade e resultado. A Bioprag entrega exatamente o que promete e ainda nos ajuda a evoluir nossos protocolos internos.",
+    author: "Coordenação SSMA Brasilfer",
+  },
+];
+
 const DIFFERENTIALS = [
   { icon: Shield, title: "Técnica especializada", desc: "Profissionais certificados e treinados continuamente em protocolos avançados." },
   { icon: FileText, title: "Documentação completa", desc: "Laudos e relatórios técnicos auditáveis em cada atendimento." },
