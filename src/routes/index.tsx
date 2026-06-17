@@ -627,60 +627,50 @@ function Method() {
 }
 
 function Training() {
-  const teamPhotos = [img2953, img2955, img2956, img2957, img2958, img2962];
+  const teamPhotos = [img2953, img2955, img2956, img2957, img2958, img2962, img2963, img2953];
   return (
     <section className="relative py-24 sm:py-32">
       <div className="container-page">
-        <div className="grid items-start gap-12 lg:grid-cols-2">
-          <Reveal>
-            <span className="eyebrow">Capacitação</span>
-            <h2 className="mt-4 font-display text-4xl font-bold leading-tight text-[#F0F4F0] sm:text-5xl">
-              Equipe treinada para entregar mais segurança.
-            </h2>
-            <p className="mt-5 text-base text-[#8FA98F]">
-              Investimos continuamente em formação técnica e protocolos de biossegurança.
-            </p>
-            <ul className="mt-8 space-y-4">
-              {[
-                "Treinamentos mensais obrigatórios",
-                "Certificações técnicas atualizadas",
-                "Uso correto de EPIs e equipamentos",
-                "Protocolos de biossegurança rigorosos",
-              ].map((t) => (
-                <li key={t} className="flex items-start gap-3">
-                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#2ECC71]" />
-                  <span className="text-sm font-medium text-[#F0F4F0]">{t}</span>
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-          <Reveal delay={0.15}>
-            <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-[#1C3D22]">
-              <img src={img2962.url} alt="Capacitação Bioprag" className="h-full w-full object-cover object-[center_top]" />
-              <div className="absolute inset-0 bg-gradient-to-tr from-[#0A1A0F]/60 to-transparent" />
-            </div>
-          </Reveal>
+        <div className="max-w-2xl">
+          <span className="eyebrow">Capacitação</span>
+          <h2 className="mt-4 font-display text-4xl font-bold leading-tight text-[#F0F4F0] sm:text-5xl">
+            Equipe treinada para entregar mais segurança.
+          </h2>
+          <p className="mt-5 text-base text-[#8FA98F]">
+            Investimos continuamente em formação técnica e protocolos de biossegurança.
+            Cada operação executada com método, EPI completo e padrão auditável.
+          </p>
         </div>
 
         <Reveal delay={0.1}>
-          <div className="mt-16">
-            <h3 className="font-display text-xl font-bold text-[#F0F4F0] sm:text-2xl">Equipe em campo</h3>
-            <p className="mt-2 text-sm text-[#8FA98F]">Operações reais, executadas com método e padrão técnico.</p>
-            <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
-              {teamPhotos.map((p, i) => (
-                <div key={i} className="group relative aspect-square overflow-hidden rounded-xl border border-[#1C3D22]">
-                  <img
-                    src={p.url}
-                    alt={`Equipe Bioprag em campo ${i + 1}`}
-                    loading="lazy"
-                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A1A0F]/70 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
-                </div>
-              ))}
-            </div>
+          <div className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+            {teamPhotos.map((p, i) => (
+              <div key={i} className="group relative aspect-square overflow-hidden rounded-xl border border-[#1C3D22]">
+                <img
+                  src={p.url}
+                  alt={`Equipe Bioprag em campo ${i + 1}`}
+                  loading="lazy"
+                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0A1A0F]/70 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+              </div>
+            ))}
           </div>
         </Reveal>
+
+        <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {[
+            "Treinamentos mensais obrigatórios",
+            "Certificações técnicas atualizadas",
+            "Uso correto de EPIs e equipamentos",
+            "Protocolos de biossegurança rigorosos",
+          ].map((t) => (
+            <li key={t} className="flex items-start gap-3 rounded-xl border border-[#1C3D22] bg-[#0F2415] p-4">
+              <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#2ECC71]" />
+              <span className="text-sm font-medium text-[#F0F4F0]">{t}</span>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );
