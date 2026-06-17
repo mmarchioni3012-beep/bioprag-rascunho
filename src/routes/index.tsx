@@ -1290,6 +1290,7 @@ function HomePage() {
         <Hero />
         <ClientsMarquee />
         <About />
+        <Segments />
         <WhyChoose />
         <Services />
         <Method />
