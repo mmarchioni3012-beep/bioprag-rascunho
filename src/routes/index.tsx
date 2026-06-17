@@ -623,35 +623,58 @@ function Method() {
 }
 
 function Training() {
+  const teamPhotos = [img2953, img2955, img2956, img2957, img2958, img2962];
   return (
     <section className="relative py-24 sm:py-32">
-      <div className="container-page grid items-center gap-12 lg:grid-cols-2">
-        <Reveal>
-          <span className="eyebrow">Capacitação</span>
-          <h2 className="mt-4 font-display text-4xl font-bold leading-tight text-[#F0F4F0] sm:text-5xl">
-            Equipe treinada para entregar mais segurança.
-          </h2>
-          <p className="mt-5 text-base text-[#8FA98F]">
-            Investimos continuamente em formação técnica e protocolos de biossegurança.
-          </p>
-          <ul className="mt-8 space-y-4">
-            {[
-              "Treinamentos mensais obrigatórios",
-              "Certificações técnicas atualizadas",
-              "Uso correto de EPIs e equipamentos",
-              "Protocolos de biossegurança rigorosos",
-            ].map((t) => (
-              <li key={t} className="flex items-start gap-3">
-                <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#2ECC71]" />
-                <span className="text-sm font-medium text-[#F0F4F0]">{t}</span>
-              </li>
-            ))}
-          </ul>
-        </Reveal>
-        <Reveal delay={0.15}>
-          <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-[#1C3D22]">
-            <img src={img2962.url} alt="Capacitação Bioprag" className="h-full w-full object-cover object-[center_top]" />
-            <div className="absolute inset-0 bg-gradient-to-tr from-[#0A1A0F]/60 to-transparent" />
+      <div className="container-page">
+        <div className="grid items-start gap-12 lg:grid-cols-2">
+          <Reveal>
+            <span className="eyebrow">Capacitação</span>
+            <h2 className="mt-4 font-display text-4xl font-bold leading-tight text-[#F0F4F0] sm:text-5xl">
+              Equipe treinada para entregar mais segurança.
+            </h2>
+            <p className="mt-5 text-base text-[#8FA98F]">
+              Investimos continuamente em formação técnica e protocolos de biossegurança.
+            </p>
+            <ul className="mt-8 space-y-4">
+              {[
+                "Treinamentos mensais obrigatórios",
+                "Certificações técnicas atualizadas",
+                "Uso correto de EPIs e equipamentos",
+                "Protocolos de biossegurança rigorosos",
+              ].map((t) => (
+                <li key={t} className="flex items-start gap-3">
+                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#2ECC71]" />
+                  <span className="text-sm font-medium text-[#F0F4F0]">{t}</span>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+          <Reveal delay={0.15}>
+            <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-[#1C3D22]">
+              <img src={img2962.url} alt="Capacitação Bioprag" className="h-full w-full object-cover object-[center_top]" />
+              <div className="absolute inset-0 bg-gradient-to-tr from-[#0A1A0F]/60 to-transparent" />
+            </div>
+          </Reveal>
+        </div>
+
+        <Reveal delay={0.1}>
+          <div className="mt-16">
+            <h3 className="font-display text-xl font-bold text-[#F0F4F0] sm:text-2xl">Equipe em campo</h3>
+            <p className="mt-2 text-sm text-[#8FA98F]">Operações reais, executadas com método e padrão técnico.</p>
+            <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+              {teamPhotos.map((p, i) => (
+                <div key={i} className="group relative aspect-square overflow-hidden rounded-xl border border-[#1C3D22]">
+                  <img
+                    src={p.url}
+                    alt={`Equipe Bioprag em campo ${i + 1}`}
+                    loading="lazy"
+                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A1A0F]/70 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+                </div>
+              ))}
+            </div>
           </div>
         </Reveal>
       </div>
@@ -664,43 +687,44 @@ function Cases() {
     <section id="clientes" className="relative bg-[#0F2415] py-24 sm:py-32">
       <div className="container-page">
         <div className="max-w-2xl">
-          <span className="eyebrow">Clientes</span>
+          <span className="eyebrow">Depoimentos</span>
           <h2 className="mt-4 font-display text-4xl font-bold leading-tight text-[#F0F4F0] sm:text-5xl">
             Empresas reais, resultados consistentes.
           </h2>
         </div>
 
-        <Reveal>
-          <div className="mt-12 grid gap-8 rounded-2xl border border-[#1C3D22] bg-[#0A1A0F] p-8 sm:p-12 lg:grid-cols-[1fr_2fr] lg:items-center">
-            <div className="flex items-center gap-4">
-              <div className="grid h-20 w-20 shrink-0 place-items-center rounded-full border border-[#2ECC71] bg-[#0F2415] font-display text-2xl font-bold text-[#2ECC71]">
-                GF
-              </div>
-              <div>
-                <div className="font-display text-lg font-bold text-[#F0F4F0]">GramFer</div>
-                <div className="text-xs uppercase tracking-wider text-[#8FA98F]">Cliente desde 2014</div>
-              </div>
-            </div>
-            <div>
-              <div className="flex gap-1 text-[#2ECC71]">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Star key={i} className="h-4 w-4 fill-current" />
-                ))}
-              </div>
-              <blockquote className="mt-3 font-display text-xl font-medium leading-snug text-[#F0F4F0] sm:text-2xl">
-                “Em mais de uma década de parceria, a Bioprag se tornou uma extensão técnica da nossa
-                operação. Documentação impecável e zero incidência sanitária.”
-              </blockquote>
-              <div className="mt-4 text-sm text-[#8FA98F]">Direção GramFer · Indústria</div>
-            </div>
-          </div>
-        </Reveal>
+        <div className="mt-12 grid gap-5 lg:grid-cols-3">
+          {TESTIMONIALS.map((t, i) => (
+            <Reveal key={i} delay={i * 0.08}>
+              <article className="flex h-full flex-col rounded-2xl border border-[#1C3D22] bg-[#0A1A0F] p-7 transition-colors hover:border-[#2ECC71]/60">
+                <div className="flex items-center gap-4">
+                  <div className="grid h-14 w-14 shrink-0 place-items-center rounded-full border border-[#2ECC71] bg-[#0F2415] font-display text-base font-bold text-[#2ECC71]">
+                    {t.initials}
+                  </div>
+                  <div className="min-w-0">
+                    <div className="font-display text-base font-bold text-[#F0F4F0]">{t.name}</div>
+                    <div className="text-[11px] uppercase tracking-wider text-[#8FA98F]">{t.role}</div>
+                  </div>
+                </div>
+                <div className="mt-5 flex gap-1 text-[#2ECC71]">
+                  {Array.from({ length: 5 }).map((_, j) => (
+                    <Star key={j} className="h-4 w-4 fill-current" />
+                  ))}
+                </div>
+                <blockquote className="mt-3 flex-1 text-base leading-relaxed text-[#F0F4F0]/90">
+                  “{t.quote}”
+                </blockquote>
+                <div className="mt-5 border-t border-[#1C3D22] pt-4 text-xs text-[#8FA98F]">{t.author}</div>
+              </article>
+            </Reveal>
+          ))}
+        </div>
 
         <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-4">
           {CLIENTS.map((c, i) => (
             <div
               key={i}
-              className="flex h-20 items-center justify-center rounded-xl border border-[#1C3D22] bg-[#0A1A0F] font-display text-base font-bold text-[#F0F4F0]/60 transition-colors hover:border-[#2ECC71] hover:text-[#F0F4F0]"
+              className="flex h-20 items-center justify-center rounded-xl border border-dashed border-[#1C3D22] bg-[#0A1A0F] font-display text-sm font-bold uppercase tracking-[0.15em] text-[#F0F4F0]/50 transition-colors hover:border-[#2ECC71] hover:text-[#F0F4F0]"
             >
               {c}
             </div>
