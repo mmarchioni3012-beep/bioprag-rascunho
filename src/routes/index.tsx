@@ -3,17 +3,22 @@ import { useEffect, useRef, useState } from "react";
 import {
   ArrowRight,
   Award,
+  Building2,
   Bug,
   CheckCircle2,
   ChevronDown,
   ClipboardList,
+  Factory,
   FileText,
   Hexagon,
+  Home,
   Instagram,
   Leaf,
+  Mail,
   MapPin,
   Menu,
   MessageCircle,
+  Navigation,
   Phone,
   Plane,
   Rat,
@@ -47,7 +52,9 @@ const WHATSAPP_NUMBER = "5514981752595";
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
 const PHONE_DISPLAY = "(14) 3845-4011";
 const WHATSAPP_DISPLAY = "(14) 98175-2595";
+const EMAIL = "vendas@bioprag.com.br";
 const ADDRESS = "Rua Goiás, 446 — Centro, Conchas/SP";
+const MAPS_URL = "https://maps.app.goo.gl/AwckADfya2dRDSbs5";
 
 const META_TITLE =
   "BIOPRAG — Controle Integrado de Pragas, Saúde Ambiental e Biossegurança | Desde 1986";
@@ -908,16 +915,16 @@ function ContactSection() {
                 title="Localização Bioprag — Rua Goiás, 446, Centro, Conchas/SP — CEP 18570-043"
               />
               <a
-                href="https://www.google.com/maps/dir/?api=1&destination=Rua+Goi%C3%A1s+446+Centro+Conchas+SP+18570-043"
+                href={MAPS_URL}
                 target="_blank"
                 rel="noreferrer"
-                className="absolute bottom-4 left-4 inline-flex items-center gap-2 rounded-lg bg-[#0A1A0F]/90 px-3 py-2 text-xs font-semibold text-[#F0F4F0] backdrop-blur-md ring-1 ring-[#2ECC71]/40 hover:bg-[#0A1A0F]"
+                className="absolute bottom-4 left-4 inline-flex items-center gap-2 rounded-lg bg-[#2ECC71] px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-[#06180D] shadow-lg transition-all hover:bg-[#7DFFB3]"
               >
-                <MapPin className="h-3.5 w-3.5 text-[#2ECC71]" /> Como chegar
+                <Navigation className="h-3.5 w-3.5" /> Como chegar
               </a>
             </div>
             <div className="mt-6 grid gap-3 sm:grid-cols-2">
-              <div className="flex items-start gap-3 rounded-lg border border-[#1C3D22] bg-[#0F2415] p-4">
+              <div className="flex items-start gap-3 rounded-lg border border-[#1C3D22] bg-[#0F2415] p-4 sm:col-span-2">
                 <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-[#2ECC71]" />
                 <div>
                   <div className="text-xs uppercase tracking-[0.14em] text-[#8FA98F]">Endereço</div>
@@ -931,48 +938,23 @@ function ContactSection() {
                   <div className="text-sm font-medium text-[#F0F4F0]">{PHONE_DISPLAY}</div>
                 </div>
               </div>
-              <div className="flex items-start gap-3 rounded-lg border border-[#1C3D22] bg-[#0F2415] p-4 sm:col-span-2">
+              <div className="flex items-start gap-3 rounded-lg border border-[#1C3D22] bg-[#0F2415] p-4">
                 <MessageCircle className="mt-0.5 h-5 w-5 shrink-0 text-[#2ECC71]" />
                 <div>
                   <div className="text-xs uppercase tracking-[0.14em] text-[#8FA98F]">WhatsApp</div>
                   <div className="text-sm font-medium text-[#F0F4F0]">{WHATSAPP_DISPLAY}</div>
                 </div>
               </div>
-            </div>
-
-            {/* Selo Bioprag */}
-            <div className="mt-6 relative overflow-hidden rounded-2xl p-[1.5px] bg-gradient-to-br from-[#2ECC71] via-[#7DFFB3] to-[#2ECC71]">
-              <div className="relative rounded-2xl bg-[#0A1A0F] p-6 sm:p-7">
-                <div className="grid items-center gap-5 sm:grid-cols-[160px_1fr]">
-                  <div className="relative mx-auto w-full max-w-[180px] rounded-xl border-2 border-[#2ECC71]/40 bg-white p-2 shadow-[0_0_40px_-10px_rgba(46,204,113,0.6)]">
-                    <img
-                      src={biopragSelo.url}
-                      alt="Selo Bioprag de Segurança — Estabelecimento protegido contra pragas"
-                      className="h-auto w-full rounded-md object-contain"
-                    />
-                    <span className="absolute -right-2 -top-2 grid h-9 w-9 place-items-center rounded-full bg-[#2ECC71] text-[#06180D] glow-green">
-                      <ShieldCheck className="h-5 w-5" strokeWidth={2.4} />
-                    </span>
-                  </div>
-                  <div className="min-w-0">
-                    <div className="text-[11px] uppercase tracking-[0.18em] text-[#2ECC71]">Símbolo Bioprag</div>
-                    <h3 className="mt-1 font-display text-xl font-bold leading-snug text-[#F0F4F0] sm:text-2xl">
-                      Receba o Selo Bioprag de Segurança.
-                    </h3>
-                    <p className="mt-2 text-sm text-[#8FA98F]">
-                      Certificação técnica que atesta o padrão de biossegurança do seu estabelecimento — exibida com orgulho por quem é protegido pela Bioprag.
-                    </p>
-                    <a
-                      href={WHATSAPP_URL}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="mt-5 inline-flex items-center gap-2 rounded-lg bg-[#2ECC71] px-5 py-3 font-display text-sm font-bold uppercase tracking-wider text-[#06180D] transition-all hover:bg-[#7DFFB3]"
-                    >
-                      Falar com especialista <ArrowRight className="h-4 w-4" />
-                    </a>
-                  </div>
+              <a
+                href={`mailto:${EMAIL}`}
+                className="flex items-start gap-3 rounded-lg border border-[#1C3D22] bg-[#0F2415] p-4 transition-colors hover:border-[#2ECC71] sm:col-span-2"
+              >
+                <Mail className="mt-0.5 h-5 w-5 shrink-0 text-[#2ECC71]" />
+                <div className="min-w-0">
+                  <div className="text-xs uppercase tracking-[0.14em] text-[#8FA98F]">E-mail comercial</div>
+                  <div className="truncate text-sm font-medium text-[#F0F4F0]">{EMAIL}</div>
                 </div>
-              </div>
+              </a>
             </div>
           </Reveal>
 
@@ -1018,6 +1000,155 @@ function ContactSection() {
               </p>
             </form>
           </Reveal>
+        </div>
+
+        {/* Selo Bioprag — full-width feature block */}
+        <Reveal>
+          <div className="mt-16 relative overflow-hidden rounded-3xl p-[2px] bg-gradient-to-br from-[#2ECC71] via-[#7DFFB3] to-[#2ECC71]">
+            <div className="relative overflow-hidden rounded-[calc(1.5rem-2px)] bg-gradient-to-br from-[#0A1A0F] via-[#0F2415] to-[#0A1A0F] px-6 py-10 sm:px-12 sm:py-14 lg:px-16 lg:py-16">
+              <div
+                className="pointer-events-none absolute inset-0 opacity-30"
+                style={{
+                  backgroundImage:
+                    "radial-gradient(circle at 15% 20%, rgba(46,204,113,0.25), transparent 45%), radial-gradient(circle at 85% 80%, rgba(125,255,179,0.18), transparent 50%)",
+                }}
+              />
+              <div className="relative grid items-center gap-10 lg:grid-cols-[320px_1fr] lg:gap-14">
+                <div className="relative mx-auto w-full max-w-[300px] lg:max-w-none">
+                  <div className="relative rounded-2xl border-2 border-[#2ECC71]/50 bg-white p-3 shadow-[0_0_60px_-10px_rgba(46,204,113,0.7)]">
+                    <img
+                      src={biopragSelo.url}
+                      alt="Selo Bioprag de Segurança — Estabelecimento protegido contra pragas"
+                      className="h-auto w-full rounded-lg object-contain"
+                    />
+                    <span className="absolute -right-3 -top-3 grid h-12 w-12 place-items-center rounded-full bg-[#2ECC71] text-[#06180D] glow-green ring-4 ring-[#0A1A0F]">
+                      <ShieldCheck className="h-6 w-6" strokeWidth={2.4} />
+                    </span>
+                  </div>
+                </div>
+                <div className="text-center lg:text-left">
+                  <span className="inline-flex items-center gap-2 rounded-full border border-[#2ECC71]/40 bg-[#2ECC71]/10 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#2ECC71]">
+                    <Sparkles className="h-3.5 w-3.5" /> Símbolo Bioprag
+                  </span>
+                  <h3 className="mt-5 font-display text-3xl font-bold leading-tight text-[#F0F4F0] sm:text-4xl lg:text-5xl">
+                    Receba o Selo Bioprag de Segurança.
+                  </h3>
+                  <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-[#8FA98F] lg:mx-0 lg:text-lg">
+                    Certificação técnica que atesta o padrão de biossegurança do seu estabelecimento — exibida com orgulho por quem é protegido pela Bioprag.
+                  </p>
+                  <div className="mt-7 flex flex-wrap justify-center gap-3 lg:justify-start">
+                    <a
+                      href={WHATSAPP_URL}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-2 rounded-lg bg-[#2ECC71] px-7 py-4 font-display text-sm font-bold uppercase tracking-wider text-[#06180D] transition-all hover:bg-[#7DFFB3] glow-green"
+                    >
+                      Falar com especialista <ArrowRight className="h-4 w-4" />
+                    </a>
+                    <a
+                      href={`mailto:${EMAIL}`}
+                      className="inline-flex items-center gap-2 rounded-lg border border-[#2ECC71]/40 px-7 py-4 font-display text-sm font-bold uppercase tracking-wider text-[#F0F4F0] transition-colors hover:border-[#2ECC71] hover:bg-[#2ECC71]/10"
+                    >
+                      <Mail className="h-4 w-4" /> Enviar e-mail
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+function Segments() {
+  const items = [
+    {
+      icon: Home,
+      title: "Residencial",
+      desc: "Proteção discreta e segura para sua família. Tratamentos eficazes que respeitam pets, crianças e o ambiente do lar.",
+      image: img2957,
+    },
+    {
+      icon: Building2,
+      title: "Comercial",
+      desc: "Lojas, escritórios, restaurantes e redes. Controle preventivo com documentação completa para auditorias sanitárias.",
+      image: img2958,
+    },
+    {
+      icon: Factory,
+      title: "Industrial",
+      desc: "Indústrias alimentícias, farmacêuticas e logísticas. Programas em conformidade com BPF, APPCC, AIB e exigências sanitárias.",
+      image: img2962,
+    },
+  ];
+
+  return (
+    <section id="atendimento" className="relative isolate overflow-hidden py-24 sm:py-32">
+      <div
+        className="absolute inset-0 -z-10"
+        style={{
+          backgroundImage: `linear-gradient(135deg, rgba(10,26,15,0.92) 0%, rgba(15,36,21,0.88) 60%, rgba(10,26,15,0.95) 100%), url(${img2953.url})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundAttachment: "fixed",
+        }}
+      />
+      <div className="container-page">
+        <div className="mx-auto max-w-3xl text-center">
+          <span className="eyebrow justify-center">Força institucional</span>
+          <h2 className="mt-4 font-display text-4xl font-bold leading-tight text-[#F0F4F0] sm:text-5xl lg:text-6xl">
+            Atendimento que protege onde a vida acontece.
+          </h2>
+          <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-[#8FA98F] sm:text-lg">
+            Da casa de uma família ao chão de uma grande indústria, a Bioprag entrega o mesmo padrão técnico,
+            documental e ambiental — com método auditável e equipe certificada.
+          </p>
+          <div className="mt-6 flex flex-wrap justify-center gap-2">
+            {["Residencial", "Comercial", "Industrial"].map((tag) => (
+              <span
+                key={tag}
+                className="rounded-full border border-[#2ECC71]/40 bg-[#2ECC71]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-[#2ECC71]"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-16 grid gap-6 md:grid-cols-3">
+          {items.map((it, i) => (
+            <Reveal key={it.title} delay={i * 0.08}>
+              <article className="group relative h-full overflow-hidden rounded-2xl border border-[#1C3D22] bg-[#0F2415]/80 backdrop-blur transition-all hover:border-[#2ECC71]/60 hover:shadow-[0_20px_60px_-20px_rgba(46,204,113,0.35)]">
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <img
+                    src={it.image.url}
+                    alt={`Atendimento Bioprag — segmento ${it.title.toLowerCase()}`}
+                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.06]"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A1A0F] via-[#0A1A0F]/40 to-transparent" />
+                  <div className="absolute left-5 top-5">
+                    <span className="grid h-12 w-12 place-items-center rounded-xl bg-[#2ECC71] text-[#06180D] shadow-lg glow-green">
+                      <it.icon className="h-6 w-6" />
+                    </span>
+                  </div>
+                </div>
+                <div className="p-6">
+                  <h3 className="font-display text-2xl font-bold text-[#F0F4F0]">{it.title}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-[#8FA98F]">{it.desc}</p>
+                  <a
+                    href={WHATSAPP_URL}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#2ECC71] transition-colors hover:text-[#7DFFB3]"
+                  >
+                    Solicitar atendimento <ArrowRight className="h-4 w-4" />
+                  </a>
+                </div>
+              </article>
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>
@@ -1159,6 +1290,7 @@ function HomePage() {
         <Hero />
         <ClientsMarquee />
         <About />
+        <Segments />
         <WhyChoose />
         <Services />
         <Method />
