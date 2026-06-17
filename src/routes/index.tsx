@@ -169,14 +169,14 @@ type Service = {
 };
 
 const SERVICES: Service[] = [
-  { title: "Monitoramento Contínuo", short: "Visitas periódicas e laudos técnicos", desc: "Programa premium com visitas técnicas programadas, indicadores e relatórios.", img: img2963.url, icon: ClipboardList, large: true },
+  { title: "Monitoramento Contínuo", short: "Visitas periódicas e laudos técnicos", desc: "Programa premium com visitas técnicas programadas, indicadores e relatórios.", img: img2963.url, icon: ClipboardList },
   { title: "Controle de Insetos Rasteiros", short: "Baratas, formigas, cupins de solo", desc: "Eliminação técnica de pragas rasteiras em qualquer ambiente.", img: img2955.url, icon: Bug },
   { title: "Controle de Insetos Voadores", short: "Mosquitos, moscas, mariposas", desc: "Manejo integrado de voadores com produtos certificados.", img: img2956.url, icon: Plane },
   { title: "Controle de Roedores", short: "Ratos e camundongos", desc: "Desratização técnica com mapa de iscas e monitoramento.", img: img2962.url, icon: Rat },
   { title: "Descupinização", short: "Cupins de madeira e estruturais", desc: "Tratamento estrutural com garantia contra cupins.", img: img2953.url, icon: TreePine },
   { title: "Sanitização de Ambientes", short: "Desinfecção e higienização", desc: "Sanitização bactericida e viricida para qualquer ambiente.", img: img2958.url, icon: SprayCan },
   { title: "Controle de Escorpiões", short: "Prevenção e eliminação", desc: "Plano técnico de prevenção, captura e bloqueio de acessos.", img: img2955.url, icon: Shield },
-  { title: "Biossegurança / DDD", short: "Desinfecção, desratização, dedetização", desc: "Programas completos para indústrias, hospitais e operações de grande porte.", img: img2957.url, icon: ShieldCheck, large: true },
+  { title: "Biossegurança / DDD", short: "Desinfecção, desratização, dedetização", desc: "Programas completos para indústrias, hospitais e operações de grande porte.", img: img2957.url, icon: ShieldCheck },
 ];
 
 const METHOD = [
