@@ -412,13 +412,14 @@ function ClientsMarquee() {
         <p className="text-xs uppercase tracking-[0.24em] text-[#8FA98F]">Empresas que confiam na Bioprag</p>
       </div>
       <div className="relative overflow-hidden">
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-[#0F2415] to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-[#0F2415] to-transparent" />
-        <div className="flex w-max animate-marquee gap-24 px-10">
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-32 bg-gradient-to-r from-[#0F2415] to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-32 bg-gradient-to-l from-[#0F2415] to-transparent" />
+        <div className="flex w-max animate-marquee gap-10 px-10">
           {row.map((c, i) => (
             <div
               key={i}
-              className="flex h-12 shrink-0 items-center font-display text-xl font-bold tracking-wide text-[#F0F4F0]/50 transition-all hover:text-[#F0F4F0]"
+              aria-label={`Logo ${c}`}
+              className="flex h-16 w-44 shrink-0 items-center justify-center rounded-md border border-dashed border-[#F0F4F0]/20 bg-[#0A1A0F] font-display text-sm font-bold uppercase tracking-[0.18em] text-[#F0F4F0]/40 transition-colors hover:border-[#2ECC71]/60 hover:text-[#F0F4F0]/80"
             >
               {c}
             </div>
