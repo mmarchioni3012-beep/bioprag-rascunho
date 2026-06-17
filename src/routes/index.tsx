@@ -120,6 +120,33 @@ const CLIENTS = [
   "Indústria Alfa", "Hospital São Lucas", "Colégio Horizonte", "Condomínio Park",
 ];
 
+const TESTIMONIALS = [
+  {
+    initials: "GF",
+    name: "GramFer",
+    role: "Indústria · Cliente desde 2014",
+    quote:
+      "Em mais de uma década de parceria, a Bioprag se tornou uma extensão técnica da nossa operação. Documentação impecável e zero incidência sanitária.",
+    author: "Direção GramFer",
+  },
+  {
+    initials: "GF",
+    name: "Grand Fair",
+    role: "Varejo · Cliente desde 2018",
+    quote:
+      "Atendimento técnico de altíssimo nível. Os laudos da Bioprag passam com folga em qualquer auditoria sanitária — e a equipe é extremamente atenciosa.",
+    author: "Gerência Operacional Grand Fair",
+  },
+  {
+    initials: "BF",
+    name: "Brasilfer",
+    role: "Indústria · Cliente desde 2020",
+    quote:
+      "Profissionalismo, pontualidade e resultado. A Bioprag entrega exatamente o que promete e ainda nos ajuda a evoluir nossos protocolos internos.",
+    author: "Coordenação SSMA Brasilfer",
+  },
+];
+
 const DIFFERENTIALS = [
   { icon: Shield, title: "Técnica especializada", desc: "Profissionais certificados e treinados continuamente em protocolos avançados." },
   { icon: FileText, title: "Documentação completa", desc: "Laudos e relatórios técnicos auditáveis em cada atendimento." },
@@ -385,13 +412,14 @@ function ClientsMarquee() {
         <p className="text-xs uppercase tracking-[0.24em] text-[#8FA98F]">Empresas que confiam na Bioprag</p>
       </div>
       <div className="relative overflow-hidden">
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-[#0F2415] to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-[#0F2415] to-transparent" />
-        <div className="flex w-max animate-marquee gap-24 px-10">
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-32 bg-gradient-to-r from-[#0F2415] to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-32 bg-gradient-to-l from-[#0F2415] to-transparent" />
+        <div className="flex w-max animate-marquee gap-10 px-10">
           {row.map((c, i) => (
             <div
               key={i}
-              className="flex h-12 shrink-0 items-center font-display text-xl font-bold tracking-wide text-[#F0F4F0]/50 transition-all hover:text-[#F0F4F0]"
+              aria-label={`Logo ${c}`}
+              className="flex h-16 w-44 shrink-0 items-center justify-center rounded-md border border-dashed border-[#F0F4F0]/20 bg-[#0A1A0F] font-display text-sm font-bold uppercase tracking-[0.18em] text-[#F0F4F0]/40 transition-colors hover:border-[#2ECC71]/60 hover:text-[#F0F4F0]/80"
             >
               {c}
             </div>
@@ -595,35 +623,58 @@ function Method() {
 }
 
 function Training() {
+  const teamPhotos = [img2953, img2955, img2956, img2957, img2958, img2962];
   return (
     <section className="relative py-24 sm:py-32">
-      <div className="container-page grid items-center gap-12 lg:grid-cols-2">
-        <Reveal>
-          <span className="eyebrow">Capacitação</span>
-          <h2 className="mt-4 font-display text-4xl font-bold leading-tight text-[#F0F4F0] sm:text-5xl">
-            Equipe treinada para entregar mais segurança.
-          </h2>
-          <p className="mt-5 text-base text-[#8FA98F]">
-            Investimos continuamente em formação técnica e protocolos de biossegurança.
-          </p>
-          <ul className="mt-8 space-y-4">
-            {[
-              "Treinamentos mensais obrigatórios",
-              "Certificações técnicas atualizadas",
-              "Uso correto de EPIs e equipamentos",
-              "Protocolos de biossegurança rigorosos",
-            ].map((t) => (
-              <li key={t} className="flex items-start gap-3">
-                <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#2ECC71]" />
-                <span className="text-sm font-medium text-[#F0F4F0]">{t}</span>
-              </li>
-            ))}
-          </ul>
-        </Reveal>
-        <Reveal delay={0.15}>
-          <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-[#1C3D22]">
-            <img src={img2962.url} alt="Capacitação Bioprag" className="h-full w-full object-cover object-[center_top]" />
-            <div className="absolute inset-0 bg-gradient-to-tr from-[#0A1A0F]/60 to-transparent" />
+      <div className="container-page">
+        <div className="grid items-start gap-12 lg:grid-cols-2">
+          <Reveal>
+            <span className="eyebrow">Capacitação</span>
+            <h2 className="mt-4 font-display text-4xl font-bold leading-tight text-[#F0F4F0] sm:text-5xl">
+              Equipe treinada para entregar mais segurança.
+            </h2>
+            <p className="mt-5 text-base text-[#8FA98F]">
+              Investimos continuamente em formação técnica e protocolos de biossegurança.
+            </p>
+            <ul className="mt-8 space-y-4">
+              {[
+                "Treinamentos mensais obrigatórios",
+                "Certificações técnicas atualizadas",
+                "Uso correto de EPIs e equipamentos",
+                "Protocolos de biossegurança rigorosos",
+              ].map((t) => (
+                <li key={t} className="flex items-start gap-3">
+                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#2ECC71]" />
+                  <span className="text-sm font-medium text-[#F0F4F0]">{t}</span>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+          <Reveal delay={0.15}>
+            <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-[#1C3D22]">
+              <img src={img2962.url} alt="Capacitação Bioprag" className="h-full w-full object-cover object-[center_top]" />
+              <div className="absolute inset-0 bg-gradient-to-tr from-[#0A1A0F]/60 to-transparent" />
+            </div>
+          </Reveal>
+        </div>
+
+        <Reveal delay={0.1}>
+          <div className="mt-16">
+            <h3 className="font-display text-xl font-bold text-[#F0F4F0] sm:text-2xl">Equipe em campo</h3>
+            <p className="mt-2 text-sm text-[#8FA98F]">Operações reais, executadas com método e padrão técnico.</p>
+            <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+              {teamPhotos.map((p, i) => (
+                <div key={i} className="group relative aspect-square overflow-hidden rounded-xl border border-[#1C3D22]">
+                  <img
+                    src={p.url}
+                    alt={`Equipe Bioprag em campo ${i + 1}`}
+                    loading="lazy"
+                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A1A0F]/70 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+                </div>
+              ))}
+            </div>
           </div>
         </Reveal>
       </div>
@@ -636,43 +687,44 @@ function Cases() {
     <section id="clientes" className="relative bg-[#0F2415] py-24 sm:py-32">
       <div className="container-page">
         <div className="max-w-2xl">
-          <span className="eyebrow">Clientes</span>
+          <span className="eyebrow">Depoimentos</span>
           <h2 className="mt-4 font-display text-4xl font-bold leading-tight text-[#F0F4F0] sm:text-5xl">
             Empresas reais, resultados consistentes.
           </h2>
         </div>
 
-        <Reveal>
-          <div className="mt-12 grid gap-8 rounded-2xl border border-[#1C3D22] bg-[#0A1A0F] p-8 sm:p-12 lg:grid-cols-[1fr_2fr] lg:items-center">
-            <div className="flex items-center gap-4">
-              <div className="grid h-20 w-20 shrink-0 place-items-center rounded-full border border-[#2ECC71] bg-[#0F2415] font-display text-2xl font-bold text-[#2ECC71]">
-                GF
-              </div>
-              <div>
-                <div className="font-display text-lg font-bold text-[#F0F4F0]">GramFer</div>
-                <div className="text-xs uppercase tracking-wider text-[#8FA98F]">Cliente desde 2014</div>
-              </div>
-            </div>
-            <div>
-              <div className="flex gap-1 text-[#2ECC71]">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Star key={i} className="h-4 w-4 fill-current" />
-                ))}
-              </div>
-              <blockquote className="mt-3 font-display text-xl font-medium leading-snug text-[#F0F4F0] sm:text-2xl">
-                “Em mais de uma década de parceria, a Bioprag se tornou uma extensão técnica da nossa
-                operação. Documentação impecável e zero incidência sanitária.”
-              </blockquote>
-              <div className="mt-4 text-sm text-[#8FA98F]">Direção GramFer · Indústria</div>
-            </div>
-          </div>
-        </Reveal>
+        <div className="mt-12 grid gap-5 lg:grid-cols-3">
+          {TESTIMONIALS.map((t, i) => (
+            <Reveal key={i} delay={i * 0.08}>
+              <article className="flex h-full flex-col rounded-2xl border border-[#1C3D22] bg-[#0A1A0F] p-7 transition-colors hover:border-[#2ECC71]/60">
+                <div className="flex items-center gap-4">
+                  <div className="grid h-14 w-14 shrink-0 place-items-center rounded-full border border-[#2ECC71] bg-[#0F2415] font-display text-base font-bold text-[#2ECC71]">
+                    {t.initials}
+                  </div>
+                  <div className="min-w-0">
+                    <div className="font-display text-base font-bold text-[#F0F4F0]">{t.name}</div>
+                    <div className="text-[11px] uppercase tracking-wider text-[#8FA98F]">{t.role}</div>
+                  </div>
+                </div>
+                <div className="mt-5 flex gap-1 text-[#2ECC71]">
+                  {Array.from({ length: 5 }).map((_, j) => (
+                    <Star key={j} className="h-4 w-4 fill-current" />
+                  ))}
+                </div>
+                <blockquote className="mt-3 flex-1 text-base leading-relaxed text-[#F0F4F0]/90">
+                  “{t.quote}”
+                </blockquote>
+                <div className="mt-5 border-t border-[#1C3D22] pt-4 text-xs text-[#8FA98F]">{t.author}</div>
+              </article>
+            </Reveal>
+          ))}
+        </div>
 
         <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-4">
           {CLIENTS.map((c, i) => (
             <div
               key={i}
-              className="flex h-20 items-center justify-center rounded-xl border border-[#1C3D22] bg-[#0A1A0F] font-display text-base font-bold text-[#F0F4F0]/60 transition-colors hover:border-[#2ECC71] hover:text-[#F0F4F0]"
+              className="flex h-20 items-center justify-center rounded-xl border border-dashed border-[#1C3D22] bg-[#0A1A0F] font-display text-sm font-bold uppercase tracking-[0.15em] text-[#F0F4F0]/50 transition-colors hover:border-[#2ECC71] hover:text-[#F0F4F0]"
             >
               {c}
             </div>
@@ -817,11 +869,8 @@ function Faq() {
 function ContactSection() {
   const [form, setForm] = useState({
     nome: "",
-    telefone: "",
-    email: "",
-    tipoAmbiente: "",
-    problema: "",
-    tamanho: "",
+    cidade: "",
+    servico: "",
     mensagem: "",
   });
 
@@ -830,15 +879,7 @@ function ContactSection() {
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const msg = `Olá! Vim pelo site da Bioprag e gostaria de um orçamento.
-
-👤 Nome: ${form.nome}
-📱 Telefone: ${form.telefone}
-📧 Email: ${form.email || "Não informado"}
-🏢 Tipo de ambiente: ${form.tipoAmbiente}
-🐛 Problema: ${form.problema}
-📐 Tamanho do local: ${form.tamanho}
-💬 Mensagem: ${form.mensagem || "Não informada"}`;
+    const msg = `Olá! Sou ${form.nome}, de ${form.cidade}. Interesse em ${form.servico}. ${form.mensagem}`;
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
   };
 
@@ -861,17 +902,25 @@ function ContactSection() {
 
         <div className="mt-12 grid gap-8 lg:grid-cols-2">
           <Reveal>
-            <div className="overflow-hidden rounded-2xl border border-[#1C3D22]">
+            <div className="relative overflow-hidden rounded-2xl border border-[#1C3D22]">
               <iframe
-                src="https://www.google.com/maps?q=Rua+Goi%C3%A1s+446+Centro+Conchas+SP+Bioprag&z=16&output=embed"
+                src="https://www.google.com/maps?q=Rua+Goi%C3%A1s,+446+-+Centro,+Conchas+-+SP,+18570-043&z=17&output=embed"
                 width="100%"
                 height="450"
                 style={{ border: 0, filter: "invert(0.92) hue-rotate(180deg) saturate(0.85) contrast(0.95)" }}
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title="Localização Bioprag — Rua Goiás, 446, Conchas/SP"
+                title="Localização Bioprag — Rua Goiás, 446, Centro, Conchas/SP — CEP 18570-043"
               />
+              <a
+                href="https://www.google.com/maps/dir/?api=1&destination=Rua+Goi%C3%A1s+446+Centro+Conchas+SP+18570-043"
+                target="_blank"
+                rel="noreferrer"
+                className="absolute bottom-4 left-4 inline-flex items-center gap-2 rounded-lg bg-[#0A1A0F]/90 px-3 py-2 text-xs font-semibold text-[#F0F4F0] backdrop-blur-md ring-1 ring-[#2ECC71]/40 hover:bg-[#0A1A0F]"
+              >
+                <MapPin className="h-3.5 w-3.5 text-[#2ECC71]" /> Como chegar
+              </a>
             </div>
             <div className="mt-6 grid gap-3 sm:grid-cols-2">
               <div className="flex items-start gap-3 rounded-lg border border-[#1C3D22] bg-[#0F2415] p-4">
@@ -882,6 +931,13 @@ function ContactSection() {
                 </div>
               </div>
               <div className="flex items-start gap-3 rounded-lg border border-[#1C3D22] bg-[#0F2415] p-4">
+                <Phone className="mt-0.5 h-5 w-5 shrink-0 text-[#2ECC71]" />
+                <div>
+                  <div className="text-xs uppercase tracking-[0.14em] text-[#8FA98F]">Telefone</div>
+                  <div className="text-sm font-medium text-[#F0F4F0]">{PHONE_DISPLAY}</div>
+                </div>
+              </div>
+              <div className="flex items-start gap-3 rounded-lg border border-[#1C3D22] bg-[#0F2415] p-4 sm:col-span-2">
                 <MessageCircle className="mt-0.5 h-5 w-5 shrink-0 text-[#2ECC71]" />
                 <div>
                   <div className="text-xs uppercase tracking-[0.14em] text-[#8FA98F]">WhatsApp</div>
@@ -889,66 +945,64 @@ function ContactSection() {
                 </div>
               </div>
             </div>
+
+            {/* Selo Bioprag */}
+            <div className="mt-6 relative overflow-hidden rounded-2xl p-[1.5px] bg-gradient-to-br from-[#2ECC71] via-[#7DFFB3] to-[#2ECC71]">
+              <div className="relative rounded-2xl bg-[#0A1A0F] p-6 sm:p-7">
+                <div className="flex items-start gap-4">
+                  <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-[#2ECC71] text-[#06180D] glow-green">
+                    <ShieldCheck className="h-7 w-7" strokeWidth={2.4} />
+                  </span>
+                  <div className="min-w-0">
+                    <div className="text-[11px] uppercase tracking-[0.18em] text-[#2ECC71]">Selo Bioprag</div>
+                    <h3 className="mt-1 font-display text-xl font-bold leading-snug text-[#F0F4F0] sm:text-2xl">
+                      Pronto para receber o Selo Bioprag de Segurança?
+                    </h3>
+                    <p className="mt-2 text-sm text-[#8FA98F]">
+                      Certificação técnica que atesta o padrão de biossegurança da sua operação.
+                    </p>
+                  </div>
+                </div>
+                <a
+                  href={WHATSAPP_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-5 inline-flex items-center gap-2 rounded-lg bg-[#2ECC71] px-5 py-3 font-display text-sm font-bold uppercase tracking-wider text-[#06180D] transition-all hover:bg-[#7DFFB3]"
+                >
+                  Falar com especialista <ArrowRight className="h-4 w-4" />
+                </a>
+              </div>
+            </div>
           </Reveal>
 
           <Reveal delay={0.1}>
             <form onSubmit={onSubmit} className="rounded-2xl border border-[#1C3D22] bg-[#0F2415] p-6 sm:p-8">
-              <div className="grid gap-4 sm:grid-cols-2">
-                <div>
-                  <label className={labelCls}>Nome completo *</label>
-                  <input required value={form.nome} onChange={update("nome")} className={inputCls} placeholder="Seu nome" />
-                </div>
-                <div>
-                  <label className={labelCls}>Telefone (WhatsApp) *</label>
-                  <input required value={form.telefone} onChange={update("telefone")} className={inputCls} placeholder="(00) 00000-0000" />
-                </div>
+              <div>
+                <label className={labelCls}>Nome *</label>
+                <input required value={form.nome} onChange={update("nome")} className={inputCls} placeholder="Seu nome completo" />
               </div>
               <div className="mt-4">
-                <label className={labelCls}>E-mail</label>
-                <input type="email" value={form.email} onChange={update("email")} className={inputCls} placeholder="voce@email.com" />
-              </div>
-              <div className="mt-4 grid gap-4 sm:grid-cols-2">
-                <div>
-                  <label className={labelCls}>Tipo de ambiente</label>
-                  <select required value={form.tipoAmbiente} onChange={update("tipoAmbiente")} className={inputCls}>
-                    <option value="">Selecione</option>
-                    <option>Residência</option>
-                    <option>Comércio / Loja</option>
-                    <option>Indústria / Fábrica</option>
-                    <option>Condomínio / Edifício</option>
-                    <option>Hospital / Clínica</option>
-                    <option>Escola / Instituição</option>
-                    <option>Outro</option>
-                  </select>
-                </div>
-                <div>
-                  <label className={labelCls}>Qual o problema?</label>
-                  <select required value={form.problema} onChange={update("problema")} className={inputCls}>
-                    <option value="">Selecione</option>
-                    <option>Baratas ou formigas</option>
-                    <option>Ratos ou roedores</option>
-                    <option>Cupins</option>
-                    <option>Moscas ou mosquitos</option>
-                    <option>Escorpiões</option>
-                    <option>Necessito de sanitização</option>
-                    <option>Monitoramento contínuo</option>
-                    <option>Outro / Não sei ao certo</option>
-                  </select>
-                </div>
+                <label className={labelCls}>Cidade *</label>
+                <input required value={form.cidade} onChange={update("cidade")} className={inputCls} placeholder="Cidade / Estado" />
               </div>
               <div className="mt-4">
-                <label className={labelCls}>Tamanho do local</label>
-                <select required value={form.tamanho} onChange={update("tamanho")} className={inputCls}>
+                <label className={labelCls}>Tipo de serviço *</label>
+                <select required value={form.servico} onChange={update("servico")} className={inputCls}>
                   <option value="">Selecione</option>
-                  <option>Até 100m²</option>
-                  <option>100 a 500m²</option>
-                  <option>500 a 2.000m²</option>
-                  <option>Acima de 2.000m²</option>
+                  <option>Monitoramento Contínuo</option>
+                  <option>Controle de Insetos Rasteiros</option>
+                  <option>Controle de Insetos Voadores</option>
+                  <option>Controle de Roedores</option>
+                  <option>Descupinização</option>
+                  <option>Sanitização de Ambientes</option>
+                  <option>Controle de Escorpiões</option>
+                  <option>Biossegurança / DDD</option>
+                  <option>Outro / Não sei ao certo</option>
                 </select>
               </div>
               <div className="mt-4">
-                <label className={labelCls}>Mensagem adicional</label>
-                <textarea rows={3} value={form.mensagem} onChange={update("mensagem")} className={inputCls} placeholder="Conte mais sobre sua situação (opcional)" />
+                <label className={labelCls}>Mensagem</label>
+                <textarea rows={4} value={form.mensagem} onChange={update("mensagem")} className={inputCls} placeholder="Conte mais sobre sua situação (opcional)" />
               </div>
               <button
                 type="submit"
