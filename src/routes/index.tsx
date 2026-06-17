@@ -52,7 +52,9 @@ const WHATSAPP_NUMBER = "5514981752595";
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
 const PHONE_DISPLAY = "(14) 3845-4011";
 const WHATSAPP_DISPLAY = "(14) 98175-2595";
+const EMAIL = "vendas@bioprag.com.br";
 const ADDRESS = "Rua Goiás, 446 — Centro, Conchas/SP";
+const MAPS_URL = "https://maps.app.goo.gl/AwckADfya2dRDSbs5";
 
 const META_TITLE =
   "BIOPRAG — Controle Integrado de Pragas, Saúde Ambiental e Biossegurança | Desde 1986";
