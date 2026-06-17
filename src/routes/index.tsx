@@ -39,6 +39,9 @@ import img2958 from "@/assets/IMG_2958.jpg.asset.json";
 import img2962 from "@/assets/IMG_2962.jpg.asset.json";
 import img2963 from "@/assets/IMG_2963.jpg.asset.json";
 import brazilMap from "@/assets/brazil-map.svg.asset.json";
+import biopragLogo from "@/assets/bioprag-logo.jpeg.asset.json";
+import biopragSelo from "@/assets/bioprag-selo.png.asset.json";
+import biopragFachada from "@/assets/bioprag-fachada.png.asset.json";
 
 const WHATSAPP_NUMBER = "5514981752595";
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
@@ -166,14 +169,14 @@ type Service = {
 };
 
 const SERVICES: Service[] = [
-  { title: "Monitoramento Contínuo", short: "Visitas periódicas e laudos técnicos", desc: "Programa premium com visitas técnicas programadas, indicadores e relatórios.", img: img2963.url, icon: ClipboardList, large: true },
+  { title: "Monitoramento Contínuo", short: "Visitas periódicas e laudos técnicos", desc: "Programa premium com visitas técnicas programadas, indicadores e relatórios.", img: img2963.url, icon: ClipboardList },
   { title: "Controle de Insetos Rasteiros", short: "Baratas, formigas, cupins de solo", desc: "Eliminação técnica de pragas rasteiras em qualquer ambiente.", img: img2955.url, icon: Bug },
   { title: "Controle de Insetos Voadores", short: "Mosquitos, moscas, mariposas", desc: "Manejo integrado de voadores com produtos certificados.", img: img2956.url, icon: Plane },
   { title: "Controle de Roedores", short: "Ratos e camundongos", desc: "Desratização técnica com mapa de iscas e monitoramento.", img: img2962.url, icon: Rat },
   { title: "Descupinização", short: "Cupins de madeira e estruturais", desc: "Tratamento estrutural com garantia contra cupins.", img: img2953.url, icon: TreePine },
   { title: "Sanitização de Ambientes", short: "Desinfecção e higienização", desc: "Sanitização bactericida e viricida para qualquer ambiente.", img: img2958.url, icon: SprayCan },
   { title: "Controle de Escorpiões", short: "Prevenção e eliminação", desc: "Plano técnico de prevenção, captura e bloqueio de acessos.", img: img2955.url, icon: Shield },
-  { title: "Biossegurança / DDD", short: "Desinfecção, desratização, dedetização", desc: "Programas completos para indústrias, hospitais e operações de grande porte.", img: img2957.url, icon: ShieldCheck, large: true },
+  { title: "Biossegurança / DDD", short: "Desinfecção, desratização, dedetização", desc: "Programas completos para indústrias, hospitais e operações de grande porte.", img: img2957.url, icon: ShieldCheck },
 ];
 
 const METHOD = [
@@ -247,8 +250,8 @@ function Navbar() {
     >
       <div className="container-page flex h-16 items-center justify-between gap-4">
         <a href="#top" className="flex min-w-0 items-center gap-2.5">
-          <span className="grid h-9 w-9 shrink-0 place-items-center rounded-md bg-[#2ECC71] text-[#06180D]">
-            <Hexagon className="h-5 w-5" strokeWidth={2.5} />
+          <span className="grid h-10 w-10 shrink-0 place-items-center overflow-hidden rounded-md bg-white p-1">
+            <img src={biopragLogo.url} alt="Bioprag" className="h-full w-full object-contain" />
           </span>
           <span className="font-display text-lg font-extrabold tracking-tight text-[#F0F4F0]">BIOPRAG</span>
         </a>
@@ -325,6 +328,9 @@ function Hero() {
       <FloatingDots />
       <div className="container-page relative grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
         <div>
+          <div className="mb-6 inline-flex items-center gap-3 rounded-xl border border-[#1C3D22] bg-white/95 p-2.5 pr-4 animate-fade-up">
+            <img src={biopragLogo.url} alt="Bioprag — Controle Integrado de Pragas Urbanas, desde 1986" className="h-12 w-auto object-contain" />
+          </div>
           <span className="eyebrow animate-fade-up">
             <Sparkles className="h-3.5 w-3.5" /> Desde 1986 · Controle Integrado de Pragas
           </span>
@@ -486,7 +492,7 @@ function About() {
         <Reveal delay={0.15}>
           <div className="relative">
             <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-[#1C3D22]">
-              <img src={img2956.url} alt="Histórico Bioprag" className="h-full w-full object-cover object-[center_top]" />
+              <img src={biopragFachada.url} alt="Fachada da sede Bioprag em Conchas/SP" className="h-full w-full object-cover object-center" />
               <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#0A1A0F] to-transparent" />
             </div>
             <div className="absolute -bottom-6 -left-6 hidden rounded-xl border border-[#1C3D22] bg-[#0F2415] p-5 sm:block">
@@ -544,16 +550,16 @@ function Services() {
           </a>
         </div>
 
-        <div className="mt-12 grid auto-rows-[280px] gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {SERVICES.map((s, i) => {
             const Icon = s.icon;
             return (
-              <Reveal key={i} delay={(i % 3) * 0.06} className={s.large ? "lg:col-span-2" : ""}>
+              <Reveal key={i} delay={(i % 4) * 0.06}>
                 <a
                   href={WHATSAPP_URL}
                   target="_blank"
                   rel="noreferrer"
-                  className="group relative block h-[280px] w-full overflow-hidden rounded-2xl border border-[#1C3D22] transition-all hover:border-[#2ECC71]"
+                  className="group relative block h-[260px] w-full overflow-hidden rounded-2xl border border-[#1C3D22] transition-all hover:border-[#2ECC71]"
                 >
                   <img
                     src={s.img}
@@ -561,17 +567,15 @@ function Services() {
                     loading="lazy"
                     className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-[rgba(0,20,5,0.65)] transition-colors duration-500 group-hover:bg-[rgba(0,20,5,0.78)]" />
-                  <span className="absolute left-5 top-5 grid h-10 w-10 place-items-center rounded-md bg-[#2ECC71] text-[#06180D]">
-                    <Icon className="h-5 w-5" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[rgba(0,20,5,0.92)] via-[rgba(0,20,5,0.55)] to-[rgba(0,20,5,0.25)] transition-colors duration-500 group-hover:from-[rgba(0,20,5,0.95)]" />
+                  <span className="absolute left-4 top-4 grid h-9 w-9 place-items-center rounded-md bg-[#2ECC71] text-[#06180D]">
+                    <Icon className="h-4.5 w-4.5" />
                   </span>
-                  <div className="absolute inset-x-0 bottom-0 p-6">
-                    <h3 className="font-display text-xl font-bold text-[#F0F4F0] sm:text-2xl">{s.title}</h3>
-                    <p className="mt-1 max-h-0 overflow-hidden text-sm text-[#D5E5D5] opacity-0 transition-all duration-500 group-hover:max-h-20 group-hover:opacity-100">
-                      {s.short}
-                    </p>
-                    <div className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-[#2ECC71] opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-                      Saiba mais <ArrowRight className="h-3.5 w-3.5" />
+                  <div className="absolute inset-x-0 bottom-0 p-5">
+                    <h3 className="font-display text-base font-bold leading-tight text-[#F0F4F0]">{s.title}</h3>
+                    <p className="mt-1 text-xs text-[#D5E5D5]/85">{s.short}</p>
+                    <div className="mt-2 inline-flex items-center gap-1.5 text-[11px] font-semibold text-[#2ECC71] opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                      Saiba mais <ArrowRight className="h-3 w-3" />
                     </div>
                   </div>
                 </a>
@@ -623,60 +627,50 @@ function Method() {
 }
 
 function Training() {
-  const teamPhotos = [img2953, img2955, img2956, img2957, img2958, img2962];
+  const teamPhotos = [img2953, img2955, img2956, img2957, img2958, img2962, img2963, img2953];
   return (
     <section className="relative py-24 sm:py-32">
       <div className="container-page">
-        <div className="grid items-start gap-12 lg:grid-cols-2">
-          <Reveal>
-            <span className="eyebrow">Capacitação</span>
-            <h2 className="mt-4 font-display text-4xl font-bold leading-tight text-[#F0F4F0] sm:text-5xl">
-              Equipe treinada para entregar mais segurança.
-            </h2>
-            <p className="mt-5 text-base text-[#8FA98F]">
-              Investimos continuamente em formação técnica e protocolos de biossegurança.
-            </p>
-            <ul className="mt-8 space-y-4">
-              {[
-                "Treinamentos mensais obrigatórios",
-                "Certificações técnicas atualizadas",
-                "Uso correto de EPIs e equipamentos",
-                "Protocolos de biossegurança rigorosos",
-              ].map((t) => (
-                <li key={t} className="flex items-start gap-3">
-                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#2ECC71]" />
-                  <span className="text-sm font-medium text-[#F0F4F0]">{t}</span>
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-          <Reveal delay={0.15}>
-            <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-[#1C3D22]">
-              <img src={img2962.url} alt="Capacitação Bioprag" className="h-full w-full object-cover object-[center_top]" />
-              <div className="absolute inset-0 bg-gradient-to-tr from-[#0A1A0F]/60 to-transparent" />
-            </div>
-          </Reveal>
+        <div className="max-w-2xl">
+          <span className="eyebrow">Capacitação</span>
+          <h2 className="mt-4 font-display text-4xl font-bold leading-tight text-[#F0F4F0] sm:text-5xl">
+            Equipe treinada para entregar mais segurança.
+          </h2>
+          <p className="mt-5 text-base text-[#8FA98F]">
+            Investimos continuamente em formação técnica e protocolos de biossegurança.
+            Cada operação executada com método, EPI completo e padrão auditável.
+          </p>
         </div>
 
         <Reveal delay={0.1}>
-          <div className="mt-16">
-            <h3 className="font-display text-xl font-bold text-[#F0F4F0] sm:text-2xl">Equipe em campo</h3>
-            <p className="mt-2 text-sm text-[#8FA98F]">Operações reais, executadas com método e padrão técnico.</p>
-            <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
-              {teamPhotos.map((p, i) => (
-                <div key={i} className="group relative aspect-square overflow-hidden rounded-xl border border-[#1C3D22]">
-                  <img
-                    src={p.url}
-                    alt={`Equipe Bioprag em campo ${i + 1}`}
-                    loading="lazy"
-                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A1A0F]/70 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
-                </div>
-              ))}
-            </div>
+          <div className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+            {teamPhotos.map((p, i) => (
+              <div key={i} className="group relative aspect-square overflow-hidden rounded-xl border border-[#1C3D22]">
+                <img
+                  src={p.url}
+                  alt={`Equipe Bioprag em campo ${i + 1}`}
+                  loading="lazy"
+                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0A1A0F]/70 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+              </div>
+            ))}
           </div>
         </Reveal>
+
+        <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {[
+            "Treinamentos mensais obrigatórios",
+            "Certificações técnicas atualizadas",
+            "Uso correto de EPIs e equipamentos",
+            "Protocolos de biossegurança rigorosos",
+          ].map((t) => (
+            <li key={t} className="flex items-start gap-3 rounded-xl border border-[#1C3D22] bg-[#0F2415] p-4">
+              <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#2ECC71]" />
+              <span className="text-sm font-medium text-[#F0F4F0]">{t}</span>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );
@@ -949,28 +943,35 @@ function ContactSection() {
             {/* Selo Bioprag */}
             <div className="mt-6 relative overflow-hidden rounded-2xl p-[1.5px] bg-gradient-to-br from-[#2ECC71] via-[#7DFFB3] to-[#2ECC71]">
               <div className="relative rounded-2xl bg-[#0A1A0F] p-6 sm:p-7">
-                <div className="flex items-start gap-4">
-                  <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-[#2ECC71] text-[#06180D] glow-green">
-                    <ShieldCheck className="h-7 w-7" strokeWidth={2.4} />
-                  </span>
+                <div className="grid items-center gap-5 sm:grid-cols-[160px_1fr]">
+                  <div className="relative mx-auto w-full max-w-[180px] rounded-xl border-2 border-[#2ECC71]/40 bg-white p-2 shadow-[0_0_40px_-10px_rgba(46,204,113,0.6)]">
+                    <img
+                      src={biopragSelo.url}
+                      alt="Selo Bioprag de Segurança — Estabelecimento protegido contra pragas"
+                      className="h-auto w-full rounded-md object-contain"
+                    />
+                    <span className="absolute -right-2 -top-2 grid h-9 w-9 place-items-center rounded-full bg-[#2ECC71] text-[#06180D] glow-green">
+                      <ShieldCheck className="h-5 w-5" strokeWidth={2.4} />
+                    </span>
+                  </div>
                   <div className="min-w-0">
-                    <div className="text-[11px] uppercase tracking-[0.18em] text-[#2ECC71]">Selo Bioprag</div>
+                    <div className="text-[11px] uppercase tracking-[0.18em] text-[#2ECC71]">Símbolo Bioprag</div>
                     <h3 className="mt-1 font-display text-xl font-bold leading-snug text-[#F0F4F0] sm:text-2xl">
-                      Pronto para receber o Selo Bioprag de Segurança?
+                      Receba o Selo Bioprag de Segurança.
                     </h3>
                     <p className="mt-2 text-sm text-[#8FA98F]">
-                      Certificação técnica que atesta o padrão de biossegurança da sua operação.
+                      Certificação técnica que atesta o padrão de biossegurança do seu estabelecimento — exibida com orgulho por quem é protegido pela Bioprag.
                     </p>
+                    <a
+                      href={WHATSAPP_URL}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="mt-5 inline-flex items-center gap-2 rounded-lg bg-[#2ECC71] px-5 py-3 font-display text-sm font-bold uppercase tracking-wider text-[#06180D] transition-all hover:bg-[#7DFFB3]"
+                    >
+                      Falar com especialista <ArrowRight className="h-4 w-4" />
+                    </a>
                   </div>
                 </div>
-                <a
-                  href={WHATSAPP_URL}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mt-5 inline-flex items-center gap-2 rounded-lg bg-[#2ECC71] px-5 py-3 font-display text-sm font-bold uppercase tracking-wider text-[#06180D] transition-all hover:bg-[#7DFFB3]"
-                >
-                  Falar com especialista <ArrowRight className="h-4 w-4" />
-                </a>
               </div>
             </div>
           </Reveal>
