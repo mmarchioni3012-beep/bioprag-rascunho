@@ -869,11 +869,8 @@ function Faq() {
 function ContactSection() {
   const [form, setForm] = useState({
     nome: "",
-    telefone: "",
-    email: "",
-    tipoAmbiente: "",
-    problema: "",
-    tamanho: "",
+    cidade: "",
+    servico: "",
     mensagem: "",
   });
 
@@ -882,15 +879,7 @@ function ContactSection() {
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const msg = `Olá! Vim pelo site da Bioprag e gostaria de um orçamento.
-
-👤 Nome: ${form.nome}
-📱 Telefone: ${form.telefone}
-📧 Email: ${form.email || "Não informado"}
-🏢 Tipo de ambiente: ${form.tipoAmbiente}
-🐛 Problema: ${form.problema}
-📐 Tamanho do local: ${form.tamanho}
-💬 Mensagem: ${form.mensagem || "Não informada"}`;
+    const msg = `Olá! Sou ${form.nome}, de ${form.cidade}. Interesse em ${form.servico}. ${form.mensagem}`;
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
   };
 
@@ -913,17 +902,25 @@ function ContactSection() {
 
         <div className="mt-12 grid gap-8 lg:grid-cols-2">
           <Reveal>
-            <div className="overflow-hidden rounded-2xl border border-[#1C3D22]">
+            <div className="relative overflow-hidden rounded-2xl border border-[#1C3D22]">
               <iframe
-                src="https://www.google.com/maps?q=Rua+Goi%C3%A1s+446+Centro+Conchas+SP+Bioprag&z=16&output=embed"
+                src="https://www.google.com/maps?q=Rua+Goi%C3%A1s,+446+-+Centro,+Conchas+-+SP,+18570-043&z=17&output=embed"
                 width="100%"
                 height="450"
                 style={{ border: 0, filter: "invert(0.92) hue-rotate(180deg) saturate(0.85) contrast(0.95)" }}
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title="Localização Bioprag — Rua Goiás, 446, Conchas/SP"
+                title="Localização Bioprag — Rua Goiás, 446, Centro, Conchas/SP — CEP 18570-043"
               />
+              <a
+                href="https://www.google.com/maps/dir/?api=1&destination=Rua+Goi%C3%A1s+446+Centro+Conchas+SP+18570-043"
+                target="_blank"
+                rel="noreferrer"
+                className="absolute bottom-4 left-4 inline-flex items-center gap-2 rounded-lg bg-[#0A1A0F]/90 px-3 py-2 text-xs font-semibold text-[#F0F4F0] backdrop-blur-md ring-1 ring-[#2ECC71]/40 hover:bg-[#0A1A0F]"
+              >
+                <MapPin className="h-3.5 w-3.5 text-[#2ECC71]" /> Como chegar
+              </a>
             </div>
             <div className="mt-6 grid gap-3 sm:grid-cols-2">
               <div className="flex items-start gap-3 rounded-lg border border-[#1C3D22] bg-[#0F2415] p-4">
@@ -934,6 +931,13 @@ function ContactSection() {
                 </div>
               </div>
               <div className="flex items-start gap-3 rounded-lg border border-[#1C3D22] bg-[#0F2415] p-4">
+                <Phone className="mt-0.5 h-5 w-5 shrink-0 text-[#2ECC71]" />
+                <div>
+                  <div className="text-xs uppercase tracking-[0.14em] text-[#8FA98F]">Telefone</div>
+                  <div className="text-sm font-medium text-[#F0F4F0]">{PHONE_DISPLAY}</div>
+                </div>
+              </div>
+              <div className="flex items-start gap-3 rounded-lg border border-[#1C3D22] bg-[#0F2415] p-4 sm:col-span-2">
                 <MessageCircle className="mt-0.5 h-5 w-5 shrink-0 text-[#2ECC71]" />
                 <div>
                   <div className="text-xs uppercase tracking-[0.14em] text-[#8FA98F]">WhatsApp</div>
@@ -941,66 +945,64 @@ function ContactSection() {
                 </div>
               </div>
             </div>
+
+            {/* Selo Bioprag */}
+            <div className="mt-6 relative overflow-hidden rounded-2xl p-[1.5px] bg-gradient-to-br from-[#2ECC71] via-[#7DFFB3] to-[#2ECC71]">
+              <div className="relative rounded-2xl bg-[#0A1A0F] p-6 sm:p-7">
+                <div className="flex items-start gap-4">
+                  <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-[#2ECC71] text-[#06180D] glow-green">
+                    <ShieldCheck className="h-7 w-7" strokeWidth={2.4} />
+                  </span>
+                  <div className="min-w-0">
+                    <div className="text-[11px] uppercase tracking-[0.18em] text-[#2ECC71]">Selo Bioprag</div>
+                    <h3 className="mt-1 font-display text-xl font-bold leading-snug text-[#F0F4F0] sm:text-2xl">
+                      Pronto para receber o Selo Bioprag de Segurança?
+                    </h3>
+                    <p className="mt-2 text-sm text-[#8FA98F]">
+                      Certificação técnica que atesta o padrão de biossegurança da sua operação.
+                    </p>
+                  </div>
+                </div>
+                <a
+                  href={WHATSAPP_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-5 inline-flex items-center gap-2 rounded-lg bg-[#2ECC71] px-5 py-3 font-display text-sm font-bold uppercase tracking-wider text-[#06180D] transition-all hover:bg-[#7DFFB3]"
+                >
+                  Falar com especialista <ArrowRight className="h-4 w-4" />
+                </a>
+              </div>
+            </div>
           </Reveal>
 
           <Reveal delay={0.1}>
             <form onSubmit={onSubmit} className="rounded-2xl border border-[#1C3D22] bg-[#0F2415] p-6 sm:p-8">
-              <div className="grid gap-4 sm:grid-cols-2">
-                <div>
-                  <label className={labelCls}>Nome completo *</label>
-                  <input required value={form.nome} onChange={update("nome")} className={inputCls} placeholder="Seu nome" />
-                </div>
-                <div>
-                  <label className={labelCls}>Telefone (WhatsApp) *</label>
-                  <input required value={form.telefone} onChange={update("telefone")} className={inputCls} placeholder="(00) 00000-0000" />
-                </div>
+              <div>
+                <label className={labelCls}>Nome *</label>
+                <input required value={form.nome} onChange={update("nome")} className={inputCls} placeholder="Seu nome completo" />
               </div>
               <div className="mt-4">
-                <label className={labelCls}>E-mail</label>
-                <input type="email" value={form.email} onChange={update("email")} className={inputCls} placeholder="voce@email.com" />
-              </div>
-              <div className="mt-4 grid gap-4 sm:grid-cols-2">
-                <div>
-                  <label className={labelCls}>Tipo de ambiente</label>
-                  <select required value={form.tipoAmbiente} onChange={update("tipoAmbiente")} className={inputCls}>
-                    <option value="">Selecione</option>
-                    <option>Residência</option>
-                    <option>Comércio / Loja</option>
-                    <option>Indústria / Fábrica</option>
-                    <option>Condomínio / Edifício</option>
-                    <option>Hospital / Clínica</option>
-                    <option>Escola / Instituição</option>
-                    <option>Outro</option>
-                  </select>
-                </div>
-                <div>
-                  <label className={labelCls}>Qual o problema?</label>
-                  <select required value={form.problema} onChange={update("problema")} className={inputCls}>
-                    <option value="">Selecione</option>
-                    <option>Baratas ou formigas</option>
-                    <option>Ratos ou roedores</option>
-                    <option>Cupins</option>
-                    <option>Moscas ou mosquitos</option>
-                    <option>Escorpiões</option>
-                    <option>Necessito de sanitização</option>
-                    <option>Monitoramento contínuo</option>
-                    <option>Outro / Não sei ao certo</option>
-                  </select>
-                </div>
+                <label className={labelCls}>Cidade *</label>
+                <input required value={form.cidade} onChange={update("cidade")} className={inputCls} placeholder="Cidade / Estado" />
               </div>
               <div className="mt-4">
-                <label className={labelCls}>Tamanho do local</label>
-                <select required value={form.tamanho} onChange={update("tamanho")} className={inputCls}>
+                <label className={labelCls}>Tipo de serviço *</label>
+                <select required value={form.servico} onChange={update("servico")} className={inputCls}>
                   <option value="">Selecione</option>
-                  <option>Até 100m²</option>
-                  <option>100 a 500m²</option>
-                  <option>500 a 2.000m²</option>
-                  <option>Acima de 2.000m²</option>
+                  <option>Monitoramento Contínuo</option>
+                  <option>Controle de Insetos Rasteiros</option>
+                  <option>Controle de Insetos Voadores</option>
+                  <option>Controle de Roedores</option>
+                  <option>Descupinização</option>
+                  <option>Sanitização de Ambientes</option>
+                  <option>Controle de Escorpiões</option>
+                  <option>Biossegurança / DDD</option>
+                  <option>Outro / Não sei ao certo</option>
                 </select>
               </div>
               <div className="mt-4">
-                <label className={labelCls}>Mensagem adicional</label>
-                <textarea rows={3} value={form.mensagem} onChange={update("mensagem")} className={inputCls} placeholder="Conte mais sobre sua situação (opcional)" />
+                <label className={labelCls}>Mensagem</label>
+                <textarea rows={4} value={form.mensagem} onChange={update("mensagem")} className={inputCls} placeholder="Conte mais sobre sua situação (opcional)" />
               </div>
               <button
                 type="submit"
