@@ -943,28 +943,35 @@ function ContactSection() {
             {/* Selo Bioprag */}
             <div className="mt-6 relative overflow-hidden rounded-2xl p-[1.5px] bg-gradient-to-br from-[#2ECC71] via-[#7DFFB3] to-[#2ECC71]">
               <div className="relative rounded-2xl bg-[#0A1A0F] p-6 sm:p-7">
-                <div className="flex items-start gap-4">
-                  <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-[#2ECC71] text-[#06180D] glow-green">
-                    <ShieldCheck className="h-7 w-7" strokeWidth={2.4} />
-                  </span>
+                <div className="grid items-center gap-5 sm:grid-cols-[160px_1fr]">
+                  <div className="relative mx-auto w-full max-w-[180px] rounded-xl border-2 border-[#2ECC71]/40 bg-white p-2 shadow-[0_0_40px_-10px_rgba(46,204,113,0.6)]">
+                    <img
+                      src={bioprágSelo.url}
+                      alt="Selo Bioprag de Segurança — Estabelecimento protegido contra pragas"
+                      className="h-auto w-full rounded-md object-contain"
+                    />
+                    <span className="absolute -right-2 -top-2 grid h-9 w-9 place-items-center rounded-full bg-[#2ECC71] text-[#06180D] glow-green">
+                      <ShieldCheck className="h-5 w-5" strokeWidth={2.4} />
+                    </span>
+                  </div>
                   <div className="min-w-0">
-                    <div className="text-[11px] uppercase tracking-[0.18em] text-[#2ECC71]">Selo Bioprag</div>
+                    <div className="text-[11px] uppercase tracking-[0.18em] text-[#2ECC71]">Símbolo Bioprag</div>
                     <h3 className="mt-1 font-display text-xl font-bold leading-snug text-[#F0F4F0] sm:text-2xl">
-                      Pronto para receber o Selo Bioprag de Segurança?
+                      Receba o Selo Bioprag de Segurança.
                     </h3>
                     <p className="mt-2 text-sm text-[#8FA98F]">
-                      Certificação técnica que atesta o padrão de biossegurança da sua operação.
+                      Certificação técnica que atesta o padrão de biossegurança do seu estabelecimento — exibida com orgulho por quem é protegido pela Bioprag.
                     </p>
+                    <a
+                      href={WHATSAPP_URL}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="mt-5 inline-flex items-center gap-2 rounded-lg bg-[#2ECC71] px-5 py-3 font-display text-sm font-bold uppercase tracking-wider text-[#06180D] transition-all hover:bg-[#7DFFB3]"
+                    >
+                      Falar com especialista <ArrowRight className="h-4 w-4" />
+                    </a>
                   </div>
                 </div>
-                <a
-                  href={WHATSAPP_URL}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mt-5 inline-flex items-center gap-2 rounded-lg bg-[#2ECC71] px-5 py-3 font-display text-sm font-bold uppercase tracking-wider text-[#06180D] transition-all hover:bg-[#7DFFB3]"
-                >
-                  Falar com especialista <ArrowRight className="h-4 w-4" />
-                </a>
               </div>
             </div>
           </Reveal>
