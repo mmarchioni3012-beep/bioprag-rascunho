@@ -994,19 +994,19 @@ function Segments() {
       icon: Home,
       title: "Residencial",
       desc: "Proteção discreta e segura para sua família. Tratamentos eficazes que respeitam pets, crianças e o ambiente do lar.",
-      image: img2957,
+      image: segResidencial,
     },
     {
       icon: Building2,
       title: "Comercial",
       desc: "Lojas, escritórios, restaurantes e redes. Controle preventivo com documentação completa para auditorias sanitárias.",
-      image: img2958,
+      image: segComercial,
     },
     {
       icon: Factory,
       title: "Industrial",
       desc: "Indústrias alimentícias, farmacêuticas e logísticas. Programas em conformidade com BPF, APPCC, AIB e exigências sanitárias.",
-      image: img2962,
+      image: segIndustrial,
     },
   ];
 
