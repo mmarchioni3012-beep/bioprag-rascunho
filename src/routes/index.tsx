@@ -74,13 +74,21 @@ export const Route = createFileRoute("/")({
 
 /* ============================ Registros ============================ */
 // Confirmar validade e formatação dos registros com a Bioprag antes da publicação final.
+// Para exibir um registro no site, altere "verified" para true depois da confirmação oficial.
+// Situação em jul/2026:
+//  - CNPJ: dígitos verificadores conferem (validado).
+//  - Inscrição Estadual: dígitos não conferem no padrão SP — confirmar na SEFAZ-SP.
+//  - CRBio-01-SP / IBAMA / V.I.S.A.: não verificáveis por cálculo — confirmar documentos e validade.
 const registrations = [
-  { label: "CNPJ", value: "05.128.516/0001-30" },
-  { label: "Inscrição Estadual", value: "271.012.217.113" },
-  { label: "CRBio-01-SP", value: "nº 712-01 e nº 82408/01-D" },
-  { label: "Cadastro IBAMA", value: "5775428" },
-  { label: "V.I.S.A.", value: "351230801-812-000001-1-6" },
+  { label: "CNPJ", value: "05.128.516/0001-30", verified: true },
+  { label: "Inscrição Estadual", value: "271.012.217.113", verified: false },
+  { label: "CRBio-01-SP", value: "nº 712-01 e nº 82408/01-D", verified: false },
+  { label: "Cadastro IBAMA", value: "5775428", verified: false },
+  { label: "V.I.S.A.", value: "351230801-812-000001-1-6", verified: false },
 ];
+
+const visibleRegistrations = registrations.filter((r) => r.verified);
+
 
 /* ============================ Dados ============================ */
 const NAV = [
