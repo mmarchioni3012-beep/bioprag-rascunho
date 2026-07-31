@@ -17,7 +17,6 @@ import {
   Mail,
   MapPin,
   Menu,
-  MessageCircle,
   Navigation,
   Phone,
   Plane,
@@ -68,6 +67,7 @@ const PHONE_DISPLAY = "(14) 3845-4011";
 const WHATSAPP_DISPLAY = "(14) 98175-2595";
 const EMAIL = "vendas@bioprag.com.br";
 const ADDRESS = "Rua Goiás, 446 — Centro, Conchas/SP";
+const ADDRESS_FILIAL = "Rua Emerson José Moreira, 1710 — Chacará Primavera, Campinas/SP";
 const MAPS_URL = "https://maps.app.goo.gl/AwckADfya2dRDSbs5";
 
 const META_TITLE =
@@ -883,11 +883,20 @@ function ContactSection() {
               </a>
             </div>
             <div className="mt-6 grid gap-3 sm:grid-cols-2">
-              <div className="flex items-start gap-3 rounded-lg border border-[#1C3D22] bg-[#0F2415] p-4 sm:col-span-2">
+              <div className="flex items-start gap-3 rounded-lg border border-[#1C3D22] bg-[#0F2415] p-4">
                 <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-[#2ECC71]" />
                 <div>
-                  <div className="text-xs uppercase tracking-[0.14em] text-[#8FA98F]">Endereço</div>
+                  <div className="text-xs uppercase tracking-[0.14em] text-[#8FA98F]">Matriz — Conchas / SP</div>
                   <div className="text-sm font-medium text-[#F0F4F0]">{ADDRESS}</div>
+                  <div className="text-xs text-[#8FA98F]">CEP 18570-043</div>
+                </div>
+              </div>
+              <div className="flex items-start gap-3 rounded-lg border border-[#1C3D22] bg-[#0F2415] p-4">
+                <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-[#2ECC71]" />
+                <div>
+                  <div className="text-xs uppercase tracking-[0.14em] text-[#8FA98F]">Filial — Campinas / SP</div>
+                  <div className="text-sm font-medium text-[#F0F4F0]">{ADDRESS_FILIAL}</div>
+                  <div className="text-xs text-[#8FA98F]">CEP 13087-441</div>
                 </div>
               </div>
               <div className="flex items-start gap-3 rounded-lg border border-[#1C3D22] bg-[#0F2415] p-4">
@@ -1165,7 +1174,7 @@ function FinalCTA() {
               rel="noreferrer"
               className="inline-flex items-center gap-2.5 rounded-lg bg-[#25D366] px-7 py-4 font-display text-base font-bold text-white transition-all hover:scale-[1.02] hover:bg-[#1FBA58] glow-green"
             >
-              <MessageCircle className="h-5 w-5" />
+              <WhatsAppIcon className="h-5 w-5" />
               Iniciar conversa no WhatsApp
             </a>
             <a
@@ -1236,7 +1245,7 @@ function Footer() {
           <ul className="mt-4 space-y-2.5 text-sm text-[#8FA98F]">
             <li className="flex items-start gap-2"><MapPin className="mt-0.5 h-4 w-4 text-[#2ECC71]" /> {ADDRESS}</li>
             <li className="flex items-center gap-2"><Phone className="h-4 w-4 text-[#2ECC71]" /> {PHONE_DISPLAY}</li>
-            <li className="flex items-center gap-2"><MessageCircle className="h-4 w-4 text-[#2ECC71]" /> {WHATSAPP_DISPLAY}</li>
+            <li className="flex items-center gap-2"><WhatsAppIcon className="h-4 w-4 text-[#25D366]" /> {WHATSAPP_DISPLAY}</li>
             <li className="flex items-center gap-2"><Mail className="h-4 w-4 text-[#2ECC71]" /> <a href={`mailto:${EMAIL}`} className="hover:text-[#2ECC71] transition-colors">{EMAIL}</a></li>
           </ul>
         </div>
