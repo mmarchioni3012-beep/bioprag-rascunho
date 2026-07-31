@@ -67,7 +67,7 @@ const PHONE_DISPLAY = "(14) 3845-4011";
 const WHATSAPP_DISPLAY = "(14) 98175-2595";
 const EMAIL = "vendas@bioprag.com.br";
 const ADDRESS = "Rua Goiás, 446 — Centro, Conchas/SP";
-const ADDRESS_FILIAL = "Rua Emerson José Moreira, 1710 — Chacará Primavera, Campinas/SP";
+const ADDRESS_FILIAL = "Rua Emerson José, 1710 — Sala 07, Campinas/SP";
 const MAPS_URL = "https://maps.app.goo.gl/AwckADfya2dRDSbs5";
 
 const META_TITLE =
@@ -896,7 +896,7 @@ function ContactSection() {
                 <div>
                   <div className="text-xs uppercase tracking-[0.14em] text-[#8FA98F]">Filial — Campinas / SP</div>
                   <div className="text-sm font-medium text-[#F0F4F0]">{ADDRESS_FILIAL}</div>
-                  <div className="text-xs text-[#8FA98F]">CEP 13087-441</div>
+                  
                 </div>
               </div>
               <div className="flex items-start gap-3 rounded-lg border border-[#1C3D22] bg-[#0F2415] p-4">
