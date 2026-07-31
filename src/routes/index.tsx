@@ -17,7 +17,6 @@ import {
   Mail,
   MapPin,
   Menu,
-  MessageCircle,
   Navigation,
   Phone,
   Plane,
@@ -44,8 +43,9 @@ import img2958 from "@/assets/IMG_2958.jpg.asset.json";
 import img2962 from "@/assets/IMG_2962.jpg.asset.json";
 import img2963 from "@/assets/IMG_2963.jpg.asset.json";
 import brazilMap from "@/assets/brazil-map.svg.asset.json";
-import biopragLogo from "@/assets/bioprag-logo.jpeg.asset.json";
-import biopragSelo from "@/assets/bioprag-selo.png.asset.json";
+import biopragSeloCrop from "@/assets/bioprag-selo-crop.png";
+import biopragLogoFull from "@/assets/bioprag-logo-full.png";
+import biopragMark from "@/assets/bioprag-mark.png";
 import biopragFachada from "@/assets/bioprag-fachada.png.asset.json";
 import foto10 from "@/assets/foto_10.webp.asset.json";
 import foto11 from "@/assets/foto_11.webp.asset.json";
@@ -67,6 +67,7 @@ const PHONE_DISPLAY = "(14) 3845-4011";
 const WHATSAPP_DISPLAY = "(14) 98175-2595";
 const EMAIL = "vendas@bioprag.com.br";
 const ADDRESS = "Rua Goiás, 446 — Centro, Conchas/SP";
+const ADDRESS_FILIAL = "Rua Emerson José, 1710 — Sala 07, Campinas/SP";
 const MAPS_URL = "https://maps.app.goo.gl/AwckADfya2dRDSbs5";
 
 const META_TITLE =
@@ -89,6 +90,15 @@ export const Route = createFileRoute("/")({
   }),
   component: HomePage,
 });
+
+/* ---------------- Icons ---------------- */
+function WhatsAppIcon({ className = "h-6 w-6" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true" className={className}>
+      <path d="M16.04 3.2c-7.06 0-12.8 5.74-12.8 12.8 0 2.26.6 4.47 1.73 6.41L3.2 28.8l6.56-1.72a12.74 12.74 0 0 0 6.28 1.63h.01c7.06 0 12.8-5.74 12.8-12.8 0-3.42-1.33-6.64-3.75-9.06a12.72 12.72 0 0 0-9.06-3.65Zm0 23.06h-.01a10.6 10.6 0 0 1-5.4-1.48l-.39-.23-4.01 1.05 1.07-3.91-.25-.4a10.58 10.58 0 0 1-1.62-5.65c0-5.86 4.77-10.63 10.63-10.63 2.84 0 5.5 1.11 7.51 3.12a10.56 10.56 0 0 1 3.11 7.52c0 5.86-4.77 10.61-10.64 10.61Zm5.83-7.96c-.32-.16-1.89-.93-2.18-1.04-.29-.11-.5-.16-.71.16-.21.32-.82 1.04-1 1.25-.19.21-.37.24-.69.08-.32-.16-1.35-.5-2.57-1.59-.95-.85-1.59-1.89-1.78-2.21-.19-.32-.02-.5.14-.66.15-.15.32-.37.48-.56.16-.19.21-.32.32-.53.11-.21.05-.4-.03-.56-.08-.16-.71-1.72-.98-2.35-.26-.62-.52-.54-.71-.55l-.61-.01c-.21 0-.56.08-.85.4-.29.32-1.11 1.09-1.11 2.65 0 1.56 1.14 3.07 1.3 3.28.16.21 2.25 3.43 5.45 4.81.76.33 1.35.52 1.82.67.76.24 1.46.21 2.01.13.61-.09 1.89-.77 2.16-1.52.27-.75.27-1.39.19-1.52-.08-.13-.29-.21-.61-.37Z" />
+    </svg>
+  );
+}
 
 /* ---------------- Hooks ---------------- */
 function useReveal<T extends HTMLElement>() {
@@ -241,9 +251,7 @@ function Navbar() {
     >
       <div className="container-page flex h-16 items-center justify-between gap-4">
         <a href="#top" className="flex min-w-0 items-center gap-2.5">
-          <span className="grid h-10 w-10 shrink-0 place-items-center overflow-hidden rounded-md bg-white p-1">
-            <img src={biopragLogo.url} alt="Bioprag" className="h-full w-full object-contain" />
-          </span>
+          <img src={biopragMark} alt="Bioprag" width={492} height={478} className="h-10 w-10 shrink-0 object-contain [filter:drop-shadow(0_0_10px_rgba(46,204,113,0.35))]" />
           <span className="font-display text-lg font-extrabold tracking-tight text-[#F0F4F0]">BIOPRAG</span>
         </a>
         <nav className="hidden items-center gap-8 md:flex">
@@ -319,9 +327,13 @@ function Hero() {
       <FloatingDots />
       <div className="container-page relative grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
         <div>
-          <div className="mb-6 inline-flex items-center gap-3 rounded-xl border border-[#1C3D22] bg-white/95 p-2.5 pr-4 animate-fade-up">
-            <img src={biopragLogo.url} alt="Bioprag — Controle Integrado de Pragas Urbanas, desde 1986" className="h-12 w-auto object-contain" />
-          </div>
+          <img
+            src={biopragLogoFull}
+            alt="Bioprag — Controle Integrado de Pragas Urbanas, desde 1986"
+            width={1881}
+            height={1052}
+            className="mb-6 h-20 w-auto object-contain object-left animate-fade-up [filter:drop-shadow(0_0_28px_rgba(46,204,113,0.28))]"
+          />
           <span className="eyebrow animate-fade-up">
             <Sparkles className="h-3.5 w-3.5" /> Desde 1986 · Controle Integrado de Pragas
           </span>
@@ -357,7 +369,7 @@ function Hero() {
 
           <div className="mt-12 grid grid-cols-2 gap-6 sm:grid-cols-4 animate-fade-up" style={{ animationDelay: "1s" }}>
             {[
-              { v: 39, s: " anos", p: "+", label: "anos de operação" },
+              { v: 40, s: " anos", p: "+", label: "anos de operação" },
               { v: 10, s: "k+", p: "", label: "atendimentos" },
               { v: 100, s: "%", p: "", label: "documentado" },
             ].map((stat, i) => (
@@ -426,7 +438,7 @@ function About() {
         <Reveal>
           <span className="eyebrow">Sobre a Bioprag</span>
           <h2 className="mt-4 font-display text-4xl font-bold leading-tight text-[#F0F4F0] sm:text-5xl">
-            Quase 40 anos protegendo o que importa.
+            Mais de 40 anos protegendo o que importa.
           </h2>
           <p className="mt-6 text-base leading-relaxed text-[#8FA98F]">
             Fundada em 1986, a Bioprag nasceu com a missão de elevar o padrão técnico do controle de pragas
@@ -620,7 +632,7 @@ function Method() {
 }
 
 function Training() {
-  const teamPhotos = [foto33, foto29, foto19, foto28, foto20, foto16, foto12, foto10, foto11, foto34];
+  const teamPhotos = [foto33, foto29, foto19, foto28, foto20, foto16, foto12, foto10];
   return (
     <section className="relative py-24 sm:py-32">
       <div className="container-page">
@@ -643,7 +655,7 @@ function Training() {
                   src={p.url}
                   alt={`Equipe Bioprag em campo ${i + 1}`}
                   loading="lazy"
-                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  className="h-full w-full object-cover object-[center_30%] transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0A1A0F]/70 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
               </div>
@@ -694,7 +706,7 @@ function Regional() {
           <div className="mt-8 grid grid-cols-3 gap-4 border-t border-[#1C3D22] pt-6">
             {[
               { v: 5, l: "regiões" },
-              { v: 39, l: "anos" },
+              { v: 40, l: "anos" },
               { v: 100, l: "% documentado", s: "" },
             ].map((s, i) => (
               <div key={i}>
@@ -871,11 +883,20 @@ function ContactSection() {
               </a>
             </div>
             <div className="mt-6 grid gap-3 sm:grid-cols-2">
-              <div className="flex items-start gap-3 rounded-lg border border-[#1C3D22] bg-[#0F2415] p-4 sm:col-span-2">
+              <div className="flex items-start gap-3 rounded-lg border border-[#1C3D22] bg-[#0F2415] p-4">
                 <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-[#2ECC71]" />
                 <div>
-                  <div className="text-xs uppercase tracking-[0.14em] text-[#8FA98F]">Endereço</div>
+                  <div className="text-xs uppercase tracking-[0.14em] text-[#8FA98F]">Matriz — Conchas / SP</div>
                   <div className="text-sm font-medium text-[#F0F4F0]">{ADDRESS}</div>
+                  <div className="text-xs text-[#8FA98F]">CEP 18570-043</div>
+                </div>
+              </div>
+              <div className="flex items-start gap-3 rounded-lg border border-[#1C3D22] bg-[#0F2415] p-4">
+                <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-[#2ECC71]" />
+                <div>
+                  <div className="text-xs uppercase tracking-[0.14em] text-[#8FA98F]">Filial — Campinas / SP</div>
+                  <div className="text-sm font-medium text-[#F0F4F0]">{ADDRESS_FILIAL}</div>
+                  
                 </div>
               </div>
               <div className="flex items-start gap-3 rounded-lg border border-[#1C3D22] bg-[#0F2415] p-4">
@@ -886,7 +907,7 @@ function ContactSection() {
                 </div>
               </div>
               <div className="flex items-start gap-3 rounded-lg border border-[#1C3D22] bg-[#0F2415] p-4">
-                <MessageCircle className="mt-0.5 h-5 w-5 shrink-0 text-[#2ECC71]" />
+                <WhatsAppIcon className="mt-0.5 h-5 w-5 shrink-0 text-[#25D366]" />
                 <div>
                   <div className="text-xs uppercase tracking-[0.14em] text-[#8FA98F]">WhatsApp</div>
                   <div className="text-sm font-medium text-[#F0F4F0]">{WHATSAPP_DISPLAY}</div>
@@ -957,7 +978,7 @@ function ContactSection() {
                 type="submit"
                 className="mt-6 inline-flex w-full items-center justify-center gap-2.5 rounded-lg bg-[#25D366] px-6 py-3.5 font-sans text-sm font-semibold text-white transition-all hover:brightness-110"
               >
-                <MessageCircle className="h-5 w-5" />
+                <WhatsAppIcon className="h-5 w-5" />
                 Enviar para o WhatsApp
                 <ArrowRight className="h-4 w-4" />
               </button>
@@ -980,15 +1001,18 @@ function ContactSection() {
             />
             <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#2ECC71]/70 to-transparent" />
             <div className="relative grid items-center gap-10 px-6 py-12 sm:px-12 sm:py-16 lg:grid-cols-[340px_1fr] lg:gap-16 lg:px-16">
-              <div className="scene-3d mx-auto w-full max-w-[300px] lg:max-w-none">
-                <div className="relative animate-float-3d">
-                  <div className="pointer-events-none absolute -inset-8 rounded-full bg-[#2ECC71]/15 blur-3xl" />
-                  <img
-                    src={biopragSelo.url}
-                    alt="Selo Bioprag de Segurança — Estabelecimento protegido contra pragas"
-                    loading="lazy"
-                    className="relative h-auto w-full object-contain [filter:drop-shadow(0_25px_45px_rgba(0,0,0,0.6))_drop-shadow(0_0_36px_rgba(46,204,113,0.35))]"
-                  />
+              <div className="scene-3d group mx-auto w-full max-w-[320px] lg:max-w-none">
+                <div className="card-3d relative rounded-[26px] border border-[#2ECC71]/25 bg-gradient-to-br from-[#122C1A] to-[#0A1A0F] p-6 shadow-[0_30px_70px_-30px_rgba(0,0,0,0.8)] group-hover:card-3d-hover">
+                  <div className="pointer-events-none absolute -inset-6 rounded-full bg-[#2ECC71]/15 blur-3xl" />
+                  <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-[#7DFFB3]/70 to-transparent" />
+                  <div className="animate-float-3d">
+                    <img
+                      src={biopragSeloCrop}
+                      alt="Selo Bioprag de Segurança — Estabelecimento protegido contra pragas"
+                      loading="lazy"
+                      className="relative mx-auto h-auto w-full max-w-[260px] object-contain [filter:drop-shadow(0_25px_45px_rgba(0,0,0,0.6))_drop-shadow(0_0_36px_rgba(46,204,113,0.35))]"
+                    />
+                  </div>
                 </div>
               </div>
               <div className="text-center lg:text-left">
@@ -1153,7 +1177,7 @@ function FinalCTA() {
               rel="noreferrer"
               className="inline-flex items-center gap-2.5 rounded-lg bg-[#25D366] px-7 py-4 font-display text-base font-bold text-white transition-all hover:scale-[1.02] hover:bg-[#1FBA58] glow-green"
             >
-              <MessageCircle className="h-5 w-5" />
+              <WhatsAppIcon className="h-5 w-5" />
               Iniciar conversa no WhatsApp
             </a>
             <a
@@ -1224,7 +1248,7 @@ function Footer() {
           <ul className="mt-4 space-y-2.5 text-sm text-[#8FA98F]">
             <li className="flex items-start gap-2"><MapPin className="mt-0.5 h-4 w-4 text-[#2ECC71]" /> {ADDRESS}</li>
             <li className="flex items-center gap-2"><Phone className="h-4 w-4 text-[#2ECC71]" /> {PHONE_DISPLAY}</li>
-            <li className="flex items-center gap-2"><MessageCircle className="h-4 w-4 text-[#2ECC71]" /> {WHATSAPP_DISPLAY}</li>
+            <li className="flex items-center gap-2"><WhatsAppIcon className="h-4 w-4 text-[#25D366]" /> {WHATSAPP_DISPLAY}</li>
             <li className="flex items-center gap-2"><Mail className="h-4 w-4 text-[#2ECC71]" /> <a href={`mailto:${EMAIL}`} className="hover:text-[#2ECC71] transition-colors">{EMAIL}</a></li>
           </ul>
         </div>
@@ -1244,9 +1268,9 @@ function FloatingWhatsApp() {
       target="_blank"
       rel="noreferrer"
       aria-label="Falar com especialista no WhatsApp"
-      className="group fixed bottom-6 right-6 z-50 grid h-14 w-14 place-items-center rounded-full bg-[#25D366] text-white shadow-lg animate-pulse-soft"
+      className="group fixed bottom-6 right-6 z-50 grid h-16 w-16 place-items-center rounded-full bg-[#25D366] text-white shadow-[0_12px_40px_-8px_rgba(37,211,102,0.8)] ring-4 ring-[#25D366]/25 transition-transform hover:scale-105 animate-pulse-soft"
     >
-      <MessageCircle className="h-6 w-6" />
+      <WhatsAppIcon className="h-9 w-9" />
       <span className="pointer-events-none absolute right-16 whitespace-nowrap rounded-md bg-[#0F2415] px-3 py-1.5 text-xs font-semibold text-[#F0F4F0] opacity-0 transition-opacity group-hover:opacity-100">
         Falar com especialista
       </span>
