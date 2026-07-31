@@ -586,7 +586,13 @@ function Indicators() {
       <div className="container-page grid grid-cols-1 gap-px sm:grid-cols-2 lg:grid-cols-4">
         {INDICATORS.map((i) => (
           <div key={i.label} className="py-6 sm:py-8">
-            <p className="font-display text-2xl text-primary md:text-3xl">{i.value}</p>
+            <p
+              className={`font-display text-primary ${
+                i.value.length > 10 ? "text-lg md:text-xl" : "text-2xl md:text-3xl"
+              }`}
+            >
+              {i.value}
+            </p>
             <p className="mt-1 text-sm text-muted-foreground">{i.label}</p>
           </div>
         ))}
