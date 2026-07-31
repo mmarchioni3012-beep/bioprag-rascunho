@@ -46,6 +46,9 @@ import img2963 from "@/assets/IMG_2963.jpg.asset.json";
 import brazilMap from "@/assets/brazil-map.svg.asset.json";
 import biopragLogo from "@/assets/bioprag-logo.jpeg.asset.json";
 import biopragSelo from "@/assets/bioprag-selo.png.asset.json";
+import biopragSeloCrop from "@/assets/bioprag-selo-crop.png";
+import biopragLogoFull from "@/assets/bioprag-logo-full.png";
+import biopragMark from "@/assets/bioprag-mark.png";
 import biopragFachada from "@/assets/bioprag-fachada.png.asset.json";
 import foto10 from "@/assets/foto_10.webp.asset.json";
 import foto11 from "@/assets/foto_11.webp.asset.json";
@@ -241,9 +244,7 @@ function Navbar() {
     >
       <div className="container-page flex h-16 items-center justify-between gap-4">
         <a href="#top" className="flex min-w-0 items-center gap-2.5">
-          <span className="grid h-10 w-10 shrink-0 place-items-center overflow-hidden rounded-md bg-white p-1">
-            <img src={biopragLogo.url} alt="Bioprag" className="h-full w-full object-contain" />
-          </span>
+          <img src={biopragMark} alt="Bioprag" width={492} height={478} className="h-10 w-10 shrink-0 object-contain [filter:drop-shadow(0_0_10px_rgba(46,204,113,0.35))]" />
           <span className="font-display text-lg font-extrabold tracking-tight text-[#F0F4F0]">BIOPRAG</span>
         </a>
         <nav className="hidden items-center gap-8 md:flex">
@@ -319,9 +320,13 @@ function Hero() {
       <FloatingDots />
       <div className="container-page relative grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
         <div>
-          <div className="mb-6 inline-flex items-center gap-3 rounded-xl border border-[#1C3D22] bg-white/95 p-2.5 pr-4 animate-fade-up">
-            <img src={biopragLogo.url} alt="Bioprag — Controle Integrado de Pragas Urbanas, desde 1986" className="h-12 w-auto object-contain" />
-          </div>
+          <img
+            src={biopragLogoFull}
+            alt="Bioprag — Controle Integrado de Pragas Urbanas, desde 1986"
+            width={1881}
+            height={1052}
+            className="mb-6 h-20 w-auto object-contain object-left animate-fade-up [filter:drop-shadow(0_0_28px_rgba(46,204,113,0.28))]"
+          />
           <span className="eyebrow animate-fade-up">
             <Sparkles className="h-3.5 w-3.5" /> Desde 1986 · Controle Integrado de Pragas
           </span>
@@ -357,7 +362,7 @@ function Hero() {
 
           <div className="mt-12 grid grid-cols-2 gap-6 sm:grid-cols-4 animate-fade-up" style={{ animationDelay: "1s" }}>
             {[
-              { v: 39, s: " anos", p: "+", label: "anos de operação" },
+              { v: 40, s: " anos", p: "+", label: "anos de operação" },
               { v: 10, s: "k+", p: "", label: "atendimentos" },
               { v: 100, s: "%", p: "", label: "documentado" },
             ].map((stat, i) => (
@@ -426,7 +431,7 @@ function About() {
         <Reveal>
           <span className="eyebrow">Sobre a Bioprag</span>
           <h2 className="mt-4 font-display text-4xl font-bold leading-tight text-[#F0F4F0] sm:text-5xl">
-            Quase 40 anos protegendo o que importa.
+            Mais de 40 anos protegendo o que importa.
           </h2>
           <p className="mt-6 text-base leading-relaxed text-[#8FA98F]">
             Fundada em 1986, a Bioprag nasceu com a missão de elevar o padrão técnico do controle de pragas
@@ -620,7 +625,7 @@ function Method() {
 }
 
 function Training() {
-  const teamPhotos = [foto33, foto29, foto19, foto28, foto20, foto16, foto12, foto10, foto11, foto34];
+  const teamPhotos = [foto33, foto29, foto19, foto28, foto20, foto16, foto12, foto10];
   return (
     <section className="relative py-24 sm:py-32">
       <div className="container-page">
@@ -643,7 +648,7 @@ function Training() {
                   src={p.url}
                   alt={`Equipe Bioprag em campo ${i + 1}`}
                   loading="lazy"
-                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  className="h-full w-full object-cover object-[center_30%] transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0A1A0F]/70 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
               </div>
@@ -694,7 +699,7 @@ function Regional() {
           <div className="mt-8 grid grid-cols-3 gap-4 border-t border-[#1C3D22] pt-6">
             {[
               { v: 5, l: "regiões" },
-              { v: 39, l: "anos" },
+              { v: 40, l: "anos" },
               { v: 100, l: "% documentado", s: "" },
             ].map((s, i) => (
               <div key={i}>
