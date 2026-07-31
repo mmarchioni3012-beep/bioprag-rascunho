@@ -85,9 +85,11 @@ const UNIDADES = {
 } as const;
 
 const META_TITLE =
-  "BIOPRAG — Controle Integrado de Pragas, Saúde Ambiental e Biossegurança | Desde 1986";
+  "BIOPRAG — Controle Integrado de Pragas e Biossegurança";
 const META_DESC =
   "Controle integrado de pragas, saúde ambiental e biossegurança com método técnico, auditável e 100% documentado. Atendimento em todo o Brasil desde 1986.";
+const SITE_URL = "https://bioprag.lovable.app";
+const OG_IMAGE = `${SITE_URL}${img2953.url}`;
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -96,10 +98,56 @@ export const Route = createFileRoute("/")({
       { name: "description", content: META_DESC },
       { property: "og:title", content: META_TITLE },
       { property: "og:description", content: META_DESC },
+      { property: "og:url", content: "/" },
       { name: "twitter:title", content: META_TITLE },
       { name: "twitter:description", content: META_DESC },
-      { property: "og:image", content: img2953.url },
-      { name: "twitter:image", content: img2953.url },
+      { property: "og:image", content: OG_IMAGE },
+      { name: "twitter:image", content: OG_IMAGE },
+    ],
+    links: [{ rel: "canonical", href: "/" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "LocalBusiness",
+          name: "BIOPRAG",
+          description: META_DESC,
+          url: SITE_URL,
+          image: OG_IMAGE,
+          telephone: "+55 14 3845-1266",
+          email: "vendas@bioprag.com.br",
+          areaServed: "BR",
+          address: [
+            {
+              "@type": "PostalAddress",
+              streetAddress: "Rua Goiás, 446",
+              addressLocality: "Conchas",
+              addressRegion: "SP",
+              addressCountry: "BR",
+            },
+            {
+              "@type": "PostalAddress",
+              streetAddress: "Rua Emerson José, 1710 — Sala 07",
+              addressLocality: "Campinas",
+              addressRegion: "SP",
+              addressCountry: "BR",
+            },
+          ],
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: FAQ.map((f) => ({
+            "@type": "Question",
+            name: f.q,
+            acceptedAnswer: { "@type": "Answer", text: f.a },
+          })),
+        }),
+      },
     ],
   }),
   component: HomePage,
