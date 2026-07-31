@@ -1029,21 +1029,25 @@ function ContactSection() {
               }}
             />
             <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#2ECC71]/70 to-transparent" />
-            <div className="relative grid items-center gap-10 px-6 py-12 sm:px-12 sm:py-16 lg:grid-cols-[340px_1fr] lg:gap-16 lg:px-16">
-              <div className="scene-3d group mx-auto w-full max-w-[320px] lg:max-w-none">
-                <div className="card-3d relative rounded-[26px] border border-[#2ECC71]/25 bg-gradient-to-br from-[#122C1A] to-[#0A1A0F] p-6 shadow-[0_30px_70px_-30px_rgba(0,0,0,0.8)] group-hover:card-3d-hover">
-                  <div className="pointer-events-none absolute -inset-6 rounded-full bg-[#2ECC71]/15 blur-3xl" />
-                  <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-[#7DFFB3]/70 to-transparent" />
+            <div className="relative grid items-center gap-10 px-6 py-12 sm:px-12 sm:py-16 lg:grid-cols-[minmax(0,460px)_1fr] lg:gap-16 lg:px-16">
+              <div className="scene-3d group mx-auto w-full max-w-[460px]">
+                <div className="card-3d relative rounded-[22px] border border-[#2ECC71]/25 bg-gradient-to-br from-[#132E1B] to-[#08150C] p-4 shadow-[0_40px_90px_-35px_rgba(0,0,0,0.9)] group-hover:card-3d-hover sm:p-5">
+                  <div className="pointer-events-none absolute -inset-8 rounded-[40px] bg-[#2ECC71]/12 blur-3xl" />
+                  <div className="pointer-events-none absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-[#7DFFB3]/70 to-transparent" />
                   <div className="animate-float-3d">
                     <img
                       src={biopragSeloCrop}
                       alt="Selo Bioprag de Segurança — Estabelecimento protegido contra pragas"
                       loading="lazy"
-                      className="relative mx-auto h-auto w-full max-w-[260px] object-contain [filter:drop-shadow(0_25px_45px_rgba(0,0,0,0.6))_drop-shadow(0_0_36px_rgba(46,204,113,0.35))]"
+                      width={1400}
+                      height={1000}
+                      className="relative block h-auto w-full rounded-[14px] object-contain shadow-[0_18px_40px_-12px_rgba(0,0,0,0.75)] ring-1 ring-[#F0F4F0]/10"
                     />
                   </div>
+                  <div className="pointer-events-none absolute inset-x-0 -bottom-3 mx-auto h-6 w-3/4 rounded-full bg-black/50 blur-xl" />
                 </div>
               </div>
+
               <div className="text-center lg:text-left">
                 <span className="inline-flex items-center gap-2 rounded-full border border-[#2ECC71]/30 bg-[#2ECC71]/8 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#2ECC71]">
                   <Sparkles className="h-3.5 w-3.5" /> Símbolo Bioprag
@@ -1191,7 +1195,7 @@ function FinalCTA() {
         alt=""
         aria-hidden
         loading="lazy"
-        className="absolute inset-0 -z-20 h-full w-full object-cover object-center"
+        className="absolute inset-0 -z-20 h-full w-full scale-105 object-cover object-[center_28%]"
       />
       <div
         className="absolute inset-0 -z-10"
