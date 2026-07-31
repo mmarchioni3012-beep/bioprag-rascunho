@@ -402,16 +402,20 @@ function Hero() {
         </div>
 
         {/* Hero visual */}
-        <div className="relative hidden lg:block animate-fade-in" style={{ animationDelay: "0.4s" }}>
-          <div className="relative aspect-[4/5] overflow-hidden rounded-3xl border border-[#1C3D22] glow-green">
-            <img src={img2953.url} alt="Equipe Bioprag em operação" className="h-full w-full object-cover object-center" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0A1A0F] via-transparent to-transparent" />
-            <div className="absolute bottom-6 left-6 right-6 rounded-xl border border-[#1C3D22] bg-[#0A1A0F]/80 p-4 backdrop-blur-md">
+        <div className="relative animate-fade-in" style={{ animationDelay: "0.4s" }}>
+          <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-[#1C3D22] glow-green sm:aspect-[16/10] lg:aspect-[4/5]">
+            <img
+              src={heroTecnico.url}
+              alt="Técnico Bioprag com EPI completo em operação de sanitização"
+              className="h-full w-full object-cover object-[center_22%] lg:object-[center_30%]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0A1A0F] via-[#0A1A0F]/20 to-transparent" />
+            <div className="absolute bottom-4 left-4 right-4 rounded-xl border border-[#1C3D22] bg-[#0A1A0F]/80 p-4 backdrop-blur-md sm:bottom-6 sm:left-6 sm:right-6">
               <div className="flex items-center gap-3">
-                <span className="grid h-10 w-10 place-items-center rounded-md bg-[#2ECC71] text-[#06180D]">
+                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-md bg-[#2ECC71] text-[#06180D]">
                   <ShieldCheck className="h-5 w-5" />
                 </span>
-                <div>
+                <div className="min-w-0">
                   <div className="text-sm font-semibold text-[#F0F4F0]">Operação certificada</div>
                   <div className="text-xs text-[#8FA98F]">Equipe técnica · EPI completo · Laudo emitido</div>
                 </div>
@@ -420,6 +424,7 @@ function Hero() {
           </div>
           <div className="absolute -right-6 -top-6 -z-10 h-40 w-40 rounded-full bg-[#2ECC71]/20 blur-3xl" />
         </div>
+
       </div>
     </section>
   );
