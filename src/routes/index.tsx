@@ -1195,7 +1195,7 @@ function FinalCTA() {
         alt=""
         aria-hidden
         loading="lazy"
-        className="absolute inset-0 -z-20 h-full w-full object-cover object-center"
+        className="absolute inset-0 -z-20 h-full w-full scale-105 object-cover object-[center_28%]"
       />
       <div
         className="absolute inset-0 -z-10"
