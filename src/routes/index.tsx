@@ -804,7 +804,10 @@ function Faq() {
 function ContactSection() {
   const [form, setForm] = useState({
     nome: "",
+    whatsapp: "",
+    email: "",
     cidade: "",
+    perfil: "",
     servico: "",
     mensagem: "",
   });
@@ -814,7 +817,17 @@ function ContactSection() {
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const msg = `Olá! Sou ${form.nome}, de ${form.cidade}. Interesse em ${form.servico}. ${form.mensagem}`;
+    const msg = [
+      `Olá, Bioprag! Meu nome é ${form.nome}.`,
+      `WhatsApp: ${form.whatsapp}`,
+      form.email ? `E-mail: ${form.email}` : "",
+      `Cidade: ${form.cidade}`,
+      `Perfil: ${form.perfil}`,
+      `Serviço de interesse: ${form.servico}`,
+      form.mensagem ? `Detalhes: ${form.mensagem}` : "",
+    ]
+      .filter(Boolean)
+      .join("\n");
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
   };
 
