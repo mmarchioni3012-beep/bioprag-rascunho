@@ -968,50 +968,56 @@ function ContactSection() {
           </Reveal>
         </div>
 
-        {/* Selo Bioprag — full-width feature block */}
+        {/* Selo Bioprag — bloco moderno */}
         <Reveal>
-          <div className="mt-16 relative overflow-hidden rounded-3xl p-[2px] bg-gradient-to-br from-[#2ECC71] via-[#7DFFB3] to-[#2ECC71]">
-            <div className="relative overflow-hidden rounded-[calc(1.5rem-2px)] bg-gradient-to-br from-[#0A1A0F] via-[#0F2415] to-[#0A1A0F] px-6 py-10 sm:px-12 sm:py-14 lg:px-16 lg:py-16">
-              <div
-                className="pointer-events-none absolute inset-0 opacity-30"
-                style={{
-                  backgroundImage:
-                    "radial-gradient(circle at 15% 20%, rgba(46,204,113,0.25), transparent 45%), radial-gradient(circle at 85% 80%, rgba(125,255,179,0.18), transparent 50%)",
-                }}
-              />
-              <div className="relative grid items-center gap-10 lg:grid-cols-[320px_1fr] lg:gap-14">
-                <div className="relative mx-auto w-full max-w-[300px] lg:max-w-none">
-                  <div className="relative rounded-2xl border-2 border-[#2ECC71]/50 bg-white p-3 shadow-[0_0_60px_-10px_rgba(46,204,113,0.7)]">
-                    <img
-                      src={biopragSelo.url}
-                      alt="Selo Bioprag de Segurança — Estabelecimento protegido contra pragas"
-                      className="h-auto w-full rounded-lg object-contain"
-                    />
-                    <span className="absolute -right-3 -top-3 grid h-12 w-12 place-items-center rounded-full bg-[#2ECC71] text-[#06180D] glow-green ring-4 ring-[#0A1A0F]">
-                      <ShieldCheck className="h-6 w-6" strokeWidth={2.4} />
-                    </span>
-                  </div>
+          <div className="relative mt-16 overflow-hidden rounded-[28px] border border-[#1C3D22] bg-[#0B1D11]">
+            <div
+              className="pointer-events-none absolute inset-0"
+              style={{
+                backgroundImage:
+                  "radial-gradient(circle at 12% 15%, rgba(46,204,113,0.16), transparent 45%), radial-gradient(circle at 88% 85%, rgba(125,255,179,0.10), transparent 50%)",
+              }}
+            />
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#2ECC71]/70 to-transparent" />
+            <div className="relative grid items-center gap-10 px-6 py-12 sm:px-12 sm:py-16 lg:grid-cols-[340px_1fr] lg:gap-16 lg:px-16">
+              <div className="scene-3d mx-auto w-full max-w-[300px] lg:max-w-none">
+                <div className="relative animate-float-3d">
+                  <div className="pointer-events-none absolute -inset-8 rounded-full bg-[#2ECC71]/15 blur-3xl" />
+                  <img
+                    src={biopragSelo.url}
+                    alt="Selo Bioprag de Segurança — Estabelecimento protegido contra pragas"
+                    loading="lazy"
+                    className="relative h-auto w-full object-contain [filter:drop-shadow(0_25px_45px_rgba(0,0,0,0.6))_drop-shadow(0_0_36px_rgba(46,204,113,0.35))]"
+                  />
                 </div>
-                <div className="text-center lg:text-left">
-                  <span className="inline-flex items-center gap-2 rounded-full border border-[#2ECC71]/40 bg-[#2ECC71]/10 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#2ECC71]">
-                    <Sparkles className="h-3.5 w-3.5" /> Símbolo Bioprag
-                  </span>
-                  <h3 className="mt-5 font-display text-3xl font-bold leading-tight text-[#F0F4F0] sm:text-4xl lg:text-5xl">
-                    Receba o Selo Bioprag de Segurança.
-                  </h3>
-                  <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-[#8FA98F] lg:mx-0 lg:text-lg">
-                    Certificação técnica que atesta o padrão de biossegurança do seu estabelecimento — exibida com orgulho por quem é protegido pela Bioprag.
-                  </p>
-                  <div className="mt-7 flex flex-wrap justify-center gap-3 lg:justify-start">
-                    <a
-                      href={WHATSAPP_URL}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-2 rounded-lg bg-[#2ECC71] px-7 py-4 font-display text-sm font-bold uppercase tracking-wider text-[#06180D] transition-all hover:bg-[#7DFFB3] glow-green"
-                    >
-                      Falar com especialista <ArrowRight className="h-4 w-4" />
-                    </a>
-                  </div>
+              </div>
+              <div className="text-center lg:text-left">
+                <span className="inline-flex items-center gap-2 rounded-full border border-[#2ECC71]/30 bg-[#2ECC71]/8 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#2ECC71]">
+                  <Sparkles className="h-3.5 w-3.5" /> Símbolo Bioprag
+                </span>
+                <h3 className="mt-5 font-display text-3xl font-bold leading-tight text-[#F0F4F0] sm:text-4xl lg:text-5xl">
+                  Receba o Selo Bioprag de Segurança.
+                </h3>
+                <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-[#8FA98F] lg:mx-0 lg:text-lg">
+                  Certificação técnica que atesta o padrão de biossegurança do seu estabelecimento — exibida com orgulho por quem é protegido pela Bioprag.
+                </p>
+                <div className="mt-8 grid gap-3 sm:grid-cols-3">
+                  {["Laudo técnico emitido", "Protocolo auditável", "Selo físico no local"].map((t) => (
+                    <div key={t} className="flex items-center gap-2 rounded-xl border border-[#1C3D22] bg-[#0F2415]/70 px-4 py-3 text-left">
+                      <CheckCircle2 className="h-4 w-4 shrink-0 text-[#2ECC71]" />
+                      <span className="text-xs font-medium text-[#F0F4F0]">{t}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-8 flex flex-wrap justify-center gap-3 lg:justify-start">
+                  <a
+                    href={WHATSAPP_URL}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 rounded-full bg-[#2ECC71] px-7 py-4 font-display text-sm font-bold uppercase tracking-wider text-[#06180D] transition-all hover:bg-[#7DFFB3] glow-green"
+                  >
+                    Falar com especialista <ArrowRight className="h-4 w-4" />
+                  </a>
                 </div>
               </div>
             </div>
