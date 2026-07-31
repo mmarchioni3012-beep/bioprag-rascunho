@@ -823,6 +823,7 @@ function ContactSection() {
     servico: "",
     mensagem: "",
   });
+  const [unidade, setUnidade] = useState<"matriz" | "filial">("matriz");
 
   const update = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
     setForm((f) => ({ ...f, [k]: e.target.value }));
