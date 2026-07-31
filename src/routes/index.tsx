@@ -28,7 +28,7 @@ import {
   ShieldCheck,
   Sparkles,
   SprayCan,
-  Star,
+  Droplets,
   Target,
   TreePine,
   X,
@@ -47,6 +47,19 @@ import brazilMap from "@/assets/brazil-map.svg.asset.json";
 import biopragLogo from "@/assets/bioprag-logo.jpeg.asset.json";
 import biopragSelo from "@/assets/bioprag-selo.png.asset.json";
 import biopragFachada from "@/assets/bioprag-fachada.png.asset.json";
+import foto10 from "@/assets/foto_10.webp.asset.json";
+import foto11 from "@/assets/foto_11.webp.asset.json";
+import foto12 from "@/assets/foto_12.webp.asset.json";
+import foto16 from "@/assets/foto_16.webp.asset.json";
+import foto19 from "@/assets/foto_19.webp.asset.json";
+import foto20 from "@/assets/foto_20.webp.asset.json";
+import foto28 from "@/assets/foto_28.webp.asset.json";
+import foto29 from "@/assets/foto_29.webp.asset.json";
+import foto33 from "@/assets/foto_33.webp.asset.json";
+import foto34 from "@/assets/foto_34.webp.asset.json";
+import segResidencial from "@/assets/seg-residencial.png";
+import segComercial from "@/assets/seg-comercial.png";
+import segIndustrial from "@/assets/seg-industrial.png";
 
 const WHATSAPP_NUMBER = "5514981752595";
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
@@ -121,41 +134,10 @@ const NAV = [
   { href: "#sobre", label: "Sobre" },
   { href: "#servicos", label: "Serviços" },
   { href: "#metodo", label: "Método" },
-  { href: "#clientes", label: "Clientes" },
+  { href: "#atendimento", label: "Atendimento" },
   { href: "#contato", label: "Contato" },
 ];
 
-const CLIENTS = [
-  "Grand Fair", "Brasilfer", "GramFer", "Supermercado Central",
-  "Indústria Alfa", "Hospital São Lucas", "Colégio Horizonte", "Condomínio Park",
-];
-
-const TESTIMONIALS = [
-  {
-    initials: "GF",
-    name: "GramFer",
-    role: "Indústria · Cliente desde 2014",
-    quote:
-      "Em mais de uma década de parceria, a Bioprag se tornou uma extensão técnica da nossa operação. Documentação impecável e zero incidência sanitária.",
-    author: "Direção GramFer",
-  },
-  {
-    initials: "GF",
-    name: "Grand Fair",
-    role: "Varejo · Cliente desde 2018",
-    quote:
-      "Atendimento técnico de altíssimo nível. Os laudos da Bioprag passam com folga em qualquer auditoria sanitária — e a equipe é extremamente atenciosa.",
-    author: "Gerência Operacional Grand Fair",
-  },
-  {
-    initials: "BF",
-    name: "Brasilfer",
-    role: "Indústria · Cliente desde 2020",
-    quote:
-      "Profissionalismo, pontualidade e resultado. A Bioprag entrega exatamente o que promete e ainda nos ajuda a evoluir nossos protocolos internos.",
-    author: "Coordenação SSMA Brasilfer",
-  },
-];
 
 const DIFFERENTIALS = [
   { icon: Shield, title: "Técnica especializada", desc: "Profissionais certificados e treinados continuamente em protocolos avançados." },
@@ -176,14 +158,16 @@ type Service = {
 };
 
 const SERVICES: Service[] = [
-  { title: "Monitoramento Contínuo", short: "Visitas periódicas e laudos técnicos", desc: "Programa premium com visitas técnicas programadas, indicadores e relatórios.", img: img2963.url, icon: ClipboardList },
-  { title: "Controle de Insetos Rasteiros", short: "Baratas, formigas, cupins de solo", desc: "Eliminação técnica de pragas rasteiras em qualquer ambiente.", img: img2955.url, icon: Bug },
-  { title: "Controle de Insetos Voadores", short: "Mosquitos, moscas, mariposas", desc: "Manejo integrado de voadores com produtos certificados.", img: img2956.url, icon: Plane },
-  { title: "Controle de Roedores", short: "Ratos e camundongos", desc: "Desratização técnica com mapa de iscas e monitoramento.", img: img2962.url, icon: Rat },
-  { title: "Descupinização", short: "Cupins de madeira e estruturais", desc: "Tratamento estrutural com garantia contra cupins.", img: img2953.url, icon: TreePine },
-  { title: "Sanitização de Ambientes", short: "Desinfecção e higienização", desc: "Sanitização bactericida e viricida para qualquer ambiente.", img: img2958.url, icon: SprayCan },
-  { title: "Controle de Escorpiões", short: "Prevenção e eliminação", desc: "Plano técnico de prevenção, captura e bloqueio de acessos.", img: img2955.url, icon: Shield },
-  { title: "Biossegurança / DDD", short: "Desinfecção, desratização, dedetização", desc: "Programas completos para indústrias, hospitais e operações de grande porte.", img: img2957.url, icon: ShieldCheck },
+  { title: "Manejo Integrado de Pragas", short: "Diagnóstico, prevenção e controle", desc: "Programa técnico completo de MIP com inspeção, barreiras e indicadores.", img: foto33.url, icon: ClipboardList },
+  { title: "Desinsetização", short: "Controle químico e mecânico de insetos", desc: "Aplicação técnica com produtos registrados na ANVISA.", img: foto11.url, icon: SprayCan },
+  { title: "Controle de Insetos Rasteiros", short: "Baratas, formigas e afins", desc: "Eliminação técnica de pragas rasteiras em qualquer ambiente.", img: foto20.url, icon: Bug },
+  { title: "Controle de Insetos Voadores", short: "Mosquitos, moscas e mariposas", desc: "Manejo integrado de voadores com produtos certificados.", img: foto34.url, icon: Plane },
+  { title: "Desratização", short: "Ratos e camundongos", desc: "Mapa de iscas, porta-iscas lacrados e monitoramento contínuo.", img: foto10.url, icon: Rat },
+  { title: "Descupinização", short: "Cupins de solo e de madeira", desc: "Tratamento estrutural com garantia contra cupins.", img: img2953.url, icon: TreePine },
+  { title: "Pragas Urbanas e Vetores", short: "Escorpiões, aranhas e vetores", desc: "Bloqueio de acessos, captura e controle de vetores urbanos.", img: foto29.url, icon: ShieldCheck },
+  { title: "Higienização de Reservatórios", short: "Limpeza de caixas d'água", desc: "Higienização de reservatórios com laudo técnico e potabilidade.", img: foto12.url, icon: Droplets },
+  { title: "Sanitização e Desinfecção", short: "Ambientes e superfícies", desc: "Sanitização bactericida e viricida para qualquer ambiente.", img: foto28.url, icon: Sparkles },
+  { title: "Monitoramento e Prevenção", short: "Visitas periódicas e laudos", desc: "Acompanhamento programado com relatórios e ações preventivas.", img: foto16.url, icon: Repeat },
 ];
 
 const METHOD = [
@@ -417,31 +401,6 @@ function Hero() {
   );
 }
 
-function ClientsMarquee() {
-  const row = [...CLIENTS, ...CLIENTS];
-  return (
-    <section className="relative border-y border-[#1C3D22] bg-[#0F2415] py-10">
-      <div className="container-page mb-6 text-center">
-        <p className="text-xs uppercase tracking-[0.24em] text-[#8FA98F]">Empresas que confiam na Bioprag</p>
-      </div>
-      <div className="relative overflow-hidden">
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-32 bg-gradient-to-r from-[#0F2415] to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-32 bg-gradient-to-l from-[#0F2415] to-transparent" />
-        <div className="flex w-max animate-marquee gap-10 px-10">
-          {row.map((c, i) => (
-            <div
-              key={i}
-              aria-label={`Logo ${c}`}
-              className="flex h-16 w-44 shrink-0 items-center justify-center rounded-md border border-dashed border-[#F0F4F0]/20 bg-[#0A1A0F] font-display text-sm font-bold uppercase tracking-[0.18em] text-[#F0F4F0]/40 transition-colors hover:border-[#2ECC71]/60 hover:text-[#F0F4F0]/80"
-            >
-              {c}
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
 
 function Reveal({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
   const { ref, shown } = useReveal<HTMLDivElement>();
@@ -471,13 +430,40 @@ function About() {
           </h2>
           <p className="mt-6 text-base leading-relaxed text-[#8FA98F]">
             Fundada em 1986, a Bioprag nasceu com a missão de elevar o padrão técnico do controle de pragas
-            no interior paulista. Hoje somos referência regional em saúde ambiental e biossegurança,
-            atendendo residências, comércios, indústrias, hospitais e órgãos públicos.
+            no interior paulista. Com sede em Conchas/SP e filial em Campinas/SP, a empresa reúne
+            experiência, conhecimento técnico e estrutura operacional própria — atendendo residências,
+            comércios, indústrias, hospitais e órgãos públicos em todo o Brasil.
           </p>
           <p className="mt-4 text-base leading-relaxed text-[#8FA98F]">
             Operamos com método, documentação e responsabilidade ambiental — porque proteção que não pode
             ser comprovada não é proteção.
           </p>
+
+          {/* Matriz & Filial */}
+          <div className="mt-8 grid gap-4 sm:grid-cols-2">
+            {[
+              {
+                tag: "Matriz",
+                city: "Conchas / SP",
+                addr: "Rua Goiás, 446 — Centro\nCEP 18570-043",
+              },
+              {
+                tag: "Filial",
+                city: "Campinas / SP",
+                addr: "Rua Emerson José, 1710 — Sala 07\nCampinas / SP",
+              },
+            ].map((u) => (
+              <div key={u.tag} className="rounded-xl border border-[#1C3D22] bg-[#0F2415] p-5 transition-colors hover:border-[#2ECC71]/60">
+                <div className="flex items-center gap-2">
+                  <MapPin className="h-4 w-4 text-[#2ECC71]" />
+                  <span className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#2ECC71]">{u.tag}</span>
+                </div>
+                <div className="mt-2 font-display text-lg font-bold text-[#F0F4F0]">{u.city}</div>
+                <p className="mt-1 whitespace-pre-line text-sm leading-relaxed text-[#8FA98F]">{u.addr}</p>
+              </div>
+            ))}
+          </div>
+
           <div className="mt-8 grid gap-4 sm:grid-cols-3">
             {[
               { icon: Award, t: "Reputação consolidada" },
@@ -557,7 +543,7 @@ function Services() {
           </a>
         </div>
 
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
           {SERVICES.map((s, i) => {
             const Icon = s.icon;
             return (
@@ -634,7 +620,7 @@ function Method() {
 }
 
 function Training() {
-  const teamPhotos = [img2953, img2955, img2956, img2957, img2958, img2962, img2963, img2953];
+  const teamPhotos = [foto33, foto29, foto19, foto28, foto20, foto16, foto12, foto10, foto11, foto34];
   return (
     <section className="relative py-24 sm:py-32">
       <div className="container-page">
@@ -683,58 +669,6 @@ function Training() {
   );
 }
 
-function Cases() {
-  return (
-    <section id="clientes" className="relative bg-[#0F2415] py-24 sm:py-32">
-      <div className="container-page">
-        <div className="max-w-2xl">
-          <span className="eyebrow">Depoimentos</span>
-          <h2 className="mt-4 font-display text-4xl font-bold leading-tight text-[#F0F4F0] sm:text-5xl">
-            Empresas reais, resultados consistentes.
-          </h2>
-        </div>
-
-        <div className="mt-12 grid gap-5 lg:grid-cols-3">
-          {TESTIMONIALS.map((t, i) => (
-            <Reveal key={i} delay={i * 0.08}>
-              <article className="flex h-full flex-col rounded-2xl border border-[#1C3D22] bg-[#0A1A0F] p-7 transition-colors hover:border-[#2ECC71]/60">
-                <div className="flex items-center gap-4">
-                  <div className="grid h-14 w-14 shrink-0 place-items-center rounded-full border border-[#2ECC71] bg-[#0F2415] font-display text-base font-bold text-[#2ECC71]">
-                    {t.initials}
-                  </div>
-                  <div className="min-w-0">
-                    <div className="font-display text-base font-bold text-[#F0F4F0]">{t.name}</div>
-                    <div className="text-[11px] uppercase tracking-wider text-[#8FA98F]">{t.role}</div>
-                  </div>
-                </div>
-                <div className="mt-5 flex gap-1 text-[#2ECC71]">
-                  {Array.from({ length: 5 }).map((_, j) => (
-                    <Star key={j} className="h-4 w-4 fill-current" />
-                  ))}
-                </div>
-                <blockquote className="mt-3 flex-1 text-base leading-relaxed text-[#F0F4F0]/90">
-                  “{t.quote}”
-                </blockquote>
-                <div className="mt-5 border-t border-[#1C3D22] pt-4 text-xs text-[#8FA98F]">{t.author}</div>
-              </article>
-            </Reveal>
-          ))}
-        </div>
-
-        <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-4">
-          {CLIENTS.map((c, i) => (
-            <div
-              key={i}
-              className="flex h-20 items-center justify-center rounded-xl border border-dashed border-[#1C3D22] bg-[#0A1A0F] font-display text-sm font-bold uppercase tracking-[0.15em] text-[#F0F4F0]/50 transition-colors hover:border-[#2ECC71] hover:text-[#F0F4F0]"
-            >
-              {c}
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
 
 function Regional() {
   return (
@@ -870,7 +804,10 @@ function Faq() {
 function ContactSection() {
   const [form, setForm] = useState({
     nome: "",
+    whatsapp: "",
+    email: "",
     cidade: "",
+    perfil: "",
     servico: "",
     mensagem: "",
   });
@@ -880,7 +817,17 @@ function ContactSection() {
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const msg = `Olá! Sou ${form.nome}, de ${form.cidade}. Interesse em ${form.servico}. ${form.mensagem}`;
+    const msg = [
+      `Olá, Bioprag! Meu nome é ${form.nome}.`,
+      `WhatsApp: ${form.whatsapp}`,
+      form.email ? `E-mail: ${form.email}` : "",
+      `Cidade: ${form.cidade}`,
+      `Perfil: ${form.perfil}`,
+      `Serviço de interesse: ${form.servico}`,
+      form.mensagem ? `Detalhes: ${form.mensagem}` : "",
+    ]
+      .filter(Boolean)
+      .join("\n");
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
   };
 
@@ -960,32 +907,50 @@ function ContactSection() {
           <Reveal delay={0.1} className="h-full">
             <form onSubmit={onSubmit} className="flex h-full flex-col rounded-2xl border border-[#1C3D22] bg-[#0F2415] p-6 sm:p-8">
               <div className="flex flex-1 flex-col gap-4">
-                <div>
-                  <label className={labelCls}>Nome *</label>
-                  <input required value={form.nome} onChange={update("nome")} className={inputCls} placeholder="Seu nome completo" />
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <label className={labelCls}>Nome *</label>
+                    <input required value={form.nome} onChange={update("nome")} className={inputCls} placeholder="Seu nome completo" />
+                  </div>
+                  <div>
+                    <label className={labelCls}>WhatsApp *</label>
+                    <input required type="tel" value={form.whatsapp} onChange={update("whatsapp")} className={inputCls} placeholder="(00) 00000-0000" />
+                  </div>
+                  <div>
+                    <label className={labelCls}>E-mail</label>
+                    <input type="email" value={form.email} onChange={update("email")} className={inputCls} placeholder="seu@email.com.br" />
+                  </div>
+                  <div>
+                    <label className={labelCls}>Cidade *</label>
+                    <input required value={form.cidade} onChange={update("cidade")} className={inputCls} placeholder="Cidade / Estado" />
+                  </div>
                 </div>
-                <div>
-                  <label className={labelCls}>Cidade *</label>
-                  <input required value={form.cidade} onChange={update("cidade")} className={inputCls} placeholder="Cidade / Estado" />
-                </div>
-                <div>
-                  <label className={labelCls}>Tipo de serviço *</label>
-                  <select required value={form.servico} onChange={update("servico")} className={inputCls}>
-                    <option value="">Selecione</option>
-                    <option>Monitoramento Contínuo</option>
-                    <option>Controle de Insetos Rasteiros</option>
-                    <option>Controle de Insetos Voadores</option>
-                    <option>Controle de Roedores</option>
-                    <option>Descupinização</option>
-                    <option>Sanitização de Ambientes</option>
-                    <option>Controle de Escorpiões</option>
-                    <option>Biossegurança / DDD</option>
-                    <option>Outro / Não sei ao certo</option>
-                  </select>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <label className={labelCls}>Perfil *</label>
+                    <select required value={form.perfil} onChange={update("perfil")} className={inputCls}>
+                      <option value="">Selecione</option>
+                      <option>Residencial</option>
+                      <option>Comercial</option>
+                      <option>Industrial</option>
+                      <option>Rural</option>
+                      <option>Órgão público / Institucional</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className={labelCls}>Serviço de interesse *</label>
+                    <select required value={form.servico} onChange={update("servico")} className={inputCls}>
+                      <option value="">Selecione</option>
+                      {SERVICES.map((s) => (
+                        <option key={s.title}>{s.title}</option>
+                      ))}
+                      <option>Outro / Não sei ao certo</option>
+                    </select>
+                  </div>
                 </div>
                 <div className="flex flex-1 flex-col">
                   <label className={labelCls}>Mensagem</label>
-                  <textarea value={form.mensagem} onChange={update("mensagem")} className={`${inputCls} min-h-0 flex-1`} placeholder="Conte mais sobre sua situação (opcional)" />
+                  <textarea value={form.mensagem} onChange={update("mensagem")} className={`${inputCls} min-h-[96px] flex-1`} placeholder="Conte mais sobre sua situação (opcional)" />
                 </div>
               </div>
               <button
@@ -1003,50 +968,56 @@ function ContactSection() {
           </Reveal>
         </div>
 
-        {/* Selo Bioprag — full-width feature block */}
+        {/* Selo Bioprag — bloco moderno */}
         <Reveal>
-          <div className="mt-16 relative overflow-hidden rounded-3xl p-[2px] bg-gradient-to-br from-[#2ECC71] via-[#7DFFB3] to-[#2ECC71]">
-            <div className="relative overflow-hidden rounded-[calc(1.5rem-2px)] bg-gradient-to-br from-[#0A1A0F] via-[#0F2415] to-[#0A1A0F] px-6 py-10 sm:px-12 sm:py-14 lg:px-16 lg:py-16">
-              <div
-                className="pointer-events-none absolute inset-0 opacity-30"
-                style={{
-                  backgroundImage:
-                    "radial-gradient(circle at 15% 20%, rgba(46,204,113,0.25), transparent 45%), radial-gradient(circle at 85% 80%, rgba(125,255,179,0.18), transparent 50%)",
-                }}
-              />
-              <div className="relative grid items-center gap-10 lg:grid-cols-[320px_1fr] lg:gap-14">
-                <div className="relative mx-auto w-full max-w-[300px] lg:max-w-none">
-                  <div className="relative rounded-2xl border-2 border-[#2ECC71]/50 bg-white p-3 shadow-[0_0_60px_-10px_rgba(46,204,113,0.7)]">
-                    <img
-                      src={biopragSelo.url}
-                      alt="Selo Bioprag de Segurança — Estabelecimento protegido contra pragas"
-                      className="h-auto w-full rounded-lg object-contain"
-                    />
-                    <span className="absolute -right-3 -top-3 grid h-12 w-12 place-items-center rounded-full bg-[#2ECC71] text-[#06180D] glow-green ring-4 ring-[#0A1A0F]">
-                      <ShieldCheck className="h-6 w-6" strokeWidth={2.4} />
-                    </span>
-                  </div>
+          <div className="relative mt-16 overflow-hidden rounded-[28px] border border-[#1C3D22] bg-[#0B1D11]">
+            <div
+              className="pointer-events-none absolute inset-0"
+              style={{
+                backgroundImage:
+                  "radial-gradient(circle at 12% 15%, rgba(46,204,113,0.16), transparent 45%), radial-gradient(circle at 88% 85%, rgba(125,255,179,0.10), transparent 50%)",
+              }}
+            />
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#2ECC71]/70 to-transparent" />
+            <div className="relative grid items-center gap-10 px-6 py-12 sm:px-12 sm:py-16 lg:grid-cols-[340px_1fr] lg:gap-16 lg:px-16">
+              <div className="scene-3d mx-auto w-full max-w-[300px] lg:max-w-none">
+                <div className="relative animate-float-3d">
+                  <div className="pointer-events-none absolute -inset-8 rounded-full bg-[#2ECC71]/15 blur-3xl" />
+                  <img
+                    src={biopragSelo.url}
+                    alt="Selo Bioprag de Segurança — Estabelecimento protegido contra pragas"
+                    loading="lazy"
+                    className="relative h-auto w-full object-contain [filter:drop-shadow(0_25px_45px_rgba(0,0,0,0.6))_drop-shadow(0_0_36px_rgba(46,204,113,0.35))]"
+                  />
                 </div>
-                <div className="text-center lg:text-left">
-                  <span className="inline-flex items-center gap-2 rounded-full border border-[#2ECC71]/40 bg-[#2ECC71]/10 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#2ECC71]">
-                    <Sparkles className="h-3.5 w-3.5" /> Símbolo Bioprag
-                  </span>
-                  <h3 className="mt-5 font-display text-3xl font-bold leading-tight text-[#F0F4F0] sm:text-4xl lg:text-5xl">
-                    Receba o Selo Bioprag de Segurança.
-                  </h3>
-                  <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-[#8FA98F] lg:mx-0 lg:text-lg">
-                    Certificação técnica que atesta o padrão de biossegurança do seu estabelecimento — exibida com orgulho por quem é protegido pela Bioprag.
-                  </p>
-                  <div className="mt-7 flex flex-wrap justify-center gap-3 lg:justify-start">
-                    <a
-                      href={WHATSAPP_URL}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-2 rounded-lg bg-[#2ECC71] px-7 py-4 font-display text-sm font-bold uppercase tracking-wider text-[#06180D] transition-all hover:bg-[#7DFFB3] glow-green"
-                    >
-                      Falar com especialista <ArrowRight className="h-4 w-4" />
-                    </a>
-                  </div>
+              </div>
+              <div className="text-center lg:text-left">
+                <span className="inline-flex items-center gap-2 rounded-full border border-[#2ECC71]/30 bg-[#2ECC71]/8 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#2ECC71]">
+                  <Sparkles className="h-3.5 w-3.5" /> Símbolo Bioprag
+                </span>
+                <h3 className="mt-5 font-display text-3xl font-bold leading-tight text-[#F0F4F0] sm:text-4xl lg:text-5xl">
+                  Receba o Selo Bioprag de Segurança.
+                </h3>
+                <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-[#8FA98F] lg:mx-0 lg:text-lg">
+                  Certificação técnica que atesta o padrão de biossegurança do seu estabelecimento — exibida com orgulho por quem é protegido pela Bioprag.
+                </p>
+                <div className="mt-8 grid gap-3 sm:grid-cols-3">
+                  {["Laudo técnico emitido", "Protocolo auditável", "Selo físico no local"].map((t) => (
+                    <div key={t} className="flex items-center gap-2 rounded-xl border border-[#1C3D22] bg-[#0F2415]/70 px-4 py-3 text-left">
+                      <CheckCircle2 className="h-4 w-4 shrink-0 text-[#2ECC71]" />
+                      <span className="text-xs font-medium text-[#F0F4F0]">{t}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-8 flex flex-wrap justify-center gap-3 lg:justify-start">
+                  <a
+                    href={WHATSAPP_URL}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 rounded-full bg-[#2ECC71] px-7 py-4 font-display text-sm font-bold uppercase tracking-wider text-[#06180D] transition-all hover:bg-[#7DFFB3] glow-green"
+                  >
+                    Falar com especialista <ArrowRight className="h-4 w-4" />
+                  </a>
                 </div>
               </div>
             </div>
@@ -1063,19 +1034,19 @@ function Segments() {
       icon: Home,
       title: "Residencial",
       desc: "Proteção discreta e segura para sua família. Tratamentos eficazes que respeitam pets, crianças e o ambiente do lar.",
-      image: img2957,
+      image: segResidencial,
     },
     {
       icon: Building2,
       title: "Comercial",
       desc: "Lojas, escritórios, restaurantes e redes. Controle preventivo com documentação completa para auditorias sanitárias.",
-      image: img2958,
+      image: segComercial,
     },
     {
       icon: Factory,
       title: "Industrial",
       desc: "Indústrias alimentícias, farmacêuticas e logísticas. Programas em conformidade com BPF, APPCC, AIB e exigências sanitárias.",
-      image: img2962,
+      image: segIndustrial,
     },
   ];
 
@@ -1112,18 +1083,24 @@ function Segments() {
           </div>
         </div>
 
-        <div className="mt-16 grid gap-6 md:grid-cols-3">
+        <div className="mt-16 grid gap-6 scene-3d md:grid-cols-3">
           {items.map((it, i) => (
             <Reveal key={it.title} delay={i * 0.08}>
-              <article className="group relative h-full overflow-hidden rounded-2xl border border-[#1C3D22] bg-[#0F2415]/80 backdrop-blur transition-all hover:border-[#2ECC71]/60 hover:shadow-[0_20px_60px_-20px_rgba(46,204,113,0.35)]">
+              <article className="group relative h-full overflow-hidden rounded-2xl border border-[#1C3D22] bg-[#0F2415]/80 backdrop-blur card-3d hover:card-3d-hover hover:border-[#2ECC71]/60">
                 <div className="relative aspect-[4/3] overflow-hidden">
+                  <div className="pointer-events-none absolute inset-0 [background:radial-gradient(circle_at_50%_60%,rgba(46,204,113,0.22),transparent_65%)]" />
+                  <div className="pointer-events-none absolute left-1/2 top-1/2 h-[70%] w-[70%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#2ECC71]/20 animate-spin-slow" />
                   <img
-                    src={it.image.url}
+                    src={it.image}
                     alt={`Atendimento Bioprag — segmento ${it.title.toLowerCase()}`}
-                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.06]"
+                    loading="lazy"
+                    width={1024}
+                    height={1024}
+                    className="relative z-[1] h-full w-full object-contain p-4 animate-float-3d [filter:drop-shadow(0_18px_30px_rgba(0,0,0,0.55))] transition-transform duration-700 group-hover:scale-[1.06]"
+                    style={{ animationDelay: `${i * 0.8}s` }}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A1A0F] via-[#0A1A0F]/40 to-transparent" />
-                  <div className="absolute left-5 top-5">
+                  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#0F2415] to-transparent" />
+                  <div className="absolute left-5 top-5 z-[2]">
                     <span className="grid h-12 w-12 place-items-center rounded-xl bg-[#2ECC71] text-[#06180D] shadow-lg glow-green">
                       <it.icon className="h-6 w-6" />
                     </span>
@@ -1284,14 +1261,12 @@ function HomePage() {
       <Navbar />
       <main>
         <Hero />
-        <ClientsMarquee />
         <About />
         <Segments />
         <WhyChoose />
         <Services />
         <Method />
         <Training />
-        <Cases />
         <Regional />
         <Faq />
         <ContactSection />
