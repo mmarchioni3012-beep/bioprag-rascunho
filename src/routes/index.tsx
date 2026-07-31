@@ -69,6 +69,18 @@ const EMAIL = "vendas@bioprag.com.br";
 const ADDRESS = "Rua Goiás, 446 — Centro, Conchas/SP";
 const ADDRESS_FILIAL = "Rua Emerson José, 1710 — Sala 07, Campinas/SP";
 const MAPS_URL = "https://maps.app.goo.gl/AwckADfya2dRDSbs5";
+const UNIDADES = {
+  matriz: {
+    label: "Matriz — Rua Goiás, 446, Centro, Conchas/SP",
+    query: "Rua Goiás, 446 - Centro, Conchas - SP, 18570-043",
+    directions: "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent("Rua Goiás, 446 - Centro, Conchas - SP, 18570-043"),
+  },
+  filial: {
+    label: "Filial — Rua Emerson José Moreira, 1710, Chácara Primavera, Campinas/SP",
+    query: "Rua Emerson José Moreira, 1710 - Chácara Primavera, Campinas - SP, 13087-441",
+    directions: "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent("Rua Emerson José Moreira, 1710 - Chácara Primavera, Campinas - SP, 13087-441"),
+  },
+} as const;
 
 const META_TITLE =
   "BIOPRAG — Controle Integrado de Pragas, Saúde Ambiental e Biossegurança | Desde 1986";
