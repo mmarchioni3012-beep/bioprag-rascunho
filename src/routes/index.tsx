@@ -44,8 +44,6 @@ import img2958 from "@/assets/IMG_2958.jpg.asset.json";
 import img2962 from "@/assets/IMG_2962.jpg.asset.json";
 import img2963 from "@/assets/IMG_2963.jpg.asset.json";
 import brazilMap from "@/assets/brazil-map.svg.asset.json";
-import biopragLogo from "@/assets/bioprag-logo.jpeg.asset.json";
-import biopragSelo from "@/assets/bioprag-selo.png.asset.json";
 import biopragSeloCrop from "@/assets/bioprag-selo-crop.png";
 import biopragLogoFull from "@/assets/bioprag-logo-full.png";
 import biopragMark from "@/assets/bioprag-mark.png";
@@ -92,6 +90,15 @@ export const Route = createFileRoute("/")({
   }),
   component: HomePage,
 });
+
+/* ---------------- Icons ---------------- */
+function WhatsAppIcon({ className = "h-6 w-6" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true" className={className}>
+      <path d="M16.04 3.2c-7.06 0-12.8 5.74-12.8 12.8 0 2.26.6 4.47 1.73 6.41L3.2 28.8l6.56-1.72a12.74 12.74 0 0 0 6.28 1.63h.01c7.06 0 12.8-5.74 12.8-12.8 0-3.42-1.33-6.64-3.75-9.06a12.72 12.72 0 0 0-9.06-3.65Zm0 23.06h-.01a10.6 10.6 0 0 1-5.4-1.48l-.39-.23-4.01 1.05 1.07-3.91-.25-.4a10.58 10.58 0 0 1-1.62-5.65c0-5.86 4.77-10.63 10.63-10.63 2.84 0 5.5 1.11 7.51 3.12a10.56 10.56 0 0 1 3.11 7.52c0 5.86-4.77 10.61-10.64 10.61Zm5.83-7.96c-.32-.16-1.89-.93-2.18-1.04-.29-.11-.5-.16-.71.16-.21.32-.82 1.04-1 1.25-.19.21-.37.24-.69.08-.32-.16-1.35-.5-2.57-1.59-.95-.85-1.59-1.89-1.78-2.21-.19-.32-.02-.5.14-.66.15-.15.32-.37.48-.56.16-.19.21-.32.32-.53.11-.21.05-.4-.03-.56-.08-.16-.71-1.72-.98-2.35-.26-.62-.52-.54-.71-.55l-.61-.01c-.21 0-.56.08-.85.4-.29.32-1.11 1.09-1.11 2.65 0 1.56 1.14 3.07 1.3 3.28.16.21 2.25 3.43 5.45 4.81.76.33 1.35.52 1.82.67.76.24 1.46.21 2.01.13.61-.09 1.89-.77 2.16-1.52.27-.75.27-1.39.19-1.52-.08-.13-.29-.21-.61-.37Z" />
+    </svg>
+  );
+}
 
 /* ---------------- Hooks ---------------- */
 function useReveal<T extends HTMLElement>() {
@@ -891,7 +898,7 @@ function ContactSection() {
                 </div>
               </div>
               <div className="flex items-start gap-3 rounded-lg border border-[#1C3D22] bg-[#0F2415] p-4">
-                <MessageCircle className="mt-0.5 h-5 w-5 shrink-0 text-[#2ECC71]" />
+                <WhatsAppIcon className="mt-0.5 h-5 w-5 shrink-0 text-[#25D366]" />
                 <div>
                   <div className="text-xs uppercase tracking-[0.14em] text-[#8FA98F]">WhatsApp</div>
                   <div className="text-sm font-medium text-[#F0F4F0]">{WHATSAPP_DISPLAY}</div>
@@ -962,7 +969,7 @@ function ContactSection() {
                 type="submit"
                 className="mt-6 inline-flex w-full items-center justify-center gap-2.5 rounded-lg bg-[#25D366] px-6 py-3.5 font-sans text-sm font-semibold text-white transition-all hover:brightness-110"
               >
-                <MessageCircle className="h-5 w-5" />
+                <WhatsAppIcon className="h-5 w-5" />
                 Enviar para o WhatsApp
                 <ArrowRight className="h-4 w-4" />
               </button>
@@ -1249,9 +1256,9 @@ function FloatingWhatsApp() {
       target="_blank"
       rel="noreferrer"
       aria-label="Falar com especialista no WhatsApp"
-      className="group fixed bottom-6 right-6 z-50 grid h-14 w-14 place-items-center rounded-full bg-[#25D366] text-white shadow-lg animate-pulse-soft"
+      className="group fixed bottom-6 right-6 z-50 grid h-16 w-16 place-items-center rounded-full bg-[#25D366] text-white shadow-[0_12px_40px_-8px_rgba(37,211,102,0.8)] ring-4 ring-[#25D366]/25 transition-transform hover:scale-105 animate-pulse-soft"
     >
-      <MessageCircle className="h-6 w-6" />
+      <WhatsAppIcon className="h-9 w-9" />
       <span className="pointer-events-none absolute right-16 whitespace-nowrap rounded-md bg-[#0F2415] px-3 py-1.5 text-xs font-semibold text-[#F0F4F0] opacity-0 transition-opacity group-hover:opacity-100">
         Falar com especialista
       </span>
