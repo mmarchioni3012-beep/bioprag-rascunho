@@ -54,6 +54,8 @@ import foto16 from "@/assets/foto_16.webp.asset.json";
 import foto19 from "@/assets/foto_19.webp.asset.json";
 import foto20 from "@/assets/foto_20.webp.asset.json";
 import foto28 from "@/assets/foto_28_v2.png.asset.json";
+import heroTecnico from "@/assets/hero-tecnico.png.asset.json";
+
 import foto29 from "@/assets/foto_29.webp.asset.json";
 import foto33 from "@/assets/foto_33.webp.asset.json";
 import foto34 from "@/assets/foto_34.webp.asset.json";
@@ -402,16 +404,20 @@ function Hero() {
         </div>
 
         {/* Hero visual */}
-        <div className="relative hidden lg:block animate-fade-in" style={{ animationDelay: "0.4s" }}>
-          <div className="relative aspect-[4/5] overflow-hidden rounded-3xl border border-[#1C3D22] glow-green">
-            <img src={img2953.url} alt="Equipe Bioprag em operação" className="h-full w-full object-cover object-center" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0A1A0F] via-transparent to-transparent" />
-            <div className="absolute bottom-6 left-6 right-6 rounded-xl border border-[#1C3D22] bg-[#0A1A0F]/80 p-4 backdrop-blur-md">
+        <div className="relative animate-fade-in" style={{ animationDelay: "0.4s" }}>
+          <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-[#1C3D22] glow-green sm:aspect-[16/10] lg:aspect-[4/5]">
+            <img
+              src={heroTecnico.url}
+              alt="Técnico Bioprag com EPI completo em operação de sanitização"
+              className="h-full w-full object-cover object-[center_22%] lg:object-[center_30%]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0A1A0F] via-[#0A1A0F]/20 to-transparent" />
+            <div className="absolute bottom-4 left-4 right-4 rounded-xl border border-[#1C3D22] bg-[#0A1A0F]/80 p-4 backdrop-blur-md sm:bottom-6 sm:left-6 sm:right-6">
               <div className="flex items-center gap-3">
-                <span className="grid h-10 w-10 place-items-center rounded-md bg-[#2ECC71] text-[#06180D]">
+                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-md bg-[#2ECC71] text-[#06180D]">
                   <ShieldCheck className="h-5 w-5" />
                 </span>
-                <div>
+                <div className="min-w-0">
                   <div className="text-sm font-semibold text-[#F0F4F0]">Operação certificada</div>
                   <div className="text-xs text-[#8FA98F]">Equipe técnica · EPI completo · Laudo emitido</div>
                 </div>
@@ -420,6 +426,7 @@ function Hero() {
           </div>
           <div className="absolute -right-6 -top-6 -z-10 h-40 w-40 rounded-full bg-[#2ECC71]/20 blur-3xl" />
         </div>
+
       </div>
     </section>
   );
@@ -582,7 +589,7 @@ function Services() {
                     src={s.img}
                     alt={s.title}
                     loading="lazy"
-                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="absolute inset-0 h-full w-full object-cover object-[center_28%] transition-transform duration-700 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[rgba(0,20,5,0.92)] via-[rgba(0,20,5,0.55)] to-[rgba(0,20,5,0.25)] transition-colors duration-500 group-hover:from-[rgba(0,20,5,0.95)]" />
                   <span className="absolute left-4 top-4 grid h-9 w-9 place-items-center rounded-md bg-[#2ECC71] text-[#06180D]">
@@ -662,12 +669,12 @@ function Training() {
         <Reveal delay={0.1}>
           <div className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
             {teamPhotos.map((p, i) => (
-              <div key={i} className="group relative aspect-square overflow-hidden rounded-xl border border-[#1C3D22]">
+              <div key={i} className="group relative aspect-[3/4] overflow-hidden rounded-xl border border-[#1C3D22] sm:aspect-square">
                 <img
                   src={p.url}
                   alt={`Equipe Bioprag em campo ${i + 1}`}
                   loading="lazy"
-                  className="h-full w-full object-cover object-[center_30%] transition-transform duration-700 group-hover:scale-105"
+                  className="h-full w-full object-cover object-[center_25%] transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0A1A0F]/70 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
               </div>
@@ -1195,7 +1202,7 @@ function FinalCTA() {
         alt=""
         aria-hidden
         loading="lazy"
-        className="absolute inset-0 -z-20 h-full w-full scale-105 object-cover object-[center_28%]"
+        className="absolute inset-0 -z-20 h-full w-full scale-105 object-cover object-[center_20%] sm:object-[center_28%]"
       />
       <div
         className="absolute inset-0 -z-10"
