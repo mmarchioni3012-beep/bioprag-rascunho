@@ -85,9 +85,11 @@ const UNIDADES = {
 } as const;
 
 const META_TITLE =
-  "BIOPRAG — Controle Integrado de Pragas, Saúde Ambiental e Biossegurança | Desde 1986";
+  "BIOPRAG — Controle Integrado de Pragas e Biossegurança";
 const META_DESC =
   "Controle integrado de pragas, saúde ambiental e biossegurança com método técnico, auditável e 100% documentado. Atendimento em todo o Brasil desde 1986.";
+const SITE_URL = "https://bioprag.lovable.app";
+const OG_IMAGE = `${SITE_URL}${img2953.url}`;
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -96,10 +98,56 @@ export const Route = createFileRoute("/")({
       { name: "description", content: META_DESC },
       { property: "og:title", content: META_TITLE },
       { property: "og:description", content: META_DESC },
+      { property: "og:url", content: "/" },
       { name: "twitter:title", content: META_TITLE },
       { name: "twitter:description", content: META_DESC },
-      { property: "og:image", content: img2953.url },
-      { name: "twitter:image", content: img2953.url },
+      { property: "og:image", content: OG_IMAGE },
+      { name: "twitter:image", content: OG_IMAGE },
+    ],
+    links: [{ rel: "canonical", href: "/" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "LocalBusiness",
+          name: "BIOPRAG",
+          description: META_DESC,
+          url: SITE_URL,
+          image: OG_IMAGE,
+          telephone: "+55 14 3845-1266",
+          email: "vendas@bioprag.com.br",
+          areaServed: "BR",
+          address: [
+            {
+              "@type": "PostalAddress",
+              streetAddress: "Rua Goiás, 446",
+              addressLocality: "Conchas",
+              addressRegion: "SP",
+              addressCountry: "BR",
+            },
+            {
+              "@type": "PostalAddress",
+              streetAddress: "Rua Emerson José, 1710 — Sala 07",
+              addressLocality: "Campinas",
+              addressRegion: "SP",
+              addressCountry: "BR",
+            },
+          ],
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: FAQ.map((f) => ({
+            "@type": "Question",
+            name: f.q,
+            acceptedAnswer: { "@type": "Answer", text: f.a },
+          })),
+        }),
+      },
     ],
   }),
   component: HomePage,
@@ -261,7 +309,7 @@ function Navbar() {
     >
       <div className="container-page flex h-16 items-center justify-between gap-4">
         <a href="#top" className="flex min-w-0 items-center gap-2.5">
-          <img src={biopragMark} alt="Bioprag" width={492} height={478} className="h-10 w-10 shrink-0 object-contain [filter:drop-shadow(0_0_10px_rgba(46,204,113,0.35))]" />
+          <img src={biopragMark} alt="Logotipo BIOPRAG — controle integrado de pragas" width={492} height={478} fetchPriority="high" decoding="async" className="h-10 w-10 shrink-0 object-contain [filter:drop-shadow(0_0_10px_rgba(46,204,113,0.35))]" />
           <span className="font-display text-lg font-extrabold tracking-tight text-[#F0F4F0]">BIOPRAG</span>
         </a>
         <nav className="hidden items-center gap-8 md:flex">
@@ -583,7 +631,7 @@ function Services() {
                 >
                   <img
                     src={s.img}
-                    alt={s.title}
+                    alt={`Serviço de ${s.title} — ${s.short} pela equipe técnica Bioprag`}
                     loading="lazy"
                     className="absolute inset-0 h-full w-full object-cover object-[center_28%] transition-transform duration-700 group-hover:scale-105"
                   />
@@ -962,26 +1010,26 @@ function ContactSection() {
               <div className="flex flex-1 flex-col gap-4">
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div>
-                    <label className={labelCls}>Nome *</label>
-                    <input required value={form.nome} onChange={update("nome")} className={inputCls} placeholder="Seu nome completo" />
+                    <label htmlFor="contato-nome" className={labelCls}>Nome *</label>
+                    <input id="contato-nome" name="nome" required value={form.nome} onChange={update("nome")} className={inputCls} placeholder="Seu nome completo" />
                   </div>
                   <div>
-                    <label className={labelCls}>WhatsApp *</label>
-                    <input required type="tel" value={form.whatsapp} onChange={update("whatsapp")} className={inputCls} placeholder="(00) 00000-0000" />
+                    <label htmlFor="contato-whatsapp" className={labelCls}>WhatsApp *</label>
+                    <input id="contato-whatsapp" name="whatsapp" required type="tel" value={form.whatsapp} onChange={update("whatsapp")} className={inputCls} placeholder="(00) 00000-0000" />
                   </div>
                   <div>
-                    <label className={labelCls}>E-mail</label>
-                    <input type="email" value={form.email} onChange={update("email")} className={inputCls} placeholder="seu@email.com.br" />
+                    <label htmlFor="contato-email" className={labelCls}>E-mail</label>
+                    <input id="contato-email" name="email" type="email" value={form.email} onChange={update("email")} className={inputCls} placeholder="seu@email.com.br" />
                   </div>
                   <div>
-                    <label className={labelCls}>Cidade *</label>
-                    <input required value={form.cidade} onChange={update("cidade")} className={inputCls} placeholder="Cidade / Estado" />
+                    <label htmlFor="contato-cidade" className={labelCls}>Cidade *</label>
+                    <input id="contato-cidade" name="cidade" required value={form.cidade} onChange={update("cidade")} className={inputCls} placeholder="Cidade / Estado" />
                   </div>
                 </div>
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div>
-                    <label className={labelCls}>Perfil *</label>
-                    <select required value={form.perfil} onChange={update("perfil")} className={inputCls}>
+                    <label htmlFor="contato-perfil" className={labelCls}>Perfil *</label>
+                    <select id="contato-perfil" name="perfil" required value={form.perfil} onChange={update("perfil")} className={inputCls}>
                       <option value="">Selecione</option>
                       <option>Residencial</option>
                       <option>Comercial</option>
@@ -991,8 +1039,8 @@ function ContactSection() {
                     </select>
                   </div>
                   <div>
-                    <label className={labelCls}>Serviço de interesse *</label>
-                    <select required value={form.servico} onChange={update("servico")} className={inputCls}>
+                    <label htmlFor="contato-servico" className={labelCls}>Serviço de interesse *</label>
+                    <select id="contato-servico" name="servico" required value={form.servico} onChange={update("servico")} className={inputCls}>
                       <option value="">Selecione</option>
                       {SERVICES.map((s) => (
                         <option key={s.title}>{s.title}</option>
@@ -1002,8 +1050,8 @@ function ContactSection() {
                   </div>
                 </div>
                 <div className="flex flex-1 flex-col">
-                  <label className={labelCls}>Mensagem</label>
-                  <textarea value={form.mensagem} onChange={update("mensagem")} className={`${inputCls} min-h-[96px] flex-1`} placeholder="Conte mais sobre sua situação (opcional)" />
+                  <label htmlFor="contato-mensagem" className={labelCls}>Mensagem</label>
+                  <textarea id="contato-mensagem" name="mensagem" value={form.mensagem} onChange={update("mensagem")} className={`${inputCls} min-h-[96px] flex-1`} placeholder="Conte mais sobre sua situação (opcional)" />
                 </div>
               </div>
               <button
