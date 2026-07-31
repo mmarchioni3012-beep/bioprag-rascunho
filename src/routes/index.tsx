@@ -53,7 +53,7 @@ import foto12 from "@/assets/foto_12.webp.asset.json";
 import foto16 from "@/assets/foto_16.webp.asset.json";
 import foto19 from "@/assets/foto_19.webp.asset.json";
 import foto20 from "@/assets/foto_20.webp.asset.json";
-import foto28 from "@/assets/foto_28.webp.asset.json";
+import foto28 from "@/assets/foto_28_v2.png.asset.json";
 import foto29 from "@/assets/foto_29.webp.asset.json";
 import foto33 from "@/assets/foto_33.webp.asset.json";
 import foto34 from "@/assets/foto_34.webp.asset.json";
@@ -69,6 +69,18 @@ const EMAIL = "vendas@bioprag.com.br";
 const ADDRESS = "Rua Goiás, 446 — Centro, Conchas/SP";
 const ADDRESS_FILIAL = "Rua Emerson José, 1710 — Sala 07, Campinas/SP";
 const MAPS_URL = "https://maps.app.goo.gl/AwckADfya2dRDSbs5";
+const UNIDADES = {
+  matriz: {
+    label: "Matriz — Rua Goiás, 446, Centro, Conchas/SP",
+    query: "Rua Goiás, 446 - Centro, Conchas - SP, 18570-043",
+    directions: "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent("Rua Goiás, 446 - Centro, Conchas - SP, 18570-043"),
+  },
+  filial: {
+    label: "Filial — Rua Emerson José Moreira, 1710, Chácara Primavera, Campinas/SP",
+    query: "Rua Emerson José Moreira, 1710 - Chácara Primavera, Campinas - SP, 13087-441",
+    directions: "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent("Rua Emerson José Moreira, 1710 - Chácara Primavera, Campinas - SP, 13087-441"),
+  },
+} as const;
 
 const META_TITLE =
   "BIOPRAG — Controle Integrado de Pragas, Saúde Ambiental e Biossegurança | Desde 1986";
@@ -823,6 +835,7 @@ function ContactSection() {
     servico: "",
     mensagem: "",
   });
+  const [unidade, setUnidade] = useState<"matriz" | "filial">("matriz");
 
   const update = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
     setForm((f) => ({ ...f, [k]: e.target.value }));
@@ -863,18 +876,34 @@ function ContactSection() {
         <div className="mt-12 grid gap-8 lg:grid-cols-2">
           <Reveal>
             <div className="relative overflow-hidden rounded-2xl border border-[#1C3D22]">
+              <div className="flex gap-2 border-b border-[#1C3D22] bg-[#0F2415] p-2">
+                {(["matriz", "filial"] as const).map((k) => (
+                  <button
+                    key={k}
+                    type="button"
+                    onClick={() => setUnidade(k)}
+                    className={`flex-1 rounded-lg px-4 py-2.5 text-xs font-bold uppercase tracking-wider transition-colors ${
+                      unidade === k ? "bg-[#2ECC71] text-[#06180D]" : "text-[#8FA98F] hover:text-[#F0F4F0]"
+                    }`}
+                  >
+                    <MapPin className="mr-1.5 inline h-3.5 w-3.5" />
+                    {k === "matriz" ? "Matriz — Conchas" : "Filial — Campinas"}
+                  </button>
+                ))}
+              </div>
               <iframe
-                src="https://www.google.com/maps?q=Rua+Goi%C3%A1s,+446+-+Centro,+Conchas+-+SP,+18570-043&z=17&output=embed"
+                key={unidade}
+                src={`https://www.google.com/maps?q=${encodeURIComponent(UNIDADES[unidade].query)}&z=17&output=embed`}
                 width="100%"
-                height="450"
+                height="420"
                 style={{ border: 0, filter: "invert(0.92) hue-rotate(180deg) saturate(0.85) contrast(0.95)" }}
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title="Localização Bioprag — Rua Goiás, 446, Centro, Conchas/SP — CEP 18570-043"
+                title={`Localização Bioprag — ${UNIDADES[unidade].label}`}
               />
               <a
-                href={MAPS_URL}
+                href={UNIDADES[unidade].directions}
                 target="_blank"
                 rel="noreferrer"
                 className="absolute bottom-4 left-4 inline-flex items-center gap-2 rounded-lg bg-[#2ECC71] px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-[#06180D] shadow-lg transition-all hover:bg-[#7DFFB3]"
@@ -1156,10 +1185,21 @@ function FinalCTA() {
     <section
       id="cta-final"
       className="relative isolate overflow-hidden py-28 sm:py-36"
-      style={{
-        background: "linear-gradient(135deg, #0A1A0F 0%, #1A3D1F 50%, #0A1A0F 100%)",
-      }}
     >
+      <img
+        src={foto34.url}
+        alt=""
+        aria-hidden
+        loading="lazy"
+        className="absolute inset-0 -z-20 h-full w-full object-cover object-center"
+      />
+      <div
+        className="absolute inset-0 -z-10"
+        style={{
+          background:
+            "linear-gradient(135deg, rgba(10,26,15,0.94) 0%, rgba(26,61,31,0.86) 50%, rgba(10,26,15,0.96) 100%)",
+        }}
+      />
       <HexGrid />
       <div className="container-page relative text-center">
         <Reveal>
