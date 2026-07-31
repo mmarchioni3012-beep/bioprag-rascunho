@@ -54,6 +54,8 @@ import foto16 from "@/assets/foto_16.webp.asset.json";
 import foto19 from "@/assets/foto_19.webp.asset.json";
 import foto20 from "@/assets/foto_20.webp.asset.json";
 import foto28 from "@/assets/foto_28_v2.png.asset.json";
+import heroTecnico from "@/assets/hero-tecnico.png.asset.json";
+
 import foto29 from "@/assets/foto_29.webp.asset.json";
 import foto33 from "@/assets/foto_33.webp.asset.json";
 import foto34 from "@/assets/foto_34.webp.asset.json";
