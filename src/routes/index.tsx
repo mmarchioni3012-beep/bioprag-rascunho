@@ -984,13 +984,18 @@ function Compliance() {
               <h3 className="text-base font-semibold text-foreground">Registros da empresa</h3>
             </div>
             <dl className="mt-5 divide-y divide-border">
-              {registrations.map((r) => (
+              {visibleRegistrations.map((r) => (
                 <div key={r.label} className="flex flex-col gap-1 py-3 sm:flex-row sm:justify-between">
                   <dt className="text-sm text-ink-soft">{r.label}</dt>
                   <dd className="text-sm font-medium text-foreground">{r.value}</dd>
                 </div>
               ))}
             </dl>
+            <p className="mt-4 text-xs leading-relaxed text-ink-soft">
+              Demais registros técnicos e sanitários, como responsável técnico, cadastro ambiental e
+              licença sanitária, são apresentados na proposta e na documentação do serviço.
+            </p>
+
           </div>
         </Reveal>
       </div>
