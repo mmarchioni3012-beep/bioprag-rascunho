@@ -1185,10 +1185,21 @@ function FinalCTA() {
     <section
       id="cta-final"
       className="relative isolate overflow-hidden py-28 sm:py-36"
-      style={{
-        background: "linear-gradient(135deg, #0A1A0F 0%, #1A3D1F 50%, #0A1A0F 100%)",
-      }}
     >
+      <img
+        src={foto34.url}
+        alt=""
+        aria-hidden
+        loading="lazy"
+        className="absolute inset-0 -z-20 h-full w-full object-cover object-center"
+      />
+      <div
+        className="absolute inset-0 -z-10"
+        style={{
+          background:
+            "linear-gradient(135deg, rgba(10,26,15,0.94) 0%, rgba(26,61,31,0.86) 50%, rgba(10,26,15,0.96) 100%)",
+        }}
+      />
       <HexGrid />
       <div className="container-page relative text-center">
         <Reveal>
