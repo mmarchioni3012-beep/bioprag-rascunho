@@ -182,16 +182,12 @@ type Service = {
 };
 
 const SERVICES: Service[] = [
-  { title: "Manejo Integrado de Pragas", short: "Diagnóstico, prevenção e controle", desc: "Programa técnico completo de MIP com inspeção, barreiras e indicadores.", img: foto33.url, icon: ClipboardList },
-  { title: "Desinsetização", short: "Controle químico e mecânico de insetos", desc: "Aplicação técnica com produtos registrados na ANVISA.", img: foto11.url, icon: SprayCan },
-  { title: "Controle de Insetos Rasteiros", short: "Baratas, formigas e afins", desc: "Eliminação técnica de pragas rasteiras em qualquer ambiente.", img: foto20.url, icon: Bug },
-  { title: "Controle de Insetos Voadores", short: "Mosquitos, moscas e mariposas", desc: "Manejo integrado de voadores com produtos certificados.", img: foto34.url, icon: Plane },
-  { title: "Desratização", short: "Ratos e camundongos", desc: "Mapa de iscas, porta-iscas lacrados e monitoramento contínuo.", img: foto10.url, icon: Rat },
-  { title: "Descupinização", short: "Cupins de solo e de madeira", desc: "Tratamento estrutural com garantia contra cupins.", img: img2953.url, icon: TreePine },
-  { title: "Pragas Urbanas e Vetores", short: "Escorpiões, aranhas e vetores", desc: "Bloqueio de acessos, captura e controle de vetores urbanos.", img: foto29.url, icon: ShieldCheck },
-  { title: "Higienização de Reservatórios", short: "Limpeza de caixas d'água", desc: "Higienização de reservatórios com laudo técnico e potabilidade.", img: foto12.url, icon: Droplets },
-  { title: "Sanitização e Desinfecção", short: "Ambientes e superfícies", desc: "Sanitização bactericida e viricida para qualquer ambiente.", img: foto28.url, icon: Sparkles },
-  { title: "Monitoramento e Prevenção", short: "Visitas periódicas e laudos", desc: "Acompanhamento programado com relatórios e ações preventivas.", img: foto16.url, icon: Repeat },
+  { title: "Desinsetização", short: "Controle químico e mecânico de insetos", desc: "Aplicação técnica com produtos registrados na ANVISA e protocolo de biossegurança.", img: foto11.url, icon: SprayCan },
+  { title: "Controle de Insetos Rasteiros", short: "Baratas, formigas e pragas rasteiras", desc: "Eliminação técnica de pragas rasteiras em ambientes residenciais, comerciais e industriais.", img: foto20.url, icon: Bug },
+  { title: "Controle de Insetos Voadores", short: "Mosquitos, moscas e mariposas", desc: "Manejo integrado de voadores com produtos certificados e baixo impacto ambiental.", img: foto34.url, icon: Plane },
+  { title: "Desratização", short: "Ratos, camundongos e roedores", desc: "Mapa de iscas, porta-iscas lacrados e monitoramento contínuo de atividade.", img: foto10.url, icon: Rat },
+  { title: "Descupinização", short: "Cupins de solo e de madeira", desc: "Tratamento estrutural preventivo e corretivo com garantia contra cupins.", img: img2953.url, icon: TreePine },
+  { title: "Higienização de Reservatórios", short: "Limpeza de caixas d'água", desc: "Higienização de reservatórios com laudo técnico e controle de potabilidade.", img: foto12.url, icon: Droplets },
 ];
 
 const METHOD = [
@@ -574,7 +570,7 @@ function Services() {
           </a>
         </div>
 
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {SERVICES.map((s, i) => {
             const Icon = s.icon;
             return (
