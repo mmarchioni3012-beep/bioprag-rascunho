@@ -589,7 +589,7 @@ function Services() {
                     src={s.img}
                     alt={s.title}
                     loading="lazy"
-                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="absolute inset-0 h-full w-full object-cover object-[center_28%] transition-transform duration-700 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[rgba(0,20,5,0.92)] via-[rgba(0,20,5,0.55)] to-[rgba(0,20,5,0.25)] transition-colors duration-500 group-hover:from-[rgba(0,20,5,0.95)]" />
                   <span className="absolute left-4 top-4 grid h-9 w-9 place-items-center rounded-md bg-[#2ECC71] text-[#06180D]">
