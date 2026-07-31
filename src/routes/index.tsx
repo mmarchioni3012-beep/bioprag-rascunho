@@ -907,32 +907,50 @@ function ContactSection() {
           <Reveal delay={0.1} className="h-full">
             <form onSubmit={onSubmit} className="flex h-full flex-col rounded-2xl border border-[#1C3D22] bg-[#0F2415] p-6 sm:p-8">
               <div className="flex flex-1 flex-col gap-4">
-                <div>
-                  <label className={labelCls}>Nome *</label>
-                  <input required value={form.nome} onChange={update("nome")} className={inputCls} placeholder="Seu nome completo" />
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <label className={labelCls}>Nome *</label>
+                    <input required value={form.nome} onChange={update("nome")} className={inputCls} placeholder="Seu nome completo" />
+                  </div>
+                  <div>
+                    <label className={labelCls}>WhatsApp *</label>
+                    <input required type="tel" value={form.whatsapp} onChange={update("whatsapp")} className={inputCls} placeholder="(00) 00000-0000" />
+                  </div>
+                  <div>
+                    <label className={labelCls}>E-mail</label>
+                    <input type="email" value={form.email} onChange={update("email")} className={inputCls} placeholder="seu@email.com.br" />
+                  </div>
+                  <div>
+                    <label className={labelCls}>Cidade *</label>
+                    <input required value={form.cidade} onChange={update("cidade")} className={inputCls} placeholder="Cidade / Estado" />
+                  </div>
                 </div>
-                <div>
-                  <label className={labelCls}>Cidade *</label>
-                  <input required value={form.cidade} onChange={update("cidade")} className={inputCls} placeholder="Cidade / Estado" />
-                </div>
-                <div>
-                  <label className={labelCls}>Tipo de serviço *</label>
-                  <select required value={form.servico} onChange={update("servico")} className={inputCls}>
-                    <option value="">Selecione</option>
-                    <option>Monitoramento Contínuo</option>
-                    <option>Controle de Insetos Rasteiros</option>
-                    <option>Controle de Insetos Voadores</option>
-                    <option>Controle de Roedores</option>
-                    <option>Descupinização</option>
-                    <option>Sanitização de Ambientes</option>
-                    <option>Controle de Escorpiões</option>
-                    <option>Biossegurança / DDD</option>
-                    <option>Outro / Não sei ao certo</option>
-                  </select>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <label className={labelCls}>Perfil *</label>
+                    <select required value={form.perfil} onChange={update("perfil")} className={inputCls}>
+                      <option value="">Selecione</option>
+                      <option>Residencial</option>
+                      <option>Comercial</option>
+                      <option>Industrial</option>
+                      <option>Rural</option>
+                      <option>Órgão público / Institucional</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className={labelCls}>Serviço de interesse *</label>
+                    <select required value={form.servico} onChange={update("servico")} className={inputCls}>
+                      <option value="">Selecione</option>
+                      {SERVICES.map((s) => (
+                        <option key={s.title}>{s.title}</option>
+                      ))}
+                      <option>Outro / Não sei ao certo</option>
+                    </select>
+                  </div>
                 </div>
                 <div className="flex flex-1 flex-col">
                   <label className={labelCls}>Mensagem</label>
-                  <textarea value={form.mensagem} onChange={update("mensagem")} className={`${inputCls} min-h-0 flex-1`} placeholder="Conte mais sobre sua situação (opcional)" />
+                  <textarea value={form.mensagem} onChange={update("mensagem")} className={`${inputCls} min-h-[96px] flex-1`} placeholder="Conte mais sobre sua situação (opcional)" />
                 </div>
               </div>
               <button
