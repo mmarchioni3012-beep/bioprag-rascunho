@@ -1001,15 +1001,18 @@ function ContactSection() {
             />
             <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#2ECC71]/70 to-transparent" />
             <div className="relative grid items-center gap-10 px-6 py-12 sm:px-12 sm:py-16 lg:grid-cols-[340px_1fr] lg:gap-16 lg:px-16">
-              <div className="scene-3d mx-auto w-full max-w-[300px] lg:max-w-none">
-                <div className="relative animate-float-3d">
-                  <div className="pointer-events-none absolute -inset-8 rounded-full bg-[#2ECC71]/15 blur-3xl" />
-                  <img
-                    src={biopragSelo.url}
-                    alt="Selo Bioprag de Segurança — Estabelecimento protegido contra pragas"
-                    loading="lazy"
-                    className="relative h-auto w-full object-contain [filter:drop-shadow(0_25px_45px_rgba(0,0,0,0.6))_drop-shadow(0_0_36px_rgba(46,204,113,0.35))]"
-                  />
+              <div className="scene-3d group mx-auto w-full max-w-[320px] lg:max-w-none">
+                <div className="card-3d relative rounded-[26px] border border-[#2ECC71]/25 bg-gradient-to-br from-[#122C1A] to-[#0A1A0F] p-6 shadow-[0_30px_70px_-30px_rgba(0,0,0,0.8)] group-hover:card-3d-hover">
+                  <div className="pointer-events-none absolute -inset-6 rounded-full bg-[#2ECC71]/15 blur-3xl" />
+                  <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-[#7DFFB3]/70 to-transparent" />
+                  <div className="animate-float-3d">
+                    <img
+                      src={biopragSeloCrop}
+                      alt="Selo Bioprag de Segurança — Estabelecimento protegido contra pragas"
+                      loading="lazy"
+                      className="relative mx-auto h-auto w-full max-w-[260px] object-contain [filter:drop-shadow(0_25px_45px_rgba(0,0,0,0.6))_drop-shadow(0_0_36px_rgba(46,204,113,0.35))]"
+                    />
+                  </div>
                 </div>
               </div>
               <div className="text-center lg:text-left">
