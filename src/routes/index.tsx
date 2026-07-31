@@ -669,12 +669,12 @@ function Training() {
         <Reveal delay={0.1}>
           <div className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
             {teamPhotos.map((p, i) => (
-              <div key={i} className="group relative aspect-square overflow-hidden rounded-xl border border-[#1C3D22]">
+              <div key={i} className="group relative aspect-[3/4] overflow-hidden rounded-xl border border-[#1C3D22] sm:aspect-square">
                 <img
                   src={p.url}
                   alt={`Equipe Bioprag em campo ${i + 1}`}
                   loading="lazy"
-                  className="h-full w-full object-cover object-[center_30%] transition-transform duration-700 group-hover:scale-105"
+                  className="h-full w-full object-cover object-[center_25%] transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0A1A0F]/70 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
               </div>
