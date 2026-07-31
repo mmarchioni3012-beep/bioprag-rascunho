@@ -57,6 +57,9 @@ import foto28 from "@/assets/foto_28.webp.asset.json";
 import foto29 from "@/assets/foto_29.webp.asset.json";
 import foto33 from "@/assets/foto_33.webp.asset.json";
 import foto34 from "@/assets/foto_34.webp.asset.json";
+import segResidencial from "@/assets/seg-residencial.png";
+import segComercial from "@/assets/seg-comercial.png";
+import segIndustrial from "@/assets/seg-industrial.png";
 
 const WHATSAPP_NUMBER = "5514981752595";
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
