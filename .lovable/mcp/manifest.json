@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "sdk_version": "0.26.1",
+  "path": "/mcp",
+  "auth": {
+    "type": "none"
+  },
+  "mcp": {
+    "server": {
+      "name": "bioprag-site",
+      "version": "0.1.0",
+      "title": "BIOPRAG - SITE"
+    },
+    "tools": [
+      {
+        "name": "get_company_overview",
+        "title": "Visão geral da BIOPRAG",
+        "description": "Retorna a apresentação institucional da BIOPRAG: posicionamento, cobertura nacional e as 5 etapas do método técnico de controle de pragas.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_services",
+        "title": "Listar serviços",
+        "description": "Lista os serviços de controle de pragas e biossegurança oferecidos pela BIOPRAG, com resumo e descrição técnica. Aceita um termo de busca opcional.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "search": {
+              "description": "Termo opcional para filtrar por nome ou descrição do serviço (ex.: 'cupim', 'ratos').",
+              "type": "string"
+            }
+          }
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_faq",
+        "title": "Perguntas frequentes",
+        "description": "Retorna as perguntas frequentes públicas da BIOPRAG (segurança dos produtos, laudos, garantia, prazos). Aceita um termo de busca opcional.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "search": {
+              "description": "Termo opcional para filtrar perguntas e respostas (ex.: 'garantia', 'laudo').",
+              "type": "string"
+            }
+          }
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_contact_info",
+        "title": "Contato e unidades",
+        "description": "Retorna os canais de contato públicos da BIOPRAG (telefone, e-mail, site) e os endereços da matriz em Conchas/SP e da filial em Campinas/SP, com links de rota no Google Maps.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}
