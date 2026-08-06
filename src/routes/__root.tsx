@@ -1,12 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import {
-  Outlet,
-  Link,
-  createRootRouteWithContext,
-  useRouter,
-  HeadContent,
-  Scripts,
-} from "@tanstack/react-router";
+import { Outlet, Link, createRootRouteWithContext, useRouter, HeadContent, Scripts } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
@@ -18,9 +11,7 @@ function NotFoundComponent() {
       <div className="max-w-md text-center">
         <h1 className="text-7xl font-bold text-foreground">404</h1>
         <h2 className="mt-4 text-xl font-semibold text-foreground">Página não encontrada</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          A página que você procura não existe ou foi movida.
-        </p>
+        <p className="mt-2 text-sm text-muted-foreground">A página que você procura não existe ou foi movida.</p>
         <div className="mt-6">
           <Link
             to="/"
@@ -44,12 +35,8 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
-        <h1 className="text-xl font-semibold tracking-tight text-foreground">
-          Esta página não carregou
-        </h1>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Algo deu errado. Tente recarregar ou volte ao início.
-        </p>
+        <h1 className="text-xl font-semibold tracking-tight text-foreground">Esta página não carregou</h1>
+        <p className="mt-2 text-sm text-muted-foreground">Algo deu errado. Tente recarregar ou volte ao início.</p>
         <div className="mt-6 flex flex-wrap justify-center gap-2">
           <button
             onClick={() => {
@@ -83,11 +70,31 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:title", content: "BIOPRAG" },
       { name: "twitter:title", content: "BIOPRAG" },
       { property: "og:site_name", content: "BIOPRAG" },
-      { name: "description", content: "Bioprag Elevated is a premium website showcasing BIOPRAG's integrated pest control, environmental health, and biosafety services." },
-      { property: "og:description", content: "Bioprag Elevated is a premium website showcasing BIOPRAG's integrated pest control, environmental health, and biosafety services." },
-      { name: "twitter:description", content: "Bioprag Elevated is a premium website showcasing BIOPRAG's integrated pest control, environmental health, and biosafety services." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/81156efe-9ec6-4923-9ee2-f47d5efa0fbd/id-preview-262018e6--9db716a7-003b-4a46-9574-9371b472433c.lovable.app-1781286909885.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/81156efe-9ec6-4923-9ee2-f47d5efa0fbd/id-preview-262018e6--9db716a7-003b-4a46-9574-9371b472433c.lovable.app-1781286909885.png" },
+      {
+        name: "description",
+        content:
+          "Bioprag Elevated is a premium website showcasing BIOPRAG's integrated pest control, environmental health, and biosafety services.",
+      },
+      {
+        property: "og:description",
+        content:
+          "Bioprag Elevated is a premium website showcasing BIOPRAG's integrated pest control, environmental health, and biosafety services.",
+      },
+      {
+        name: "twitter:description",
+        content:
+          "Bioprag Elevated is a premium website showcasing BIOPRAG's integrated pest control, environmental health, and biosafety services.",
+      },
+      {
+        property: "og:image",
+        content:
+          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/81156efe-9ec6-4923-9ee2-f47d5efa0fbd/id-preview-262018e6--9db716a7-003b-4a46-9574-9371b472433c.lovable.app-1781286909885.png",
+      },
+      {
+        name: "twitter:image",
+        content:
+          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/81156efe-9ec6-4923-9ee2-f47d5efa0fbd/id-preview-262018e6--9db716a7-003b-4a46-9574-9371b472433c.lovable.app-1781286909885.png",
+      },
       { name: "twitter:card", content: "summary_large_image" },
       { property: "og:type", content: "website" },
     ],
@@ -112,9 +119,28 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="pt-BR">
       <head>
         <HeadContent />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-M4VCZRB8');`,
+          }}
+        />
       </head>
       <body>
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-M4VCZRB8"
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+            title="Google Tag Manager"
+          />
+        </noscript>
         {children}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){window.dataLayer=window.dataLayer||[];if(window.__biopragTrackingInit)return;window.__biopragTrackingInit=true;var push=function(payload){window.dataLayer.push(payload);};document.addEventListener('click',function(event){var target=event.target;var link=target&&target.closest?target.closest('a'):null;if(!link)return;var href=link.getAttribute('href')||'';var section=link.closest('section');var location=(section&&section.id)||'site';if(href.indexOf('wa.me/')!==-1||href.indexOf('whatsapp.com/')!==-1){push({event:'whatsapp_click',click_location:location});return;}if(href.indexOf('tel:')===0){push({event:'phone_click',click_location:location});return;}if(href.indexOf('google.com/maps/dir')!==-1){push({event:'route_click',click_location:'contato'});}},true);document.addEventListener('submit',function(event){var form=event.target;if(form&&typeof form.checkValidity==='function'&&form.checkValidity()){push({event:'lead_form_submit',form_name:'formulario_contato'});}},true);})();`,
+          }}
+        />
         <Scripts />
       </body>
     </html>
