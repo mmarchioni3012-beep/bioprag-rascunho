@@ -968,7 +968,7 @@ function ContactSection() {
                   pushTrackingEvent("route_click", {
                     link_url: UNIDADES[unidade].directions,
                     link_text: "Como chegar",
-                    location_name: UNIDADES[unidade].label,
+                    location_name: unidade === "matriz" ? "Matriz — Conchas" : "Filial — Campinas",
                   })
                 }
                 className="absolute bottom-4 left-4 inline-flex items-center gap-2 rounded-lg bg-[#2ECC71] px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-[#06180D] shadow-lg transition-all hover:bg-[#7DFFB3]"
