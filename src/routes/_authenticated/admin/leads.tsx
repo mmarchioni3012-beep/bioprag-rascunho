@@ -245,9 +245,11 @@ function LeadsAdmin() {
       </header>
 
       <div className="mx-auto max-w-[1400px] px-4 py-6">
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
           {[
             { l: "Leads no filtro", v: String(kpis.total) },
+            { l: "Cadastro manual", v: String(kpis.manual) },
+            { l: "Origem digital", v: String(kpis.digital) },
             { l: "Com mensagem no WhatsApp", v: String(kpis.withWa) },
             { l: "Ganhos", v: String(kpis.won) },
             { l: "Valor fechado", v: kpis.value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" }) },
@@ -258,6 +260,19 @@ function LeadsAdmin() {
             </div>
           ))}
         </div>
+
+        {originReport.length > 0 && (
+          <div className="mt-3 rounded-xl border border-[#1C3D22] bg-[#0B1D11] p-4">
+            <p className="text-xs uppercase tracking-wider text-[#8FA98F]">Leads por origem</p>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {originReport.map(([name, count]) => (
+                <span key={name} className="rounded-full border border-[#1C3D22] px-3 py-1 text-xs text-[#F0F4F0]">
+                  {name} · <strong className="text-[#2ECC71]">{count}</strong>
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
 
         <div className="mt-6 grid gap-3 rounded-xl border border-[#1C3D22] bg-[#0B1D11] p-4 md:grid-cols-3 lg:grid-cols-6">
           <div>
