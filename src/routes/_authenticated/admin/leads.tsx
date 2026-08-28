@@ -483,6 +483,19 @@ function LeadsAdmin() {
           </aside>
         </div>
       )}
+
+      {showNew && (
+        <NewLeadDialog
+          onClose={() => setShowNew(false)}
+          onCreated={() => {
+            void queryClient.invalidateQueries({ queryKey: ["leads"] });
+          }}
+          onOpenLead={(id) => {
+            setShowNew(false);
+            setSelectedId(id);
+          }}
+        />
+      )}
     </div>
   );
 }
