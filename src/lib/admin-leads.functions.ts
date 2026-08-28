@@ -274,7 +274,7 @@ export const createLeadManually = createServerFn({ method: "POST" })
       .map(([k]) => k);
 
     await context.supabase.from("lead_events").insert({
-      lead_id: lead.id,
+      lead_id: created.id,
       event_type: "lead_created_manually",
       event_data: {
         by_user: context.userId,
@@ -288,7 +288,7 @@ export const createLeadManually = createServerFn({ method: "POST" })
       medium: data.manual_source,
     } as never);
 
-    return { success: true as const, lead, message: "Lead cadastrado com sucesso." };
+    return { success: true, lead: created, message: "Lead cadastrado com sucesso." };
   });
 
 export const updateLead = createServerFn({ method: "POST" })
