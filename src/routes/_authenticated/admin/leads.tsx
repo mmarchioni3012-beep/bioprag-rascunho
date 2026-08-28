@@ -394,7 +394,10 @@ function LeadsAdmin() {
                   </td>
                   <td className="px-4 py-3 text-[#8FA98F]">{l.city}</td>
                   <td className="px-4 py-3 text-[#8FA98F]">{l.service_interest}</td>
-                  <td className="px-4 py-3 text-[#8FA98F]">{l.source ?? "—"}{l.campaign ? ` / ${l.campaign}` : ""}</td>
+                  <td className="px-4 py-3 text-[#8FA98F]">
+                    {originLabel(l)}
+                    {l.short_protocol ? <span className="ml-2 text-[10px] text-[#5F7A63]">{l.short_protocol}</span> : null}
+                  </td>
                   <td className="px-4 py-3 text-[#8FA98F]">{WA_LABEL[l.whatsapp_status ?? "nao_aberto"]}</td>
                   <td className="px-4 py-3">
                     <span className="rounded bg-[#2ECC71]/12 px-2 py-1 text-xs text-[#2ECC71]">
