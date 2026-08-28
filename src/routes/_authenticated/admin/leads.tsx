@@ -36,31 +36,8 @@ export const Route = createFileRoute("/_authenticated/admin/leads")({
   component: LeadsAdmin,
 });
 
-const STATUS = [
-  "novo",
-  "contato_pendente",
-  "contatado",
-  "qualificado",
-  "orcamento_enviado",
-  "servico_agendado",
-  "ganho",
-  "perdido",
-  "sem_resposta",
-  "spam",
-] as const;
-
-const STATUS_LABEL: Record<string, string> = {
-  novo: "Novo",
-  contato_pendente: "Contato pendente",
-  contatado: "Contatado",
-  qualificado: "Qualificado",
-  orcamento_enviado: "Orçamento enviado",
-  servico_agendado: "Serviço agendado",
-  ganho: "Ganho",
-  perdido: "Perdido",
-  sem_resposta: "Sem resposta",
-  spam: "Spam",
-};
+const STATUS = LEAD_STATUS;
+const STATUS_LABEL = LEAD_STATUS_LABEL;
 
 const WA_STATUS = ["nao_aberto", "aberto", "nao_confirmado", "mensagem_recebida", "respondido", "convertido"] as const;
 const WA_LABEL: Record<string, string> = {
