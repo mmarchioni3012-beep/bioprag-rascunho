@@ -2,7 +2,7 @@ export const GA_MEASUREMENT_ID = "G-C9Q29DLP1T";
 
 declare global {
   interface Window {
-    dataLayer?: Record<string, unknown>[] | IArguments[];
+    dataLayer?: unknown[];
     gtag?: (...args: unknown[]) => void;
   }
 }
