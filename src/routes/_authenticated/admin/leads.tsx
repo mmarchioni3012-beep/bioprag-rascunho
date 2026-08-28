@@ -98,6 +98,8 @@ function LeadsAdmin() {
           service_interest: filters.service_interest || null,
           customer_type: filters.customer_type || null,
           origin: filters.origin || null,
+          origin_group: filters.origin_group || null,
+          manual_source: filters.manual_source || null,
           campaign: filters.campaign || null,
           term: filters.term || null,
           status: filters.status || null,
