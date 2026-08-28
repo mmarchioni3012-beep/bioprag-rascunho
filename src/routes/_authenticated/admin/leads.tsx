@@ -224,7 +224,10 @@ function LeadsAdmin() {
             <h1 className="font-display text-xl font-extrabold">Gestão de leads</h1>
             <p className="text-xs text-[#8FA98F]">Dados sensíveis — uso interno BIOPRAG</p>
           </div>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
+            <button onClick={() => setShowNew(true)} className="rounded-md bg-[#2ECC71] px-4 py-2 text-sm font-semibold text-[#06180D]">
+              + Novo lead
+            </button>
             <button onClick={exportCsv} className="rounded-md bg-[#2ECC71] px-4 py-2 text-sm font-semibold text-[#06180D]">
               Exportar CSV
             </button>
