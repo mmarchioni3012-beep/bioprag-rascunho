@@ -14,8 +14,6 @@ import {
   ORIGIN_GROUPS,
   ORIGIN_GROUP_LABEL,
   originLabel,
-  whatsappUrl,
-  suggestedWhatsappMessage,
 } from "@/lib/leads-constants";
 
 type Lead = Tables<"leads">;
