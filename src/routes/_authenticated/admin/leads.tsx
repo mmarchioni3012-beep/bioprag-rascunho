@@ -5,6 +5,18 @@ import { useMemo, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import type { Tables } from "@/integrations/supabase/types";
 import { listLeads, listLeadEvents, updateLead, getMyAdminAccess } from "@/lib/admin-leads.functions";
+import { NewLeadDialog } from "@/components/admin/NewLeadDialog";
+import {
+  LEAD_STATUS,
+  LEAD_STATUS_LABEL,
+  MANUAL_SOURCES,
+  MANUAL_SOURCE_LABEL,
+  ORIGIN_GROUPS,
+  ORIGIN_GROUP_LABEL,
+  originLabel,
+  whatsappUrl,
+  suggestedWhatsappMessage,
+} from "@/lib/leads-constants";
 
 type Lead = Tables<"leads">;
 type LeadEvent = Tables<"lead_events">;
