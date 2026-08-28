@@ -329,6 +329,24 @@ function LeadsAdmin() {
             <label className={label} htmlFor="f-owner">Responsável</label>
             <input id="f-owner" className={input} value={filters.assigned_to} onChange={(e) => setFilters({ ...filters, assigned_to: e.target.value })} />
           </div>
+          <div>
+            <label className={label} htmlFor="f-origin-group">Grupo de origem</label>
+            <select id="f-origin-group" className={input} value={filters.origin_group} onChange={(e) => setFilters({ ...filters, origin_group: e.target.value })}>
+              <option value="">Todas</option>
+              {ORIGIN_GROUPS.map((g) => (
+                <option key={g} value={g}>{ORIGIN_GROUP_LABEL[g]}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label className={label} htmlFor="f-manual-source">Origem manual</label>
+            <select id="f-manual-source" className={input} value={filters.manual_source} onChange={(e) => setFilters({ ...filters, manual_source: e.target.value })}>
+              <option value="">Todas</option>
+              {MANUAL_SOURCES.map((s) => (
+                <option key={s} value={s}>{MANUAL_SOURCE_LABEL[s]}</option>
+              ))}
+            </select>
+          </div>
           <div className="flex items-end gap-2">
             <input
               id="f-arch"
