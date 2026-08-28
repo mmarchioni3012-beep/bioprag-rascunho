@@ -259,14 +259,15 @@ export const createLeadManually = createServerFn({ method: "POST" })
         .insert({ ...payload, short_protocol: makeProtocol() } as never)
         .select("id, short_protocol")
         .single();
-      if (row) lead = row as never;
+      if (row) lead = row as unknown as { id: string; short_protocol: string | null };
       else lastError = error?.message ?? "erro desconhecido";
     }
 
-    if (!lead) {
+    if (lead === null) {
       console.error("createLeadManually error", lastError);
-      return { success: false as const, lead: null, message: "Não foi possível cadastrar o lead. Tente novamente." };
+      return { success: false, lead: null, message: "Não foi possível cadastrar o lead. Tente novamente." };
     }
+    const created: { id: string; short_protocol: string | null } = lead;
 
     const providedFields = Object.entries(data)
       .filter(([k, v]) => v !== null && v !== undefined && v !== "" && k !== "phone" && k !== "email" && k !== "message")
