@@ -71,6 +71,8 @@ function LeadsAdmin() {
     service_interest: "",
     customer_type: "",
     origin: "",
+    origin_group: "",
+    manual_source: "",
     campaign: "",
     term: "",
     status: "",
@@ -80,6 +82,7 @@ function LeadsAdmin() {
     search: "",
   });
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [showNew, setShowNew] = useState(false);
 
   const access = useQuery({ queryKey: ["admin-access"], queryFn: () => fetchAccess({ data: undefined }) });
 
