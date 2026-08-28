@@ -1,6 +1,16 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Outlet, Link, createRootRouteWithContext, useRouter, HeadContent, Scripts } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import {
+  Outlet,
+  Link,
+  createRootRouteWithContext,
+  useRouter,
+  useRouterState,
+  HeadContent,
+  Scripts,
+} from "@tanstack/react-router";
+import { useEffect, useRef, type ReactNode } from "react";
+
+import { trackPageView } from "../lib/tracking";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -119,6 +129,12 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="pt-BR">
       <head>
         <HeadContent />
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-C9Q29DLP1T" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag('js',new Date());gtag('config','G-C9Q29DLP1T',{send_page_view:true});`,
+          }}
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-M4VCZRB8');`,
@@ -138,7 +154,7 @@ function RootShell({ children }: { children: ReactNode }) {
         {children}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){window.dataLayer=window.dataLayer||[];if(window.__biopragTrackingInit)return;window.__biopragTrackingInit=true;var push=function(payload){window.dataLayer.push(payload);};document.addEventListener('click',function(event){var target=event.target;var link=target&&target.closest?target.closest('a'):null;if(!link)return;var href=link.getAttribute('href')||'';var section=link.closest('section');var location=(section&&section.id)||'site';if(href.indexOf('wa.me/')!==-1||href.indexOf('whatsapp.com/')!==-1){push({event:'whatsapp_click',click_location:location});return;}if(href.indexOf('tel:')===0){push({event:'phone_click',click_location:location});return;}},true);})();`,
+            __html: `(function(){window.dataLayer=window.dataLayer||[];if(window.__biopragTrackingInit)return;window.__biopragTrackingInit=true;var push=function(payload){var e=payload.event;var p={};for(var k in payload){if(k!=='event')p[k]=payload[k];}if(typeof window.gtag==='function')window.gtag('event',e,p);window.dataLayer.push(payload);};document.addEventListener('click',function(event){var target=event.target;var link=target&&target.closest?target.closest('a'):null;if(!link)return;var href=link.getAttribute('href')||'';var section=link.closest('section');var location=(section&&section.id)||'site';if(href.indexOf('wa.me/')!==-1||href.indexOf('whatsapp.com/')!==-1){push({event:'whatsapp_click',click_location:location});return;}if(href.indexOf('tel:')===0){push({event:'phone_click',click_location:location});return;}},true);})();`,
           }}
         />
         <Scripts />
@@ -149,6 +165,16 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const firstRender = useRef(true);
+
+  useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false;
+      return;
+    }
+    trackPageView(pathname);
+  }, [pathname]);
 
   return (
     <QueryClientProvider client={queryClient}>
