@@ -193,20 +193,27 @@ export const findLeadsByPhone = createServerFn({ method: "POST" })
     return rows ?? [];
   });
 
+type CreateLeadResult = {
+  success: boolean;
+  lead: { id: string; short_protocol: string | null } | null;
+  message: string;
+};
+
 export const createLeadManually = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((input: unknown) => manualLeadSchema.parse(input))
-  .handler(async ({ data, context }) => {
+  .handler(async ({ data, context }): Promise<CreateLeadResult> => {
     await assertAdmin(context.supabase as never, context.userId);
 
     if (data.manual_source === "outro" && !data.manual_source_detail?.trim()) {
-      return { success: false as const, lead: null, message: "Descreva a origem do contato." };
+      return { success: false, lead: null, message: "Descreva a origem do contato." };
     }
 
     const digits = data.phone.replace(/\D/g, "");
     if (digits.length < 10 || digits.length > 13) {
-      return { success: false as const, lead: null, message: "Informe um telefone válido com DDD." };
+      return { success: false, lead: null, message: "Informe um telefone válido com DDD." };
     }
+
 
     const by = adminName(context.claims as unknown as Record<string, unknown>);
     const now = new Date().toISOString();
