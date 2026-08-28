@@ -5,6 +5,16 @@ import { useMemo, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import type { Tables } from "@/integrations/supabase/types";
 import { listLeads, listLeadEvents, updateLead, getMyAdminAccess } from "@/lib/admin-leads.functions";
+import { NewLeadDialog } from "@/components/admin/NewLeadDialog";
+import {
+  LEAD_STATUS,
+  LEAD_STATUS_LABEL,
+  MANUAL_SOURCES,
+  MANUAL_SOURCE_LABEL,
+  ORIGIN_GROUPS,
+  ORIGIN_GROUP_LABEL,
+  originLabel,
+} from "@/lib/leads-constants";
 
 type Lead = Tables<"leads">;
 type LeadEvent = Tables<"lead_events">;
@@ -24,31 +34,8 @@ export const Route = createFileRoute("/_authenticated/admin/leads")({
   component: LeadsAdmin,
 });
 
-const STATUS = [
-  "novo",
-  "contato_pendente",
-  "contatado",
-  "qualificado",
-  "orcamento_enviado",
-  "servico_agendado",
-  "ganho",
-  "perdido",
-  "sem_resposta",
-  "spam",
-] as const;
-
-const STATUS_LABEL: Record<string, string> = {
-  novo: "Novo",
-  contato_pendente: "Contato pendente",
-  contatado: "Contatado",
-  qualificado: "Qualificado",
-  orcamento_enviado: "Orçamento enviado",
-  servico_agendado: "Serviço agendado",
-  ganho: "Ganho",
-  perdido: "Perdido",
-  sem_resposta: "Sem resposta",
-  spam: "Spam",
-};
+const STATUS = LEAD_STATUS;
+const STATUS_LABEL = LEAD_STATUS_LABEL;
 
 const WA_STATUS = ["nao_aberto", "aberto", "nao_confirmado", "mensagem_recebida", "respondido", "convertido"] as const;
 const WA_LABEL: Record<string, string> = {
@@ -82,6 +69,8 @@ function LeadsAdmin() {
     service_interest: "",
     customer_type: "",
     origin: "",
+    origin_group: "",
+    manual_source: "",
     campaign: "",
     term: "",
     status: "",
@@ -91,6 +80,7 @@ function LeadsAdmin() {
     search: "",
   });
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [showNew, setShowNew] = useState(false);
 
   const access = useQuery({ queryKey: ["admin-access"], queryFn: () => fetchAccess({ data: undefined }) });
 
@@ -106,6 +96,8 @@ function LeadsAdmin() {
           service_interest: filters.service_interest || null,
           customer_type: filters.customer_type || null,
           origin: filters.origin || null,
+          origin_group: filters.origin_group || null,
+          manual_source: filters.manual_source || null,
           campaign: filters.campaign || null,
           term: filters.term || null,
           status: filters.status || null,
@@ -139,7 +131,17 @@ function LeadsAdmin() {
     const withWa = leads.filter((l) => l.whatsapp_received_at).length;
     const won = leads.filter((l) => l.status === "ganho").length;
     const value = leads.reduce((sum, l) => sum + Number(l.closed_value ?? 0), 0);
-    return { total, withWa, won, value };
+    const manual = leads.filter((l) => l.origin === "manual").length;
+    return { total, withWa, won, value, manual, digital: total - manual };
+  }, [leads]);
+
+  const originReport = useMemo(() => {
+    const map = new Map<string, number>();
+    for (const l of leads) {
+      const key = originLabel(l);
+      map.set(key, (map.get(key) ?? 0) + 1);
+    }
+    return [...map.entries()].sort((a, b) => b[1] - a[1]);
   }, [leads]);
 
   const signOut = async () => {
@@ -169,7 +171,13 @@ function LeadsAdmin() {
       "estimated_value",
       "closed_value",
       "service_date",
+      "short_protocol",
       "origin",
+      "manual_source",
+      "manual_source_detail",
+      "reported_source",
+      "created_by_name",
+      "follow_up_at",
       "source",
       "medium",
       "campaign",
@@ -220,7 +228,10 @@ function LeadsAdmin() {
             <h1 className="font-display text-xl font-extrabold">Gestão de leads</h1>
             <p className="text-xs text-[#8FA98F]">Dados sensíveis — uso interno BIOPRAG</p>
           </div>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
+            <button onClick={() => setShowNew(true)} className="rounded-md bg-[#2ECC71] px-4 py-2 text-sm font-semibold text-[#06180D]">
+              + Novo lead
+            </button>
             <button onClick={exportCsv} className="rounded-md bg-[#2ECC71] px-4 py-2 text-sm font-semibold text-[#06180D]">
               Exportar CSV
             </button>
@@ -232,9 +243,11 @@ function LeadsAdmin() {
       </header>
 
       <div className="mx-auto max-w-[1400px] px-4 py-6">
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
           {[
             { l: "Leads no filtro", v: String(kpis.total) },
+            { l: "Cadastro manual", v: String(kpis.manual) },
+            { l: "Origem digital", v: String(kpis.digital) },
             { l: "Com mensagem no WhatsApp", v: String(kpis.withWa) },
             { l: "Ganhos", v: String(kpis.won) },
             { l: "Valor fechado", v: kpis.value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" }) },
@@ -245,6 +258,19 @@ function LeadsAdmin() {
             </div>
           ))}
         </div>
+
+        {originReport.length > 0 && (
+          <div className="mt-3 rounded-xl border border-[#1C3D22] bg-[#0B1D11] p-4">
+            <p className="text-xs uppercase tracking-wider text-[#8FA98F]">Leads por origem</p>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {originReport.map(([name, count]) => (
+                <span key={name} className="rounded-full border border-[#1C3D22] px-3 py-1 text-xs text-[#F0F4F0]">
+                  {name} · <strong className="text-[#2ECC71]">{count}</strong>
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
 
         <div className="mt-6 grid gap-3 rounded-xl border border-[#1C3D22] bg-[#0B1D11] p-4 md:grid-cols-3 lg:grid-cols-6">
           <div>
@@ -301,6 +327,24 @@ function LeadsAdmin() {
             <label className={label} htmlFor="f-owner">Responsável</label>
             <input id="f-owner" className={input} value={filters.assigned_to} onChange={(e) => setFilters({ ...filters, assigned_to: e.target.value })} />
           </div>
+          <div>
+            <label className={label} htmlFor="f-origin-group">Grupo de origem</label>
+            <select id="f-origin-group" className={input} value={filters.origin_group} onChange={(e) => setFilters({ ...filters, origin_group: e.target.value })}>
+              <option value="">Todas</option>
+              {ORIGIN_GROUPS.map((g) => (
+                <option key={g} value={g}>{ORIGIN_GROUP_LABEL[g]}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label className={label} htmlFor="f-manual-source">Origem manual</label>
+            <select id="f-manual-source" className={input} value={filters.manual_source} onChange={(e) => setFilters({ ...filters, manual_source: e.target.value })}>
+              <option value="">Todas</option>
+              {MANUAL_SOURCES.map((s) => (
+                <option key={s} value={s}>{MANUAL_SOURCE_LABEL[s]}</option>
+              ))}
+            </select>
+          </div>
           <div className="flex items-end gap-2">
             <input
               id="f-arch"
@@ -348,7 +392,10 @@ function LeadsAdmin() {
                   </td>
                   <td className="px-4 py-3 text-[#8FA98F]">{l.city}</td>
                   <td className="px-4 py-3 text-[#8FA98F]">{l.service_interest}</td>
-                  <td className="px-4 py-3 text-[#8FA98F]">{l.source ?? "—"}{l.campaign ? ` / ${l.campaign}` : ""}</td>
+                  <td className="px-4 py-3 text-[#8FA98F]">
+                    {originLabel(l)}
+                    {l.short_protocol ? <span className="ml-2 text-[10px] text-[#5F7A63]">{l.short_protocol}</span> : null}
+                  </td>
                   <td className="px-4 py-3 text-[#8FA98F]">{WA_LABEL[l.whatsapp_status ?? "nao_aberto"]}</td>
                   <td className="px-4 py-3">
                     <span className="rounded bg-[#2ECC71]/12 px-2 py-1 text-xs text-[#2ECC71]">
@@ -433,6 +480,19 @@ function LeadsAdmin() {
             </div>
           </aside>
         </div>
+      )}
+
+      {showNew && (
+        <NewLeadDialog
+          onClose={() => setShowNew(false)}
+          onCreated={() => {
+            void queryClient.invalidateQueries({ queryKey: ["leads"] });
+          }}
+          onOpenLead={(id) => {
+            setShowNew(false);
+            setSelectedId(id);
+          }}
+        />
       )}
     </div>
   );

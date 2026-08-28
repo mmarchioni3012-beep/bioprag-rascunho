@@ -76,25 +76,33 @@ export type Database = {
       leads: {
         Row: {
           archived: boolean
+          archived_at: string | null
+          archived_by: string | null
           assigned_to: string | null
+          attribution_type: string | null
           campaign: string | null
           city: string
           closed_value: number | null
           company_name: string | null
           content: string | null
           created_at: string
+          created_by: string | null
+          created_by_name: string | null
           customer_type: string
           device_type: string | null
           duplicate_suspected: boolean
           email: string | null
           estimated_value: number | null
           fbclid: string | null
+          follow_up_at: string | null
           gbraid: string | null
           gclid: string | null
           id: string
           internal_notes: string | null
           landing_page: string | null
           loss_reason: string | null
+          manual_source: string | null
+          manual_source_detail: string | null
           marketing_consent: boolean
           marketing_consent_at: string | null
           medium: string | null
@@ -109,10 +117,13 @@ export type Database = {
           privacy_acknowledged: boolean
           privacy_acknowledged_at: string | null
           referrer: string | null
+          related_lead_id: string | null
+          reported_source: string | null
           retention_review_at: string
           service_date: string | null
           service_interest: string
           session_id: string | null
+          short_protocol: string | null
           source: string | null
           status: string
           term: string | null
@@ -124,25 +135,33 @@ export type Database = {
         }
         Insert: {
           archived?: boolean
+          archived_at?: string | null
+          archived_by?: string | null
           assigned_to?: string | null
+          attribution_type?: string | null
           campaign?: string | null
           city: string
           closed_value?: number | null
           company_name?: string | null
           content?: string | null
           created_at?: string
+          created_by?: string | null
+          created_by_name?: string | null
           customer_type?: string
           device_type?: string | null
           duplicate_suspected?: boolean
           email?: string | null
           estimated_value?: number | null
           fbclid?: string | null
+          follow_up_at?: string | null
           gbraid?: string | null
           gclid?: string | null
           id?: string
           internal_notes?: string | null
           landing_page?: string | null
           loss_reason?: string | null
+          manual_source?: string | null
+          manual_source_detail?: string | null
           marketing_consent?: boolean
           marketing_consent_at?: string | null
           medium?: string | null
@@ -157,10 +176,13 @@ export type Database = {
           privacy_acknowledged?: boolean
           privacy_acknowledged_at?: string | null
           referrer?: string | null
+          related_lead_id?: string | null
+          reported_source?: string | null
           retention_review_at?: string
           service_date?: string | null
           service_interest: string
           session_id?: string | null
+          short_protocol?: string | null
           source?: string | null
           status?: string
           term?: string | null
@@ -172,25 +194,33 @@ export type Database = {
         }
         Update: {
           archived?: boolean
+          archived_at?: string | null
+          archived_by?: string | null
           assigned_to?: string | null
+          attribution_type?: string | null
           campaign?: string | null
           city?: string
           closed_value?: number | null
           company_name?: string | null
           content?: string | null
           created_at?: string
+          created_by?: string | null
+          created_by_name?: string | null
           customer_type?: string
           device_type?: string | null
           duplicate_suspected?: boolean
           email?: string | null
           estimated_value?: number | null
           fbclid?: string | null
+          follow_up_at?: string | null
           gbraid?: string | null
           gclid?: string | null
           id?: string
           internal_notes?: string | null
           landing_page?: string | null
           loss_reason?: string | null
+          manual_source?: string | null
+          manual_source_detail?: string | null
           marketing_consent?: boolean
           marketing_consent_at?: string | null
           medium?: string | null
@@ -205,10 +235,13 @@ export type Database = {
           privacy_acknowledged?: boolean
           privacy_acknowledged_at?: string | null
           referrer?: string | null
+          related_lead_id?: string | null
+          reported_source?: string | null
           retention_review_at?: string
           service_date?: string | null
           service_interest?: string
           session_id?: string | null
+          short_protocol?: string | null
           source?: string | null
           status?: string
           term?: string | null
@@ -218,7 +251,15 @@ export type Database = {
           whatsapp_received_at?: string | null
           whatsapp_status?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "leads_related_lead_id_fkey"
+            columns: ["related_lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_roles: {
         Row: {
