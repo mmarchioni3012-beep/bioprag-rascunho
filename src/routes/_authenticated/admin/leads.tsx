@@ -133,7 +133,17 @@ function LeadsAdmin() {
     const withWa = leads.filter((l) => l.whatsapp_received_at).length;
     const won = leads.filter((l) => l.status === "ganho").length;
     const value = leads.reduce((sum, l) => sum + Number(l.closed_value ?? 0), 0);
-    return { total, withWa, won, value };
+    const manual = leads.filter((l) => l.origin === "manual").length;
+    return { total, withWa, won, value, manual, digital: total - manual };
+  }, [leads]);
+
+  const originReport = useMemo(() => {
+    const map = new Map<string, number>();
+    for (const l of leads) {
+      const key = originLabel(l);
+      map.set(key, (map.get(key) ?? 0) + 1);
+    }
+    return [...map.entries()].sort((a, b) => b[1] - a[1]);
   }, [leads]);
 
   const signOut = async () => {
