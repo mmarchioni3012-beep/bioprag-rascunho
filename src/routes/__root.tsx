@@ -154,7 +154,7 @@ function RootShell({ children }: { children: ReactNode }) {
         {children}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){window.dataLayer=window.dataLayer||[];if(window.__biopragTrackingInit)return;window.__biopragTrackingInit=true;var push=function(payload){var e=payload.event;var p={};for(var k in payload){if(k!=='event')p[k]=payload[k];}if(typeof window.gtag==='function')window.gtag('event',e,p);window.dataLayer.push(payload);};document.addEventListener('click',function(event){var target=event.target;var link=target&&target.closest?target.closest('a'):null;if(!link)return;var href=link.getAttribute('href')||'';var section=link.closest('section');var location=(section&&section.id)||'site';if(href.indexOf('wa.me/')!==-1||href.indexOf('whatsapp.com/')!==-1){push({event:'whatsapp_click',click_location:location});return;}if(href.indexOf('tel:')===0){push({event:'phone_click',click_location:location});return;}},true);})();`,
+            __html: `(function(){window.dataLayer=window.dataLayer||[];if(window.__biopragTrackingInit)return;window.__biopragTrackingInit=true;document.addEventListener('click',function(event){var target=event.target;var link=target&&target.closest?target.closest('a'):null;if(!link)return;var href=link.getAttribute('href')||'';var section=link.closest('section');var location=(section&&section.id)||'site';if(href.indexOf('wa.me/')!==-1||href.indexOf('whatsapp.com/')!==-1){window.dataLayer.push({event:'whatsapp_click',click_location:location});return;}if(href.indexOf('tel:')===0){window.dataLayer.push({event:'phone_click',click_location:location});return;}},true);})();`,
           }}
         />
         <Scripts />
