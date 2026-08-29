@@ -130,9 +130,23 @@ export const submitLead = createServerFn({ method: "POST" })
     const now = new Date().toISOString();
     const city = data.city.trim().replace(/\s+/g, " ");
 
+    const addr = data.address ?? {};
+    const addrValues = [addr.cep, addr.street, addr.number, addr.state, addr.reference].map((v) =>
+      v?.trim() ? v.trim() : null,
+    );
+    const filled = addrValues.filter(Boolean).length;
+    const addressStatus = filled === 0 ? "nao_informado" : addr.street?.trim() && addr.number?.trim() ? "completo" : "parcial";
+
     const { data: lead, error } = await supabaseAdmin
       .from("leads")
       .insert({
+        address_cep: addr.cep?.trim() || null,
+        address_street: addr.street?.trim() || null,
+        address_number: addr.number?.trim() || null,
+        address_complement: addr.complement?.trim() || null,
+        address_state: addr.state?.trim() || null,
+        address_reference: addr.reference?.trim() || null,
+        address_status: addressStatus,
         name: data.name.trim().replace(/\s+/g, " "),
         phone: data.phone.trim(),
         phone_normalized: digits,
