@@ -518,7 +518,19 @@ function LeadEditor({
     closed_value: lead.closed_value != null ? String(lead.closed_value) : "",
     service_date: lead.service_date ?? "",
     archived: Boolean(lead.archived),
+    address_cep: lead.address_cep ?? "",
+    address_street: lead.address_street ?? "",
+    address_number: lead.address_number ?? "",
+    address_complement: lead.address_complement ?? "",
+    address_state: lead.address_state ?? "",
+    address_reference: lead.address_reference ?? "",
+    address_zone: lead.address_zone ?? "",
+    neighborhood: lead.neighborhood ?? "",
+    city: lead.city ?? "",
   });
+
+  const addressComplete = Boolean(state.address_street.trim() && state.address_number.trim() && state.city.trim());
+  const addressWarning = state.status === "servico_agendado" && !addressComplete;
 
   return (
     <div className="mt-6 rounded-xl border border-[#1C3D22] bg-[#08150D] p-4">
