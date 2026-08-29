@@ -879,19 +879,6 @@ function Faq() {
   );
 }
 
-const PERFIS = [
-  { value: "residencial", label: "Residencial" },
-  { value: "empresa", label: "Empresa" },
-  { value: "condominio", label: "Condomínio" },
-  { value: "propriedade_rural", label: "Propriedade rural" },
-  { value: "outro", label: "Outro" },
-] as const;
-
-const CONTATO_PREFERIDO = [
-  { value: "whatsapp", label: "WhatsApp" },
-  { value: "telefone", label: "Telefone" },
-  { value: "email", label: "E-mail" },
-] as const;
 
 function ContactSection() {
   const [unidade, setUnidade] = useState<"matriz" | "filial">("matriz");
