@@ -17,20 +17,32 @@ const attributionSchema = z.object({
   session_id: z.string().max(100).nullish(),
 });
 
+const addressSchema = z.object({
+  cep: z.string().trim().max(20).nullish(),
+  street: z.string().trim().max(200).nullish(),
+  number: z.string().trim().max(30).nullish(),
+  complement: z.string().trim().max(120).nullish(),
+  state: z.string().trim().max(40).nullish(),
+  reference: z.string().trim().max(200).nullish(),
+});
+
 const leadSchema = z.object({
   name: z.string().trim().min(2).max(120),
   phone: z.string().trim().min(8).max(30),
   email: z.string().trim().email().max(200).nullish().or(z.literal("")),
   city: z.string().trim().min(2).max(120),
   neighborhood: z.string().trim().max(120).nullish(),
-  customer_type: z.enum(["residencial", "empresa", "condominio", "propriedade_rural", "outro"]),
+  customer_type: z
+    .enum(["residencial", "empresa", "condominio", "propriedade_rural", "outro"])
+    .optional(),
   company_name: z.string().trim().max(160).nullish(),
   service_interest: z.string().trim().min(2).max(160),
   pest_type: z.string().trim().max(160).nullish(),
   message: z.string().trim().max(2000).nullish(),
-  preferred_contact: z.enum(["whatsapp", "telefone", "email"]),
+  preferred_contact: z.enum(["whatsapp", "telefone", "email"]).optional(),
   privacy_acknowledged: z.literal(true),
-  marketing_consent: z.boolean(),
+  marketing_consent: z.boolean().optional(),
+  address: addressSchema.partial().optional(),
   honeypot: z.string().max(200).optional(),
   attribution: attributionSchema.partial().optional(),
 });
@@ -118,28 +130,42 @@ export const submitLead = createServerFn({ method: "POST" })
     const now = new Date().toISOString();
     const city = data.city.trim().replace(/\s+/g, " ");
 
+    const addr = data.address ?? {};
+    const addrValues = [addr.cep, addr.street, addr.number, addr.state, addr.reference].map((v) =>
+      v?.trim() ? v.trim() : null,
+    );
+    const filled = addrValues.filter(Boolean).length;
+    const addressStatus = filled === 0 ? "nao_informado" : addr.street?.trim() && addr.number?.trim() ? "completo" : "parcial";
+
     const { data: lead, error } = await supabaseAdmin
       .from("leads")
       .insert({
+        address_cep: addr.cep?.trim() || null,
+        address_street: addr.street?.trim() || null,
+        address_number: addr.number?.trim() || null,
+        address_complement: addr.complement?.trim() || null,
+        address_state: addr.state?.trim() || null,
+        address_reference: addr.reference?.trim() || null,
+        address_status: addressStatus,
         name: data.name.trim().replace(/\s+/g, " "),
         phone: data.phone.trim(),
         phone_normalized: digits,
         email: data.email ? data.email.trim().toLowerCase() : null,
         city,
         neighborhood: data.neighborhood?.trim() || null,
-        customer_type: data.customer_type,
+        customer_type: data.customer_type ?? "outro",
         company_name: data.company_name?.trim() || null,
         service_interest: data.service_interest,
         pest_type: data.pest_type?.trim() || null,
         message: data.message?.trim() || null,
-        preferred_contact: data.preferred_contact,
+        preferred_contact: data.preferred_contact ?? "whatsapp",
         origin: "site_form",
         status: "novo",
         whatsapp_status: "aberto",
         whatsapp_intent_at: now,
         privacy_acknowledged: true,
         privacy_acknowledged_at: now,
-        marketing_consent: data.marketing_consent,
+        marketing_consent: data.marketing_consent ?? false,
         marketing_consent_at: data.marketing_consent ? now : null,
         source: a.source ?? null,
         medium: a.medium ?? null,
@@ -169,6 +195,7 @@ export const submitLead = createServerFn({ method: "POST" })
     }
 
     const shortProtocol = `BP-${lead.id.replace(/-/g, "").slice(0, 6).toUpperCase()}`;
+    await supabaseAdmin.from("leads").update({ short_protocol: shortProtocol }).eq("id", lead.id);
 
     await supabaseAdmin.from("lead_events").insert([
       {

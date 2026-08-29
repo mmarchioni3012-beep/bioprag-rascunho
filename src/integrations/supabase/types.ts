@@ -75,6 +75,14 @@ export type Database = {
       }
       leads: {
         Row: {
+          address_cep: string | null
+          address_complement: string | null
+          address_number: string | null
+          address_reference: string | null
+          address_state: string | null
+          address_status: string
+          address_street: string | null
+          address_zone: string | null
           archived: boolean
           archived_at: string | null
           archived_by: string | null
@@ -134,6 +142,14 @@ export type Database = {
           whatsapp_status: string
         }
         Insert: {
+          address_cep?: string | null
+          address_complement?: string | null
+          address_number?: string | null
+          address_reference?: string | null
+          address_state?: string | null
+          address_status?: string
+          address_street?: string | null
+          address_zone?: string | null
           archived?: boolean
           archived_at?: string | null
           archived_by?: string | null
@@ -193,6 +209,14 @@ export type Database = {
           whatsapp_status?: string
         }
         Update: {
+          address_cep?: string | null
+          address_complement?: string | null
+          address_number?: string | null
+          address_reference?: string | null
+          address_state?: string | null
+          address_status?: string
+          address_street?: string | null
+          address_zone?: string | null
           archived?: boolean
           archived_at?: string | null
           archived_by?: string | null
