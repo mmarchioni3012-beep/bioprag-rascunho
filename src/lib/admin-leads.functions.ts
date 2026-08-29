@@ -38,6 +38,16 @@ const updateSchema = z.object({
   follow_up_at: z.string().max(40).nullish(),
   assigned_to: z.string().max(120).nullish(),
   archived: z.boolean().optional(),
+  city: z.string().trim().max(120).optional(),
+  neighborhood: z.string().trim().max(120).nullish(),
+  address_cep: z.string().trim().max(20).nullish(),
+  address_street: z.string().trim().max(200).nullish(),
+  address_number: z.string().trim().max(30).nullish(),
+  address_complement: z.string().trim().max(120).nullish(),
+  address_state: z.string().trim().max(40).nullish(),
+  address_reference: z.string().trim().max(200).nullish(),
+  address_zone: z.enum(["urbana", "rural"]).nullish(),
+  address_status: z.enum(["nao_informado", "parcial", "completo", "confirmado"]).optional(),
 });
 
 const manualLeadSchema = z.object({
