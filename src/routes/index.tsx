@@ -1090,6 +1090,8 @@ function ContactSection() {
           </div>
         </Reveal>
       </div>
+
+      {openForm && <LeadFormModal onClose={() => setOpenForm(false)} />}
     </section>
   );
 }
