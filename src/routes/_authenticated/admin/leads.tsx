@@ -581,6 +581,63 @@ function LeadEditor({
           <label htmlFor="e-archived" className="text-xs text-[#8FA98F]">Arquivar lead</label>
         </div>
       </div>
+
+      <div className="mt-6 rounded-lg border border-[#132A19] bg-[#0A1A0F] p-4">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <h4 className="font-display text-xs font-bold uppercase tracking-wider">Endereço do atendimento</h4>
+          <span className="rounded-full border border-[#1C3D22] px-2.5 py-1 text-[11px] text-[#8FA98F]">
+            {ADDRESS_STATUS_LABEL[lead.address_status ?? "nao_informado"] ?? "Não informado"}
+          </span>
+        </div>
+        {addressWarning && (
+          <p className="mt-3 rounded-md border border-amber-400/40 bg-amber-400/10 px-3 py-2 text-xs text-amber-200">
+            Endereço incompleto — complete logradouro, número e cidade antes de agendar o serviço.
+          </p>
+        )}
+        <div className="mt-4 grid gap-3 sm:grid-cols-2">
+          <div>
+            <label className={label} htmlFor="e-cep">CEP</label>
+            <input id="e-cep" className={input} value={state.address_cep} onChange={(e) => setState({ ...state, address_cep: e.target.value })} />
+          </div>
+          <div>
+            <label className={label} htmlFor="e-street">Logradouro</label>
+            <input id="e-street" className={input} value={state.address_street} onChange={(e) => setState({ ...state, address_street: e.target.value })} />
+          </div>
+          <div>
+            <label className={label} htmlFor="e-number">Número</label>
+            <input id="e-number" className={input} value={state.address_number} onChange={(e) => setState({ ...state, address_number: e.target.value })} />
+          </div>
+          <div>
+            <label className={label} htmlFor="e-compl">Complemento</label>
+            <input id="e-compl" className={input} value={state.address_complement} onChange={(e) => setState({ ...state, address_complement: e.target.value })} />
+          </div>
+          <div>
+            <label className={label} htmlFor="e-bairro">Bairro</label>
+            <input id="e-bairro" className={input} value={state.neighborhood} onChange={(e) => setState({ ...state, neighborhood: e.target.value })} />
+          </div>
+          <div>
+            <label className={label} htmlFor="e-city">Cidade</label>
+            <input id="e-city" className={input} value={state.city} onChange={(e) => setState({ ...state, city: e.target.value })} />
+          </div>
+          <div>
+            <label className={label} htmlFor="e-uf">Estado</label>
+            <input id="e-uf" className={input} value={state.address_state} onChange={(e) => setState({ ...state, address_state: e.target.value })} />
+          </div>
+          <div>
+            <label className={label} htmlFor="e-zone">Zona</label>
+            <select id="e-zone" className={input} value={state.address_zone} onChange={(e) => setState({ ...state, address_zone: e.target.value })}>
+              <option value="">Não informada</option>
+              <option value="urbana">Urbana</option>
+              <option value="rural">Rural</option>
+            </select>
+          </div>
+          <div className="sm:col-span-2">
+            <label className={label} htmlFor="e-ref">Ponto de referência</label>
+            <input id="e-ref" className={input} value={state.address_reference} onChange={(e) => setState({ ...state, address_reference: e.target.value })} />
+          </div>
+        </div>
+      </div>
+
       <button
         disabled={saving}
         onClick={() =>
@@ -595,6 +652,15 @@ function LeadEditor({
             closed_value: state.closed_value ? Number(state.closed_value) : null,
             service_date: state.service_date || null,
             archived: state.archived,
+            city: state.city || undefined,
+            neighborhood: state.neighborhood || null,
+            address_cep: state.address_cep || null,
+            address_street: state.address_street || null,
+            address_number: state.address_number || null,
+            address_complement: state.address_complement || null,
+            address_state: state.address_state || null,
+            address_reference: state.address_reference || null,
+            address_zone: state.address_zone ? state.address_zone : null,
           })
         }
         className="mt-4 w-full rounded-lg bg-[#2ECC71] px-4 py-3 text-sm font-semibold text-[#06180D] transition-all hover:brightness-110 disabled:opacity-60"
