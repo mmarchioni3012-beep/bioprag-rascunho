@@ -7,6 +7,7 @@ import type { Tables } from "@/integrations/supabase/types";
 import { listLeads, listLeadEvents, updateLead, getMyAdminAccess } from "@/lib/admin-leads.functions";
 import { NewLeadDialog } from "@/components/admin/NewLeadDialog";
 import {
+  ADDRESS_STATUS_LABEL,
   LEAD_STATUS,
   LEAD_STATUS_LABEL,
   MANUAL_SOURCES,
