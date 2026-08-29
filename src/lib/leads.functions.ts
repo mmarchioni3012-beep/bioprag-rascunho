@@ -17,20 +17,32 @@ const attributionSchema = z.object({
   session_id: z.string().max(100).nullish(),
 });
 
+const addressSchema = z.object({
+  cep: z.string().trim().max(20).nullish(),
+  street: z.string().trim().max(200).nullish(),
+  number: z.string().trim().max(30).nullish(),
+  complement: z.string().trim().max(120).nullish(),
+  state: z.string().trim().max(40).nullish(),
+  reference: z.string().trim().max(200).nullish(),
+});
+
 const leadSchema = z.object({
   name: z.string().trim().min(2).max(120),
   phone: z.string().trim().min(8).max(30),
   email: z.string().trim().email().max(200).nullish().or(z.literal("")),
   city: z.string().trim().min(2).max(120),
   neighborhood: z.string().trim().max(120).nullish(),
-  customer_type: z.enum(["residencial", "empresa", "condominio", "propriedade_rural", "outro"]),
+  customer_type: z
+    .enum(["residencial", "empresa", "condominio", "propriedade_rural", "outro"])
+    .optional(),
   company_name: z.string().trim().max(160).nullish(),
   service_interest: z.string().trim().min(2).max(160),
   pest_type: z.string().trim().max(160).nullish(),
   message: z.string().trim().max(2000).nullish(),
-  preferred_contact: z.enum(["whatsapp", "telefone", "email"]),
+  preferred_contact: z.enum(["whatsapp", "telefone", "email"]).optional(),
   privacy_acknowledged: z.literal(true),
-  marketing_consent: z.boolean(),
+  marketing_consent: z.boolean().optional(),
+  address: addressSchema.partial().optional(),
   honeypot: z.string().max(200).optional(),
   attribution: attributionSchema.partial().optional(),
 });
