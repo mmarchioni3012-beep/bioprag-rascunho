@@ -134,3 +134,10 @@ export function whatsappUrl(phone: string, message: string) {
 export function suggestedWhatsappMessage(name: string, service: string) {
   return `Olá, ${name}! Aqui é da Bioprag. Recebemos sua solicitação referente a ${service}. Podemos continuar seu atendimento por aqui?`;
 }
+
+export const ADDRESS_STATUS_LABEL: Record<string, string> = {
+  nao_informado: "Endereço não informado",
+  parcial: "Endereço parcial",
+  completo: "Endereço completo",
+  confirmado: "Endereço confirmado",
+};
