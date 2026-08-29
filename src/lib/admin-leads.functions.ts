@@ -332,6 +332,24 @@ export const updateLead = createServerFn({ method: "POST" })
       patch['archived_by'] = null;
     }
 
+    // Situação do endereço recalculada quando o admin complementa os dados.
+    const touchedAddress = [
+      "address_cep",
+      "address_street",
+      "address_number",
+      "address_state",
+      "address_reference",
+      "address_zone",
+    ].some((k) => k in rest);
+    if (touchedAddress && !rest.address_status) {
+      const street = (rest.address_street ?? "")?.trim();
+      const number = (rest.address_number ?? "")?.trim();
+      const any = [rest.address_cep, street, number, rest.address_state, rest.address_reference].some((v) =>
+        (v ?? "").toString().trim(),
+      );
+      patch['address_status'] = !any ? "nao_informado" : street && number ? "completo" : "parcial";
+    }
+
     const { data: row, error } = await context.supabase
       .from("leads")
       .update(patch as never)
