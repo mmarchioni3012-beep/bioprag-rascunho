@@ -195,6 +195,7 @@ export const submitLead = createServerFn({ method: "POST" })
     }
 
     const shortProtocol = `BP-${lead.id.replace(/-/g, "").slice(0, 6).toUpperCase()}`;
+    await supabaseAdmin.from("leads").update({ short_protocol: shortProtocol }).eq("id", lead.id);
 
     await supabaseAdmin.from("lead_events").insert([
       {
