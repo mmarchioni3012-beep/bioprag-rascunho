@@ -1,9 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useRef, useState } from "react";
 import { pushTrackingEvent } from "@/lib/tracking";
-import { getAttribution } from "@/lib/attribution";
-import { submitLead, trackSiteEvent } from "@/lib/leads.functions";
+import { LeadFormModal } from "@/components/LeadFormModal";
 
 import {
   ArrowRight,
