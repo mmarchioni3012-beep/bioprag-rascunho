@@ -1116,148 +1116,42 @@ function ContactSection() {
           </Reveal>
 
           <Reveal delay={0.1} className="h-full">
-            <form onSubmit={onSubmit} noValidate className="flex h-full flex-col rounded-2xl border border-[#1C3D22] bg-[#0F2415] p-6 sm:p-8">
-              <div className="flex flex-1 flex-col gap-4">
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <div>
-                    <label htmlFor="contato-nome" className={labelCls}>Nome *</label>
-                    <input id="contato-nome" name="nome" required value={form.nome} onChange={update("nome")} className={inputCls} placeholder="Seu nome completo" />
-                  </div>
-                  <div>
-                    <label htmlFor="contato-whatsapp" className={labelCls}>WhatsApp *</label>
-                    <input id="contato-whatsapp" name="whatsapp" required type="tel" value={form.whatsapp} onChange={update("whatsapp")} className={inputCls} placeholder="(00) 00000-0000" />
-                  </div>
-                  <div>
-                    <label htmlFor="contato-email" className={labelCls}>E-mail</label>
-                    <input id="contato-email" name="email" type="email" value={form.email} onChange={update("email")} className={inputCls} placeholder="seu@email.com.br" />
-                  </div>
-                  <div>
-                    <label htmlFor="contato-cidade" className={labelCls}>Cidade *</label>
-                    <input id="contato-cidade" name="cidade" required value={form.cidade} onChange={update("cidade")} className={inputCls} placeholder="Cidade / Estado" />
-                  </div>
-                  <div>
-                    <label htmlFor="contato-bairro" className={labelCls}>Bairro</label>
-                    <input id="contato-bairro" name="bairro" value={form.bairro} onChange={update("bairro")} className={inputCls} placeholder="Bairro (opcional)" />
-                  </div>
-                  <div>
-                    <label htmlFor="contato-perfil" className={labelCls}>Perfil *</label>
-                    <select id="contato-perfil" name="perfil" required value={form.perfil} onChange={update("perfil")} className={inputCls}>
-                      <option value="">Selecione</option>
-                      {PERFIS.map((p) => (
-                        <option key={p.value} value={p.value}>{p.label}</option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-
-                {(form.perfil === "empresa" || form.perfil === "condominio") && (
-                  <div>
-                    <label htmlFor="contato-empresa" className={labelCls}>Nome da empresa / condomínio</label>
-                    <input id="contato-empresa" name="empresa" value={form.empresa} onChange={update("empresa")} className={inputCls} placeholder="Razão social ou nome do condomínio" />
-                  </div>
-                )}
-
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <div>
-                    <label htmlFor="contato-servico" className={labelCls}>Serviço de interesse *</label>
-                    <select id="contato-servico" name="servico" required value={form.servico} onChange={update("servico")} className={inputCls}>
-                      <option value="">Selecione</option>
-                      {SERVICES.map((s) => (
-                        <option key={s.title}>{s.title}</option>
-                      ))}
-                      <option>Outro / Não sei ao certo</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label htmlFor="contato-praga" className={labelCls}>Tipo de praga</label>
-                    <input id="contato-praga" name="praga" value={form.praga} onChange={update("praga")} className={inputCls} placeholder="Baratas, ratos, cupins… (opcional)" />
-                  </div>
-                </div>
-
-                <div>
-                  <label htmlFor="contato-preferencia" className={labelCls}>Melhor forma de contato *</label>
-                  <select id="contato-preferencia" name="contato" required value={form.contato} onChange={update("contato")} className={inputCls}>
-                    {CONTATO_PREFERIDO.map((c) => (
-                      <option key={c.value} value={c.value}>{c.label}</option>
-                    ))}
-                  </select>
-                </div>
-
-                <div className="flex flex-1 flex-col">
-                  <label htmlFor="contato-mensagem" className={labelCls}>Mensagem</label>
-                  <textarea id="contato-mensagem" name="mensagem" value={form.mensagem} onChange={update("mensagem")} className={`${inputCls} min-h-[96px] flex-1`} placeholder="Conte mais sobre sua situação (opcional)" />
-                </div>
-
-                {/* Campo anti-spam: invisível para usuários reais */}
-                <div className="hidden" aria-hidden="true">
-                  <label htmlFor="contato-site">Site</label>
-                  <input id="contato-site" name="site" tabIndex={-1} autoComplete="off" value={form.honeypot} onChange={update("honeypot")} />
-                </div>
-
-                <div className="space-y-3 rounded-lg border border-[#1C3D22] bg-[#0A1A0F] p-4">
-                  <div className="flex items-start gap-3">
-                    <input
-                      id="contato-privacidade"
-                      type="checkbox"
-                      required
-                      checked={privacidade}
-                      onChange={(e) => setPrivacidade(e.target.checked)}
-                      className="mt-0.5 h-4 w-4 shrink-0 accent-[#2ECC71]"
-                    />
-                    <label htmlFor="contato-privacidade" className="text-xs leading-relaxed text-[#8FA98F]">
-                      Autorizo a BIOPRAG a usar meus dados para retorno comercial deste atendimento, conforme a{" "}
-                      <Link to="/politica-de-privacidade" className="text-[#2ECC71] hover:underline">
-                        Política de Privacidade
-                      </Link>
-                      . *
-                    </label>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <input
-                      id="contato-marketing"
-                      type="checkbox"
-                      checked={marketing}
-                      onChange={(e) => setMarketing(e.target.checked)}
-                      className="mt-0.5 h-4 w-4 shrink-0 accent-[#2ECC71]"
-                    />
-                    <label htmlFor="contato-marketing" className="text-xs leading-relaxed text-[#8FA98F]">
-                      Quero receber informações e promoções da BIOPRAG (opcional).
-                    </label>
-                  </div>
-                </div>
-              </div>
-
-              {erro && (
-                <p role="alert" className="mt-4 rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-300">
-                  {erro}
-                </p>
-              )}
-
-              {status === "sent" && (
-                <div className="mt-4 rounded-lg border border-[#2ECC71]/40 bg-[#2ECC71]/10 px-4 py-3 text-sm text-[#7DFFB3]">
-                  Solicitação registrada{protocolo ? ` — protocolo ${protocolo}` : ""}. Se o WhatsApp não abrir
-                  automaticamente,{" "}
-                  <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="font-semibold underline">
-                    clique aqui para falar com a equipe
-                  </a>
-                  .
-                </div>
-              )}
-
-              <button
-                type="submit"
-                disabled={status === "sending"}
-                className="mt-6 inline-flex w-full items-center justify-center gap-2.5 rounded-lg bg-[#25D366] px-6 py-3.5 font-sans text-sm font-semibold text-white transition-all hover:brightness-110 disabled:opacity-60"
-              >
-                <WhatsAppIcon className="h-5 w-5" />
-                {status === "sending" ? "Enviando..." : "Enviar e falar no WhatsApp"}
-                <ArrowRight className="h-4 w-4" />
-              </button>
-              <p className="mt-3 text-center text-xs text-[#8FA98F]">
-                Sua solicitação é registrada antes do WhatsApp abrir. Resposta em até 1 hora em horário comercial.
+            <div className="flex h-full flex-col justify-center rounded-2xl border border-[#1C3D22] bg-[#0F2415] p-7 sm:p-10">
+              <span className="inline-flex w-fit items-center gap-2 rounded-full border border-[#2ECC71]/30 bg-[#2ECC71]/8 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#2ECC71]">
+                <Sparkles className="h-3.5 w-3.5" /> Atendimento rápido
+              </span>
+              <h3 className="mt-6 font-display text-3xl font-bold leading-tight text-[#F0F4F0] sm:text-4xl">
+                Precisa de ajuda com pragas?
+              </h3>
+              <p className="mt-4 text-base leading-relaxed text-[#8FA98F]">
+                Preencha dois passos rápidos e nossa equipe entra em contato pelo WhatsApp em até 1 hora. Leva menos de um
+                minuto — apenas nome, WhatsApp, cidade e o serviço desejado.
               </p>
-            </form>
+              <ul className="mt-6 space-y-2.5 text-sm text-[#C7D8C7]">
+                {["Sem cadastro nem senha", "Endereço é opcional", "Resposta em horário comercial"].map((t) => (
+                  <li key={t} className="flex items-start gap-2.5">
+                    <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-[#2ECC71]" /> {t}
+                  </li>
+                ))}
+              </ul>
+              <button
+                type="button"
+                onClick={() => setOpenForm(true)}
+                className="mt-8 inline-flex w-full items-center justify-center gap-2.5 rounded-lg bg-[#2ECC71] px-6 py-4 font-sans text-sm font-bold text-[#06180D] transition-all hover:brightness-110"
+              >
+                Solicitar avaliação <ArrowRight className="h-4 w-4" />
+              </button>
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-3 inline-flex w-full items-center justify-center gap-2.5 rounded-lg border border-[#25D366]/40 px-6 py-3.5 font-sans text-sm font-semibold text-[#7DFFB3] transition-colors hover:bg-[#25D366]/10"
+              >
+                <WhatsAppIcon className="h-5 w-5" /> Falar agora no WhatsApp
+              </a>
+            </div>
           </Reveal>
+
 
         </div>
 
