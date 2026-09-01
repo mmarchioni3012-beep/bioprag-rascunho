@@ -429,6 +429,8 @@ function LeadsAdmin() {
             <dl className="mt-6 grid grid-cols-2 gap-3 text-sm">
               {[
                 ["Telefone", selected.phone],
+                ["Telefone alternativo", selected.phone_alt ?? "—"],
+
                 ["E-mail", selected.email ?? "—"],
                 ["Cidade", selected.city],
                 ["Bairro", selected.neighborhood ?? "—"],
