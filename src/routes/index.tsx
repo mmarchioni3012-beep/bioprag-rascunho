@@ -1569,10 +1569,13 @@ function Footer() {
 function FloatingWhatsApp() {
   return (
     <a
-      href={WHATSAPP_URL}
+      href={waLink("Olá! Vim pelo site da Bioprag e gostaria de atendimento.")}
       target="_blank"
       rel="noreferrer"
+      data-click-location="botao_flutuante"
+      data-cta-label="whatsapp_flutuante"
       aria-label="Falar com especialista no WhatsApp"
+
       className="group fixed bottom-6 right-6 z-50 grid h-16 w-16 place-items-center rounded-full bg-[#25D366] text-white shadow-[0_12px_40px_-8px_rgba(37,211,102,0.8)] ring-4 ring-[#25D366]/25 transition-transform hover:scale-105 animate-pulse-soft"
     >
       <WhatsAppIcon className="h-9 w-9" />
