@@ -1127,16 +1127,32 @@ function ContactSection() {
                 <Phone className="mt-0.5 h-5 w-5 shrink-0 text-[#2ECC71]" />
                 <div>
                   <div className="text-xs uppercase tracking-[0.14em] text-[#8FA98F]">Telefone</div>
-                  <div className="text-sm font-medium text-[#F0F4F0]">{PHONE_DISPLAY}</div>
+                  <a
+                    href="tel:+551438454011"
+                    data-click-location="secao_contato"
+                    className="text-sm font-medium text-[#F0F4F0] transition-colors hover:text-[#2ECC71]"
+                  >
+                    {PHONE_DISPLAY}
+                  </a>
                 </div>
               </div>
               <div className="flex items-start gap-3 rounded-lg border border-[#1C3D22] bg-[#0F2415] p-4">
                 <WhatsAppIcon className="mt-0.5 h-5 w-5 shrink-0 text-[#25D366]" />
                 <div>
                   <div className="text-xs uppercase tracking-[0.14em] text-[#8FA98F]">WhatsApp</div>
-                  <div className="text-sm font-medium text-[#F0F4F0]">{WHATSAPP_DISPLAY}</div>
+                  <a
+                    href={waLink("Olá! Vim pelo site da Bioprag e gostaria de atendimento.")}
+                    target="_blank"
+                    rel="noreferrer"
+                    data-click-location="secao_contato"
+                    data-cta-label="numero_whatsapp"
+                    className="text-sm font-medium text-[#F0F4F0] transition-colors hover:text-[#2ECC71]"
+                  >
+                    {WHATSAPP_DISPLAY}
+                  </a>
                 </div>
               </div>
+
               <div className="flex items-start gap-3 rounded-lg border border-[#1C3D22] bg-[#0F2415] p-4 sm:col-span-2">
                 <Mail className="mt-0.5 h-5 w-5 shrink-0 text-[#2ECC71]" />
                 <div className="min-w-0">
