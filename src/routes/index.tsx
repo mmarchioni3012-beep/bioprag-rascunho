@@ -1176,13 +1176,16 @@ function ContactSection() {
                 Solicitar avaliação <ArrowRight className="h-4 w-4" />
               </button>
               <a
-                href={WHATSAPP_URL}
+                href={waLink("Olá! Vim pelo site da Bioprag e gostaria de atendimento.")}
                 target="_blank"
                 rel="noreferrer"
+                data-click-location="secao_contato"
+                data-cta-label="falar_agora"
                 className="mt-3 inline-flex w-full items-center justify-center gap-2.5 rounded-lg border border-[#25D366]/40 px-6 py-3.5 font-sans text-sm font-semibold text-[#7DFFB3] transition-colors hover:bg-[#25D366]/10"
               >
                 <WhatsAppIcon className="h-5 w-5" /> Falar agora no WhatsApp
               </a>
+
             </div>
           </Reveal>
 
