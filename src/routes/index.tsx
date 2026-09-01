@@ -1252,27 +1252,64 @@ function ContactSection() {
   );
 }
 
+type Segment = {
+  icon: typeof Home;
+  title: string;
+  desc: string;
+  image: string;
+  ambientes: string;
+  entrega: string[];
+};
+
+const SEGMENTS: Segment[] = [
+  {
+    icon: Home,
+    title: "Residencial",
+    desc: "Proteção discreta e segura para sua família. Tratamentos técnicos que consideram pets, crianças e o ambiente do lar.",
+    image: segResidencial,
+    ambientes: "Casas, apartamentos, quintais, áreas de serviço, forros e caixas d'água.",
+    entrega: [
+      "Vistoria técnica antes de qualquer aplicação",
+      "Produtos registrados na ANVISA aplicados por equipe treinada",
+      "Orientações claras de segurança para moradores e animais",
+      "Laudo técnico do atendimento realizado",
+      "Agendamento em horário combinado com o cliente",
+    ],
+  },
+  {
+    icon: Building2,
+    title: "Comercial",
+    desc: "Lojas, escritórios, restaurantes e redes. Controle preventivo com documentação para auditorias sanitárias.",
+    image: segComercial,
+    ambientes: "Restaurantes, mercados, padarias, escritórios, clínicas, hotéis e condomínios.",
+    entrega: [
+      "Plano de controle adequado à rotina do estabelecimento",
+      "Execução em horários que não interrompem a operação",
+      "Documentação técnica para fiscalização sanitária",
+      "Mapa de pontos de monitoramento quando aplicável",
+      "Programação de reavaliações periódicas",
+    ],
+  },
+  {
+    icon: Factory,
+    title: "Industrial",
+    desc: "Indústrias alimentícias, farmacêuticas e logísticas. Programas alinhados a requisitos de BPF, APPCC e auditorias sanitárias.",
+    image: segIndustrial,
+    ambientes: "Plantas industriais, áreas de produção, armazéns, centros de distribuição e áreas externas.",
+    entrega: [
+      "Programa de manejo integrado de pragas documentado",
+      "Mapa de dispositivos e registros de monitoramento",
+      "Procedimentos e laudos organizados para auditoria",
+      "Equipe com treinamento de biossegurança e EPI completo",
+      "Cronograma de visitas técnicas definido com a operação",
+    ],
+  },
+];
+
 function Segments() {
-  const items = [
-    {
-      icon: Home,
-      title: "Residencial",
-      desc: "Proteção discreta e segura para sua família. Tratamentos eficazes que respeitam pets, crianças e o ambiente do lar.",
-      image: segResidencial,
-    },
-    {
-      icon: Building2,
-      title: "Comercial",
-      desc: "Lojas, escritórios, restaurantes e redes. Controle preventivo com documentação completa para auditorias sanitárias.",
-      image: segComercial,
-    },
-    {
-      icon: Factory,
-      title: "Industrial",
-      desc: "Indústrias alimentícias, farmacêuticas e logísticas. Programas em conformidade com BPF, APPCC, AIB e exigências sanitárias.",
-      image: segIndustrial,
-    },
-  ];
+  const items = SEGMENTS;
+  const [openSegment, setOpenSegment] = useState<Segment | null>(null);
+
 
   return (
     <section id="atendimento" className="relative isolate overflow-hidden py-24 sm:py-32">
