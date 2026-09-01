@@ -418,13 +418,16 @@ function Navbar() {
           ))}
         </nav>
         <a
-          href={WHATSAPP_URL}
+          href={waLink("Olá! Gostaria de falar com um especialista da Bioprag.")}
           target="_blank"
           rel="noreferrer"
+          data-click-location="menu_topo"
+          data-cta-label="falar_com_especialista"
           className="hidden items-center gap-2 rounded-lg bg-[#2ECC71] px-4 py-2 text-sm font-semibold text-[#06180D] transition-all hover:bg-[#7DFFB3] md:inline-flex"
         >
           Falar com especialista <ArrowRight className="h-4 w-4" />
         </a>
+
         <button
           aria-label="Menu"
           onClick={() => setOpen(true)}
