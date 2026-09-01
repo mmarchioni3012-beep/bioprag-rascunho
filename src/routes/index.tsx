@@ -1242,9 +1242,12 @@ function ContactSection() {
                 </div>
                 <div className="mt-8 flex flex-wrap justify-center gap-3 lg:justify-start">
                   <a
-                    href={WHATSAPP_URL}
+                    href={waLink("Olá! Gostaria de saber como obter o Selo Bioprag de Segurança.")}
                     target="_blank"
                     rel="noreferrer"
+                    data-click-location="secao_selo"
+                    data-cta-label="falar_com_especialista_selo"
+
                     className="inline-flex items-center gap-2 rounded-full bg-[#2ECC71] px-7 py-4 font-display text-sm font-bold uppercase tracking-wider text-[#06180D] transition-all hover:bg-[#7DFFB3] glow-green"
                   >
                     Falar com especialista <ArrowRight className="h-4 w-4" />
