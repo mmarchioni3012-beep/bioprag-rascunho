@@ -2,6 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { pushTrackingEvent } from "@/lib/tracking";
 import { LeadFormModal } from "@/components/LeadFormModal";
+import { InfoModal } from "@/components/InfoModal";
+
 
 import {
   ArrowRight,
