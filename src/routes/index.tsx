@@ -1370,23 +1370,61 @@ function Segments() {
                 <div className="p-6">
                   <h3 className="font-display text-2xl font-bold text-[#F0F4F0]">{it.title}</h3>
                   <p className="mt-3 text-sm leading-relaxed text-[#8FA98F]">{it.desc}</p>
-                  <a
-                    href={WHATSAPP_URL}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#2ECC71] transition-colors hover:text-[#7DFFB3]"
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setOpenSegment(it);
+                      pushTrackingEvent("segment_card_open", { segment_name: it.title });
+                    }}
+                    aria-label={`Ver detalhes do atendimento ${it.title}`}
+                    className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#2ECC71] transition-colors hover:text-[#7DFFB3] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#2ECC71]"
                   >
-                    Solicitar atendimento <ArrowRight className="h-4 w-4" />
-                  </a>
+                    Ver detalhes <ArrowRight className="h-4 w-4" />
+                  </button>
                 </div>
               </article>
             </Reveal>
           ))}
         </div>
       </div>
+
+      {openSegment && (
+        <InfoModal
+          eyebrow="Atendimento"
+          title={openSegment.title}
+          onClose={() => setOpenSegment(null)}
+          footer={
+            <a
+              href={waLink(
+                `Olá! Gostaria de solicitar uma avaliação para atendimento ${openSegment.title.toLowerCase()} da Bioprag.`,
+              )}
+              target="_blank"
+              rel="noreferrer"
+              data-click-location="modal_segmento"
+              data-cta-label={`solicitar_atendimento_${openSegment.title.toLowerCase()}`}
+              className="inline-flex w-full items-center justify-center gap-2.5 rounded-lg bg-[#2ECC71] px-6 py-3.5 text-sm font-bold text-[#06180D] transition-all hover:brightness-110"
+            >
+              <WhatsAppIcon className="h-5 w-5" /> Solicitar atendimento
+            </a>
+          }
+        >
+          <p className="text-sm leading-relaxed text-[#C7D8C7]">{openSegment.desc}</p>
+          <h3 className="mt-6 text-xs font-semibold uppercase tracking-[0.18em] text-[#2ECC71]">Ambientes atendidos</h3>
+          <p className="mt-2 text-sm leading-relaxed text-[#8FA98F]">{openSegment.ambientes}</p>
+          <h3 className="mt-6 text-xs font-semibold uppercase tracking-[0.18em] text-[#2ECC71]">Como entregamos</h3>
+          <ul className="mt-3 space-y-2.5">
+            {openSegment.entrega.map((item) => (
+              <li key={item} className="flex items-start gap-2.5 text-sm text-[#C7D8C7]">
+                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#2ECC71]" /> {item}
+              </li>
+            ))}
+          </ul>
+        </InfoModal>
+      )}
     </section>
   );
 }
+
 
 function FinalCTA() {
   return (
