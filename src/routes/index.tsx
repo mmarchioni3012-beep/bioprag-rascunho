@@ -465,13 +465,16 @@ function Navbar() {
             ))}
           </nav>
           <a
-            href={WHATSAPP_URL}
+            href={waLink("Olá! Gostaria de falar com um especialista da Bioprag.")}
             target="_blank"
             rel="noreferrer"
+            data-click-location="menu_mobile"
+            data-cta-label="falar_com_especialista"
             className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#2ECC71] px-4 py-3 text-sm font-semibold text-[#06180D]"
           >
             Falar com especialista
           </a>
+
         </aside>
       </div>
     </header>
