@@ -154,9 +154,10 @@ function RootShell({ children }: { children: ReactNode }) {
         {children}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){window.dataLayer=window.dataLayer||[];if(window.__biopragTrackingInit)return;window.__biopragTrackingInit=true;document.addEventListener('click',function(event){var target=event.target;var link=target&&target.closest?target.closest('a'):null;if(!link)return;var href=link.getAttribute('href')||'';var section=link.closest('section');var location=(section&&section.id)||'site';if(href.indexOf('wa.me/')!==-1||href.indexOf('whatsapp.com/')!==-1){window.dataLayer.push({event:'whatsapp_click',click_location:location});return;}if(href.indexOf('tel:')===0){window.dataLayer.push({event:'phone_click',click_location:location});return;}},true);})();`,
+            __html: `(function(){window.dataLayer=window.dataLayer||[];if(window.__biopragTrackingInit)return;window.__biopragTrackingInit=true;document.addEventListener('click',function(event){var target=event.target;var link=target&&target.closest?target.closest('a'):null;if(!link)return;var href=link.getAttribute('href')||'';var section=link.closest('section');var loc=link.getAttribute('data-click-location')||(section&&section.id)||'site';var payload={click_location:loc};var label=link.getAttribute('data-cta-label');if(label)payload.cta_label=label;var svc=link.getAttribute('data-service-name');if(svc)payload.service_name=svc;if(href.indexOf('wa.me/')!==-1||href.indexOf('whatsapp.com/')!==-1){payload.event='whatsapp_click';window.dataLayer.push(payload);return;}if(href.indexOf('tel:')===0){window.dataLayer.push({event:'phone_click',click_location:loc});return;}},true);})();`,
           }}
         />
+
         <Scripts />
       </body>
     </html>

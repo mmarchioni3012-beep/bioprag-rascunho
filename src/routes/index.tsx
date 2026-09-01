@@ -68,6 +68,10 @@ import segIndustrial from "@/assets/seg-industrial.png";
 
 const WHATSAPP_NUMBER = "5514981752595";
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
+/** Link de WhatsApp com mensagem pré-preenchida (sem dados pessoais). */
+const waLink = (message?: string) =>
+  message ? `${WHATSAPP_URL}?text=${encodeURIComponent(message)}` : WHATSAPP_URL;
+
 const PHONE_DISPLAY = "(14) 3845-4011";
 const WHATSAPP_DISPLAY = "(14) 98175-2595";
 const EMAIL = "vendas@bioprag.com.br";
@@ -90,7 +94,8 @@ const UNIDADES = {
 const META_TITLE =
   "BIOPRAG — Controle Integrado de Pragas e Biossegurança";
 const META_DESC =
-  "Controle integrado de pragas, saúde ambiental e biossegurança com método técnico, auditável e 100% documentado. Atendimento em todo o Brasil desde 1986.";
+  "Controle integrado de pragas, saúde ambiental e biossegurança com método técnico, auditável e documentado. Atendimento em todo o Brasil desde 1986.";
+
 const SITE_URL = "https://bioprag.lovable.app";
 const OG_IMAGE = `${SITE_URL}${img2953.url}`;
 
@@ -230,16 +235,104 @@ type Service = {
   img: string;
   icon: typeof Bug;
   large?: boolean;
+  /** Conteúdo exibido no modal do serviço. */
+  aplicacao: string;
+  inclui: string[];
 };
 
 const SERVICES: Service[] = [
-  { title: "Desinsetização", short: "Controle químico e mecânico de insetos", desc: "Aplicação técnica com produtos registrados na ANVISA e protocolo de biossegurança.", img: foto11.url, icon: SprayCan },
-  { title: "Controle de Insetos Rasteiros", short: "Baratas, formigas e pragas rasteiras", desc: "Eliminação técnica de pragas rasteiras em ambientes residenciais, comerciais e industriais.", img: foto20.url, icon: Bug },
-  { title: "Controle de Insetos Voadores", short: "Mosquitos, moscas e mariposas", desc: "Manejo integrado de voadores com produtos certificados e baixo impacto ambiental.", img: foto34.url, icon: Plane },
-  { title: "Desratização", short: "Ratos, camundongos e roedores", desc: "Mapa de iscas, porta-iscas lacrados e monitoramento contínuo de atividade.", img: foto10.url, icon: Rat },
-  { title: "Descupinização", short: "Cupins de solo e de madeira", desc: "Tratamento estrutural preventivo e corretivo com garantia contra cupins.", img: img2953.url, icon: TreePine },
-  { title: "Higienização de Reservatórios", short: "Limpeza de caixas d'água", desc: "Higienização de reservatórios com laudo técnico e controle de potabilidade.", img: foto12.url, icon: Droplets },
+  {
+    title: "Desinsetização",
+    short: "Controle químico e mecânico de insetos",
+    desc: "Aplicação técnica com produtos registrados na ANVISA e protocolo de biossegurança.",
+    img: foto11.url,
+    icon: SprayCan,
+    aplicacao: "Ambientes residenciais, comerciais e industriais com presença ou risco de infestação por insetos.",
+    inclui: [
+      "Vistoria técnica e identificação dos focos",
+      "Escolha do método conforme o ambiente e o público presente",
+      "Produtos registrados na ANVISA aplicados por equipe treinada",
+      "Orientações de segurança antes e depois da aplicação",
+      "Laudo técnico do serviço executado",
+    ],
+  },
+  {
+    title: "Controle de Insetos Rasteiros",
+    short: "Baratas, formigas e pragas rasteiras",
+    desc: "Manejo técnico de pragas rasteiras em ambientes residenciais, comerciais e industriais.",
+    img: foto20.url,
+    icon: Bug,
+    aplicacao: "Cozinhas, áreas de serviço, depósitos, restaurantes, mercados e áreas de produção.",
+    inclui: [
+      "Inspeção de abrigos, frestas e pontos de passagem",
+      "Aplicação dirigida com produtos registrados na ANVISA",
+      "Recomendações de manejo ambiental e vedação",
+      "Orientação de reavaliação quando necessária",
+      "Laudo técnico do serviço executado",
+    ],
+  },
+  {
+    title: "Controle de Insetos Voadores",
+    short: "Mosquitos, moscas e mariposas",
+    desc: "Manejo integrado de voadores com produtos certificados e baixo impacto ambiental.",
+    img: foto34.url,
+    icon: Plane,
+    aplicacao: "Áreas internas e externas com circulação de voadores, incluindo comércio de alimentos e indústrias.",
+    inclui: [
+      "Identificação de criadouros e rotas de voo",
+      "Aplicação técnica com produtos registrados na ANVISA",
+      "Recomendações de barreiras físicas e higienização",
+      "Orientações de segurança para o ambiente",
+      "Laudo técnico do serviço executado",
+    ],
+  },
+  {
+    title: "Desratização",
+    short: "Ratos, camundongos e roedores",
+    desc: "Mapa de iscas, porta-iscas lacrados e monitoramento da atividade.",
+    img: foto10.url,
+    icon: Rat,
+    aplicacao: "Residências, condomínios, comércios, indústrias, galpões e áreas externas.",
+    inclui: [
+      "Inspeção e mapeamento dos pontos de atividade",
+      "Instalação de porta-iscas lacrados e identificados",
+      "Mapa de pontos para conferência e auditoria",
+      "Orientações de manejo de resíduos e vedação",
+      "Laudo técnico do serviço executado",
+    ],
+  },
+  {
+    title: "Descupinização",
+    short: "Cupins de solo e de madeira",
+    desc: "Tratamento estrutural preventivo e corretivo conforme o tipo de cupim identificado.",
+    img: img2953.url,
+    icon: TreePine,
+    aplicacao: "Estruturas de madeira, forros, batentes, móveis fixos, solos e alvenaria.",
+    inclui: [
+      "Identificação do tipo de cupim e da extensão do ataque",
+      "Definição do método: barreira química, injeção ou tratamento localizado",
+      "Aplicação com produtos registrados na ANVISA",
+      "Orientações de acompanhamento posterior",
+      "Laudo técnico do serviço executado",
+    ],
+  },
+  {
+    title: "Higienização de Reservatórios",
+    short: "Limpeza de caixas d'água",
+    desc: "Higienização de reservatórios com laudo técnico e cuidados de potabilidade.",
+    img: foto12.url,
+    icon: Droplets,
+    aplicacao: "Caixas d'água e reservatórios residenciais, comerciais, condominiais e industriais.",
+    inclui: [
+      "Esvaziamento e remoção de resíduos do reservatório",
+      "Limpeza das paredes e desinfecção com produtos apropriados",
+      "Verificação de tampas, vedação e pontos de contaminação",
+      "Orientação sobre a periodicidade recomendada",
+      "Laudo técnico do serviço executado",
+    ],
+  },
 ];
+
 
 const METHOD = [
   { icon: Search, title: "Diagnóstico", desc: "Vistoria técnica completa e identificação de focos." },
@@ -254,7 +347,7 @@ const REGIONS = ["Norte", "Nordeste", "Centro-Oeste", "Sudeste", "Sul"];
 const FAQ = [
   { q: "Como funciona o processo do início ao fim?", a: "Iniciamos com vistoria técnica gratuita, elaboramos um plano personalizado, executamos com produtos certificados e entregamos laudo + cronograma de monitoramento." },
   { q: "Os produtos utilizados são seguros para crianças e pets?", a: "Sim. Trabalhamos exclusivamente com produtos aprovados pela ANVISA, aplicados por profissionais treinados, com baixíssima toxicidade residual." },
-  { q: "Preciso sair de casa durante o serviço?", a: "Na maioria dos serviços não é necessário. Para casos específicos orientamos um curto período de ausência, sempre informado previamente." },
+  { q: "Preciso sair de casa durante o serviço?", a: "Depende do tipo de serviço e do produto aplicado. Em alguns casos não é necessário sair; em outros, orientamos um período de ausência do ambiente. A orientação é sempre informada antes da execução pelo técnico responsável." },
   { q: "Vocês emitem laudo técnico?", a: "Sim. Todo atendimento gera laudo técnico detalhado, exigível por órgãos sanitários e auditorias." },
   { q: "Qual o prazo de garantia dos serviços?", a: "A garantia varia por serviço, podendo chegar a 12 meses com plano de monitoramento contínuo." },
   { q: "Atendem empresas de grande porte?", a: "Sim. Operamos com indústrias, redes de varejo, hospitais e condomínios, com estrutura para grandes volumes." },
@@ -411,8 +504,9 @@ function Hero() {
           </h1>
           <p className="mt-6 max-w-xl text-base text-[#8FA98F] sm:text-lg animate-fade-up" style={{ animationDelay: "0.7s" }}>
             Controle integrado de pragas, saúde ambiental e biossegurança com método técnico,
-            auditável e 100% documentado.
+            auditável e documentado.
           </p>
+
           <div className="mt-8 flex flex-wrap gap-3 animate-fade-up" style={{ animationDelay: "0.85s" }}>
             <a
               href="#contato"
@@ -432,7 +526,6 @@ function Hero() {
             {[
               { v: 40, s: " anos", p: "+", label: "anos de operação" },
               { v: 10, s: "k+", p: "", label: "atendimentos" },
-              { v: 100, s: "%", p: "", label: "documentado" },
             ].map((stat, i) => (
               <div key={i}>
                 <div className="font-display text-3xl font-bold text-[#2ECC71]">
@@ -444,10 +537,15 @@ function Hero() {
               </div>
             ))}
             <div>
+              <div className="font-display text-2xl font-bold text-[#2ECC71]">Documentado</div>
+              <div className="mt-1 text-xs uppercase tracking-wider text-[#8FA98F]">Atendimento técnico e documentado</div>
+            </div>
+            <div>
               <div className="font-display text-2xl font-bold text-[#2ECC71]">Nacional</div>
               <div className="mt-1 text-xs uppercase tracking-wider text-[#8FA98F]">Atendimento em todo o Brasil</div>
             </div>
           </div>
+
         </div>
 
         {/* Hero visual */}
@@ -606,6 +704,8 @@ function WhyChoose() {
 }
 
 function Services() {
+  const [openService, setOpenService] = useState<Service | null>(null);
+
   return (
     <section id="servicos" className="relative py-24 sm:py-32">
       <div className="container-page">
@@ -616,7 +716,14 @@ function Services() {
               Soluções completas para cada ambiente.
             </h2>
           </div>
-          <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-sm font-semibold text-[#2ECC71] hover:text-[#7DFFB3]">
+          <a
+            href={waLink("Olá! Gostaria de tirar dúvidas sobre os serviços da Bioprag.")}
+            target="_blank"
+            rel="noreferrer"
+            data-click-location="secao_servicos"
+            data-cta-label="tirar_duvidas"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-[#2ECC71] hover:text-[#7DFFB3]"
+          >
             Tirar dúvidas <ArrowRight className="h-4 w-4" />
           </a>
         </div>
@@ -626,11 +733,14 @@ function Services() {
             const Icon = s.icon;
             return (
               <Reveal key={i} delay={(i % 4) * 0.06}>
-                <a
-                  href={WHATSAPP_URL}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="group relative block h-[260px] w-full overflow-hidden rounded-2xl border border-[#1C3D22] transition-all hover:border-[#2ECC71]"
+                <button
+                  type="button"
+                  onClick={() => {
+                    setOpenService(s);
+                    pushTrackingEvent("service_card_open", { service_name: s.title });
+                  }}
+                  aria-label={`Ver detalhes do serviço ${s.title}`}
+                  className="group relative block h-[260px] w-full overflow-hidden rounded-2xl border border-[#1C3D22] text-left transition-all hover:border-[#2ECC71] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#2ECC71]"
                 >
                   <img
                     src={s.img}
@@ -645,19 +755,59 @@ function Services() {
                   <div className="absolute inset-x-0 bottom-0 p-5">
                     <h3 className="font-display text-base font-bold leading-tight text-[#F0F4F0]">{s.title}</h3>
                     <p className="mt-1 text-xs text-[#D5E5D5]/85">{s.short}</p>
-                    <div className="mt-2 inline-flex items-center gap-1.5 text-[11px] font-semibold text-[#2ECC71] opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                    <div className="mt-2 inline-flex items-center gap-1.5 text-[11px] font-semibold text-[#2ECC71] transition-opacity duration-500 sm:opacity-0 sm:group-hover:opacity-100">
                       Saiba mais <ArrowRight className="h-3 w-3" />
                     </div>
                   </div>
-                </a>
+                </button>
               </Reveal>
             );
           })}
         </div>
       </div>
+
+      {openService && (
+        <InfoModal
+          eyebrow="Serviço"
+          title={openService.title}
+          onClose={() => setOpenService(null)}
+          footer={
+            <a
+              href={waLink(
+                `Olá! Gostaria de solicitar uma avaliação para o serviço de ${openService.title} da Bioprag.`,
+              )}
+              target="_blank"
+              rel="noreferrer"
+              data-click-location="modal_servico"
+              data-cta-label="solicitar_avaliacao_servico"
+              data-service-name={openService.title}
+              className="inline-flex w-full items-center justify-center gap-2.5 rounded-lg bg-[#2ECC71] px-6 py-3.5 text-sm font-bold text-[#06180D] transition-all hover:brightness-110"
+            >
+              <WhatsAppIcon className="h-5 w-5" /> Solicitar avaliação deste serviço
+            </a>
+          }
+        >
+          <p className="text-sm leading-relaxed text-[#C7D8C7]">{openService.desc}</p>
+          <h3 className="mt-6 text-xs font-semibold uppercase tracking-[0.18em] text-[#2ECC71]">Onde se aplica</h3>
+          <p className="mt-2 text-sm leading-relaxed text-[#8FA98F]">{openService.aplicacao}</p>
+          <h3 className="mt-6 text-xs font-semibold uppercase tracking-[0.18em] text-[#2ECC71]">O que está incluído</h3>
+          <ul className="mt-3 space-y-2.5">
+            {openService.inclui.map((item) => (
+              <li key={item} className="flex items-start gap-2.5 text-sm text-[#C7D8C7]">
+                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#2ECC71]" /> {item}
+              </li>
+            ))}
+          </ul>
+          <p className="mt-6 rounded-lg border border-[#1C3D22] bg-[#0A1A0F] p-4 text-xs leading-relaxed text-[#8FA98F]">
+            O método, os produtos e a periodicidade são definidos após a vistoria técnica, conforme o ambiente,
+            o tipo de ocorrência e as normas sanitárias aplicáveis.
+          </p>
+        </InfoModal>
+      )}
     </section>
   );
 }
+
 
 function Method() {
   return (
@@ -773,7 +923,6 @@ function Regional() {
             {[
               { v: 5, l: "regiões" },
               { v: 40, l: "anos" },
-              { v: 100, l: "% documentado", s: "" },
             ].map((s, i) => (
               <div key={i}>
                 <div className="font-display text-3xl font-bold text-[#2ECC71]">
@@ -782,7 +931,12 @@ function Regional() {
                 <div className="mt-1 text-xs uppercase tracking-wider text-[#8FA98F]">{s.l}</div>
               </div>
             ))}
+            <div>
+              <div className="font-display text-xl font-bold text-[#2ECC71]">Laudo técnico</div>
+              <div className="mt-1 text-xs uppercase tracking-wider text-[#8FA98F]">em todo atendimento</div>
+            </div>
           </div>
+
         </Reveal>
         <Reveal delay={0.15}>
           <div className="relative aspect-square overflow-hidden rounded-2xl border border-[#1C3D22] bg-[#0F2415] p-8">
