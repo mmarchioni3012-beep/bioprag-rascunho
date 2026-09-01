@@ -1470,9 +1470,11 @@ function FinalCTA() {
           </p>
           <div className="mt-10 flex flex-wrap justify-center gap-3">
             <a
-              href={WHATSAPP_URL}
+              href={waLink("Olá! Gostaria de falar com um especialista da Bioprag.")}
               target="_blank"
               rel="noreferrer"
+              data-click-location="cta_final"
+              data-cta-label="iniciar_conversa"
               className="inline-flex items-center gap-2.5 rounded-lg bg-[#25D366] px-7 py-4 font-display text-base font-bold text-white transition-all hover:scale-[1.02] hover:bg-[#1FBA58] glow-green"
             >
               <WhatsAppIcon className="h-5 w-5" />
@@ -1480,6 +1482,8 @@ function FinalCTA() {
             </a>
             <a
               href={`tel:+551438454011`}
+              data-click-location="cta_final"
+
               className="inline-flex items-center gap-2 rounded-lg border border-[#F0F4F0]/30 px-7 py-4 text-base font-semibold text-[#F0F4F0] hover:bg-[#F0F4F0]/5"
             >
               <Phone className="h-4 w-4" /> {PHONE_DISPLAY}
