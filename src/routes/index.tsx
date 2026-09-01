@@ -1565,8 +1565,9 @@ function Footer() {
           <h4 className="font-display text-sm font-bold uppercase tracking-wider text-[#F0F4F0]">Contato</h4>
           <ul className="mt-4 space-y-2.5 text-sm text-[#8FA98F]">
             <li className="flex items-start gap-2"><MapPin className="mt-0.5 h-4 w-4 text-[#2ECC71]" /> {ADDRESS}</li>
-            <li className="flex items-center gap-2"><Phone className="h-4 w-4 text-[#2ECC71]" /> {PHONE_DISPLAY}</li>
-            <li className="flex items-center gap-2"><WhatsAppIcon className="h-4 w-4 text-[#25D366]" /> {WHATSAPP_DISPLAY}</li>
+            <li className="flex items-center gap-2"><Phone className="h-4 w-4 text-[#2ECC71]" /> <a href="tel:+551438454011" data-click-location="rodape" className="hover:text-[#2ECC71] transition-colors">{PHONE_DISPLAY}</a></li>
+            <li className="flex items-center gap-2"><WhatsAppIcon className="h-4 w-4 text-[#25D366]" /> <a href={waLink("Olá! Vim pelo site da Bioprag e gostaria de atendimento.")} target="_blank" rel="noreferrer" data-click-location="rodape" data-cta-label="numero_whatsapp" className="hover:text-[#2ECC71] transition-colors">{WHATSAPP_DISPLAY}</a></li>
+
             <li className="flex items-center gap-2"><Mail className="h-4 w-4 text-[#2ECC71]" /> <a href={`mailto:${EMAIL}`} className="hover:text-[#2ECC71] transition-colors">{EMAIL}</a></li>
           </ul>
         </div>
