@@ -1096,11 +1096,11 @@ function ContactSection() {
                 rel="noreferrer"
                 onClick={() =>
                   pushTrackingEvent("route_click", {
-                    link_url: UNIDADES[unidade].directions,
-                    link_text: "Como chegar",
-                    location_name: unidade === "matriz" ? "Matriz — Conchas" : "Filial — Campinas",
+                    click_location: "secao_unidades",
+                    location_name: unidade === "matriz" ? "matriz_conchas" : "filial_campinas",
                   })
                 }
+
                 className="absolute bottom-4 left-4 inline-flex items-center gap-2 rounded-lg bg-[#2ECC71] px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-[#06180D] shadow-lg transition-all hover:bg-[#7DFFB3]"
               >
                 <Navigation className="h-3.5 w-3.5" /> Como chegar
