@@ -86,12 +86,14 @@ export type Database = {
           archived: boolean
           archived_at: string | null
           archived_by: string | null
+          arrived_at: string
           assigned_to: string | null
           attribution_type: string | null
           campaign: string | null
           city: string
           closed_value: number | null
           company_name: string | null
+          consent_version: string | null
           content: string | null
           created_at: string
           created_by: string | null
@@ -120,6 +122,7 @@ export type Database = {
           origin: string
           pest_type: string | null
           phone: string
+          phone_alt: string | null
           phone_normalized: string | null
           preferred_contact: string
           privacy_acknowledged: boolean
@@ -153,12 +156,14 @@ export type Database = {
           archived?: boolean
           archived_at?: string | null
           archived_by?: string | null
+          arrived_at?: string
           assigned_to?: string | null
           attribution_type?: string | null
           campaign?: string | null
           city: string
           closed_value?: number | null
           company_name?: string | null
+          consent_version?: string | null
           content?: string | null
           created_at?: string
           created_by?: string | null
@@ -187,6 +192,7 @@ export type Database = {
           origin?: string
           pest_type?: string | null
           phone: string
+          phone_alt?: string | null
           phone_normalized?: string | null
           preferred_contact?: string
           privacy_acknowledged?: boolean
@@ -220,12 +226,14 @@ export type Database = {
           archived?: boolean
           archived_at?: string | null
           archived_by?: string | null
+          arrived_at?: string
           assigned_to?: string | null
           attribution_type?: string | null
           campaign?: string | null
           city?: string
           closed_value?: number | null
           company_name?: string | null
+          consent_version?: string | null
           content?: string | null
           created_at?: string
           created_by?: string | null
@@ -254,6 +262,7 @@ export type Database = {
           origin?: string
           pest_type?: string | null
           phone?: string
+          phone_alt?: string | null
           phone_normalized?: string | null
           preferred_contact?: string
           privacy_acknowledged?: boolean

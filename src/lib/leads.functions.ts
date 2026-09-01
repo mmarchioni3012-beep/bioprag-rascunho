@@ -26,26 +26,39 @@ const addressSchema = z.object({
   reference: z.string().trim().max(200).nullish(),
 });
 
+/** Remove tags HTML e caracteres de controle de qualquer texto livre. */
+const clean = (v: string) =>
+  v
+    .replace(/<[^>]*>/g, " ")
+    .replace(/[\u0000-\u001F\u007F]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+const text = (max: number) => z.string().trim().max(max).transform(clean);
+
 const leadSchema = z.object({
-  name: z.string().trim().min(2).max(120),
-  phone: z.string().trim().min(8).max(30),
+  name: z.string().trim().min(2).max(120).transform(clean),
+  phone: z.string().trim().min(8).max(20),
+  phone_alt: z.string().trim().max(20).nullish(),
   email: z.string().trim().email().max(200).nullish().or(z.literal("")),
-  city: z.string().trim().min(2).max(120),
-  neighborhood: z.string().trim().max(120).nullish(),
+  city: z.string().trim().min(2).max(100).transform(clean),
+  neighborhood: text(100).nullish(),
   customer_type: z
-    .enum(["residencial", "empresa", "condominio", "propriedade_rural", "outro"])
+    .enum(["residencial", "comercial", "industrial", "condominio", "propriedade_rural", "empresa", "outro"])
     .optional(),
-  company_name: z.string().trim().max(160).nullish(),
-  service_interest: z.string().trim().min(2).max(160),
-  pest_type: z.string().trim().max(160).nullish(),
-  message: z.string().trim().max(2000).nullish(),
+  company_name: text(160).nullish(),
+  service_interest: z.string().trim().min(2).max(160).transform(clean),
+  pest_type: text(160).nullish(),
+  message: text(1500).nullish(),
   preferred_contact: z.enum(["whatsapp", "telefone", "email"]).optional(),
   privacy_acknowledged: z.literal(true),
+  consent_version: z.string().trim().max(40).optional(),
   marketing_consent: z.boolean().optional(),
   address: addressSchema.partial().optional(),
   honeypot: z.string().max(200).optional(),
   attribution: attributionSchema.partial().optional(),
 });
+
 
 export type SubmitLeadInput = z.input<typeof leadSchema>;
 
@@ -128,7 +141,8 @@ export const submitLead = createServerFn({ method: "POST" })
     }
 
     const now = new Date().toISOString();
-    const city = data.city.trim().replace(/\s+/g, " ");
+    const upper = (v?: string | null) => (v && v.trim() ? v.trim().toUpperCase() : null);
+    const city = upper(data.city)!;
 
     const addr = data.address ?? {};
     const addrValues = [addr.cep, addr.street, addr.number, addr.state, addr.reference].map((v) =>
@@ -141,32 +155,36 @@ export const submitLead = createServerFn({ method: "POST" })
       .from("leads")
       .insert({
         address_cep: addr.cep?.trim() || null,
-        address_street: addr.street?.trim() || null,
+        address_street: upper(addr.street),
         address_number: addr.number?.trim() || null,
-        address_complement: addr.complement?.trim() || null,
-        address_state: addr.state?.trim() || null,
-        address_reference: addr.reference?.trim() || null,
+        address_complement: upper(addr.complement),
+        address_state: upper(addr.state),
+        address_reference: upper(addr.reference),
         address_status: addressStatus,
-        name: data.name.trim().replace(/\s+/g, " "),
+        name: upper(data.name)!,
         phone: data.phone.trim(),
+        phone_alt: data.phone_alt?.trim() || null,
         phone_normalized: digits,
         email: data.email ? data.email.trim().toLowerCase() : null,
         city,
-        neighborhood: data.neighborhood?.trim() || null,
+        neighborhood: upper(data.neighborhood),
         customer_type: data.customer_type ?? "outro",
-        company_name: data.company_name?.trim() || null,
-        service_interest: data.service_interest,
-        pest_type: data.pest_type?.trim() || null,
+        company_name: upper(data.company_name),
+        service_interest: upper(data.service_interest)!,
+        pest_type: upper(data.pest_type),
         message: data.message?.trim() || null,
         preferred_contact: data.preferred_contact ?? "whatsapp",
         origin: "site_form",
         status: "novo",
         whatsapp_status: "aberto",
         whatsapp_intent_at: now,
+        arrived_at: now,
         privacy_acknowledged: true,
         privacy_acknowledged_at: now,
+        consent_version: data.consent_version ?? "aviso-privacidade-v1",
         marketing_consent: data.marketing_consent ?? false,
         marketing_consent_at: data.marketing_consent ? now : null,
+
         source: a.source ?? null,
         medium: a.medium ?? null,
         campaign: a.campaign ?? null,

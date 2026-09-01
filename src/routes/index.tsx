@@ -2,6 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { pushTrackingEvent } from "@/lib/tracking";
 import { LeadFormModal } from "@/components/LeadFormModal";
+import { InfoModal } from "@/components/InfoModal";
+
 
 import {
   ArrowRight,
@@ -68,6 +70,10 @@ import segIndustrial from "@/assets/seg-industrial.png";
 
 const WHATSAPP_NUMBER = "5514981752595";
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
+/** Link de WhatsApp com mensagem pré-preenchida (sem dados pessoais). */
+const waLink = (message?: string) =>
+  message ? `${WHATSAPP_URL}?text=${encodeURIComponent(message)}` : WHATSAPP_URL;
+
 const PHONE_DISPLAY = "(14) 3845-4011";
 const WHATSAPP_DISPLAY = "(14) 98175-2595";
 const EMAIL = "vendas@bioprag.com.br";
@@ -90,7 +96,8 @@ const UNIDADES = {
 const META_TITLE =
   "BIOPRAG — Controle Integrado de Pragas e Biossegurança";
 const META_DESC =
-  "Controle integrado de pragas, saúde ambiental e biossegurança com método técnico, auditável e 100% documentado. Atendimento em todo o Brasil desde 1986.";
+  "Controle integrado de pragas, saúde ambiental e biossegurança com método técnico, auditável e documentado. Atendimento em todo o Brasil desde 1986.";
+
 const SITE_URL = "https://bioprag.lovable.app";
 const OG_IMAGE = `${SITE_URL}${img2953.url}`;
 
@@ -230,16 +237,104 @@ type Service = {
   img: string;
   icon: typeof Bug;
   large?: boolean;
+  /** Conteúdo exibido no modal do serviço. */
+  aplicacao: string;
+  inclui: string[];
 };
 
 const SERVICES: Service[] = [
-  { title: "Desinsetização", short: "Controle químico e mecânico de insetos", desc: "Aplicação técnica com produtos registrados na ANVISA e protocolo de biossegurança.", img: foto11.url, icon: SprayCan },
-  { title: "Controle de Insetos Rasteiros", short: "Baratas, formigas e pragas rasteiras", desc: "Eliminação técnica de pragas rasteiras em ambientes residenciais, comerciais e industriais.", img: foto20.url, icon: Bug },
-  { title: "Controle de Insetos Voadores", short: "Mosquitos, moscas e mariposas", desc: "Manejo integrado de voadores com produtos certificados e baixo impacto ambiental.", img: foto34.url, icon: Plane },
-  { title: "Desratização", short: "Ratos, camundongos e roedores", desc: "Mapa de iscas, porta-iscas lacrados e monitoramento contínuo de atividade.", img: foto10.url, icon: Rat },
-  { title: "Descupinização", short: "Cupins de solo e de madeira", desc: "Tratamento estrutural preventivo e corretivo com garantia contra cupins.", img: img2953.url, icon: TreePine },
-  { title: "Higienização de Reservatórios", short: "Limpeza de caixas d'água", desc: "Higienização de reservatórios com laudo técnico e controle de potabilidade.", img: foto12.url, icon: Droplets },
+  {
+    title: "Desinsetização",
+    short: "Controle químico e mecânico de insetos",
+    desc: "Aplicação técnica com produtos registrados na ANVISA e protocolo de biossegurança.",
+    img: foto11.url,
+    icon: SprayCan,
+    aplicacao: "Ambientes residenciais, comerciais e industriais com presença ou risco de infestação por insetos.",
+    inclui: [
+      "Vistoria técnica e identificação dos focos",
+      "Escolha do método conforme o ambiente e o público presente",
+      "Produtos registrados na ANVISA aplicados por equipe treinada",
+      "Orientações de segurança antes e depois da aplicação",
+      "Laudo técnico do serviço executado",
+    ],
+  },
+  {
+    title: "Controle de Insetos Rasteiros",
+    short: "Baratas, formigas e pragas rasteiras",
+    desc: "Manejo técnico de pragas rasteiras em ambientes residenciais, comerciais e industriais.",
+    img: foto20.url,
+    icon: Bug,
+    aplicacao: "Cozinhas, áreas de serviço, depósitos, restaurantes, mercados e áreas de produção.",
+    inclui: [
+      "Inspeção de abrigos, frestas e pontos de passagem",
+      "Aplicação dirigida com produtos registrados na ANVISA",
+      "Recomendações de manejo ambiental e vedação",
+      "Orientação de reavaliação quando necessária",
+      "Laudo técnico do serviço executado",
+    ],
+  },
+  {
+    title: "Controle de Insetos Voadores",
+    short: "Mosquitos, moscas e mariposas",
+    desc: "Manejo integrado de voadores com produtos certificados e baixo impacto ambiental.",
+    img: foto34.url,
+    icon: Plane,
+    aplicacao: "Áreas internas e externas com circulação de voadores, incluindo comércio de alimentos e indústrias.",
+    inclui: [
+      "Identificação de criadouros e rotas de voo",
+      "Aplicação técnica com produtos registrados na ANVISA",
+      "Recomendações de barreiras físicas e higienização",
+      "Orientações de segurança para o ambiente",
+      "Laudo técnico do serviço executado",
+    ],
+  },
+  {
+    title: "Desratização",
+    short: "Ratos, camundongos e roedores",
+    desc: "Mapa de iscas, porta-iscas lacrados e monitoramento da atividade.",
+    img: foto10.url,
+    icon: Rat,
+    aplicacao: "Residências, condomínios, comércios, indústrias, galpões e áreas externas.",
+    inclui: [
+      "Inspeção e mapeamento dos pontos de atividade",
+      "Instalação de porta-iscas lacrados e identificados",
+      "Mapa de pontos para conferência e auditoria",
+      "Orientações de manejo de resíduos e vedação",
+      "Laudo técnico do serviço executado",
+    ],
+  },
+  {
+    title: "Descupinização",
+    short: "Cupins de solo e de madeira",
+    desc: "Tratamento estrutural preventivo e corretivo conforme o tipo de cupim identificado.",
+    img: img2953.url,
+    icon: TreePine,
+    aplicacao: "Estruturas de madeira, forros, batentes, móveis fixos, solos e alvenaria.",
+    inclui: [
+      "Identificação do tipo de cupim e da extensão do ataque",
+      "Definição do método: barreira química, injeção ou tratamento localizado",
+      "Aplicação com produtos registrados na ANVISA",
+      "Orientações de acompanhamento posterior",
+      "Laudo técnico do serviço executado",
+    ],
+  },
+  {
+    title: "Higienização de Reservatórios",
+    short: "Limpeza de caixas d'água",
+    desc: "Higienização de reservatórios com laudo técnico e cuidados de potabilidade.",
+    img: foto12.url,
+    icon: Droplets,
+    aplicacao: "Caixas d'água e reservatórios residenciais, comerciais, condominiais e industriais.",
+    inclui: [
+      "Esvaziamento e remoção de resíduos do reservatório",
+      "Limpeza das paredes e desinfecção com produtos apropriados",
+      "Verificação de tampas, vedação e pontos de contaminação",
+      "Orientação sobre a periodicidade recomendada",
+      "Laudo técnico do serviço executado",
+    ],
+  },
 ];
+
 
 const METHOD = [
   { icon: Search, title: "Diagnóstico", desc: "Vistoria técnica completa e identificação de focos." },
@@ -254,7 +349,7 @@ const REGIONS = ["Norte", "Nordeste", "Centro-Oeste", "Sudeste", "Sul"];
 const FAQ = [
   { q: "Como funciona o processo do início ao fim?", a: "Iniciamos com vistoria técnica gratuita, elaboramos um plano personalizado, executamos com produtos certificados e entregamos laudo + cronograma de monitoramento." },
   { q: "Os produtos utilizados são seguros para crianças e pets?", a: "Sim. Trabalhamos exclusivamente com produtos aprovados pela ANVISA, aplicados por profissionais treinados, com baixíssima toxicidade residual." },
-  { q: "Preciso sair de casa durante o serviço?", a: "Na maioria dos serviços não é necessário. Para casos específicos orientamos um curto período de ausência, sempre informado previamente." },
+  { q: "Preciso sair de casa durante o serviço?", a: "Depende do tipo de serviço e do produto aplicado. Em alguns casos não é necessário sair; em outros, orientamos um período de ausência do ambiente. A orientação é sempre informada antes da execução pelo técnico responsável." },
   { q: "Vocês emitem laudo técnico?", a: "Sim. Todo atendimento gera laudo técnico detalhado, exigível por órgãos sanitários e auditorias." },
   { q: "Qual o prazo de garantia dos serviços?", a: "A garantia varia por serviço, podendo chegar a 12 meses com plano de monitoramento contínuo." },
   { q: "Atendem empresas de grande porte?", a: "Sim. Operamos com indústrias, redes de varejo, hospitais e condomínios, com estrutura para grandes volumes." },
@@ -323,13 +418,16 @@ function Navbar() {
           ))}
         </nav>
         <a
-          href={WHATSAPP_URL}
+          href={waLink("Olá! Gostaria de falar com um especialista da Bioprag.")}
           target="_blank"
           rel="noreferrer"
+          data-click-location="menu_topo"
+          data-cta-label="falar_com_especialista"
           className="hidden items-center gap-2 rounded-lg bg-[#2ECC71] px-4 py-2 text-sm font-semibold text-[#06180D] transition-all hover:bg-[#7DFFB3] md:inline-flex"
         >
           Falar com especialista <ArrowRight className="h-4 w-4" />
         </a>
+
         <button
           aria-label="Menu"
           onClick={() => setOpen(true)}
@@ -367,13 +465,16 @@ function Navbar() {
             ))}
           </nav>
           <a
-            href={WHATSAPP_URL}
+            href={waLink("Olá! Gostaria de falar com um especialista da Bioprag.")}
             target="_blank"
             rel="noreferrer"
+            data-click-location="menu_mobile"
+            data-cta-label="falar_com_especialista"
             className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#2ECC71] px-4 py-3 text-sm font-semibold text-[#06180D]"
           >
             Falar com especialista
           </a>
+
         </aside>
       </div>
     </header>
@@ -411,8 +512,9 @@ function Hero() {
           </h1>
           <p className="mt-6 max-w-xl text-base text-[#8FA98F] sm:text-lg animate-fade-up" style={{ animationDelay: "0.7s" }}>
             Controle integrado de pragas, saúde ambiental e biossegurança com método técnico,
-            auditável e 100% documentado.
+            auditável e documentado.
           </p>
+
           <div className="mt-8 flex flex-wrap gap-3 animate-fade-up" style={{ animationDelay: "0.85s" }}>
             <a
               href="#contato"
@@ -432,7 +534,6 @@ function Hero() {
             {[
               { v: 40, s: " anos", p: "+", label: "anos de operação" },
               { v: 10, s: "k+", p: "", label: "atendimentos" },
-              { v: 100, s: "%", p: "", label: "documentado" },
             ].map((stat, i) => (
               <div key={i}>
                 <div className="font-display text-3xl font-bold text-[#2ECC71]">
@@ -444,10 +545,15 @@ function Hero() {
               </div>
             ))}
             <div>
+              <div className="font-display text-2xl font-bold text-[#2ECC71]">Documentado</div>
+              <div className="mt-1 text-xs uppercase tracking-wider text-[#8FA98F]">Atendimento técnico e documentado</div>
+            </div>
+            <div>
               <div className="font-display text-2xl font-bold text-[#2ECC71]">Nacional</div>
               <div className="mt-1 text-xs uppercase tracking-wider text-[#8FA98F]">Atendimento em todo o Brasil</div>
             </div>
           </div>
+
         </div>
 
         {/* Hero visual */}
@@ -606,6 +712,8 @@ function WhyChoose() {
 }
 
 function Services() {
+  const [openService, setOpenService] = useState<Service | null>(null);
+
   return (
     <section id="servicos" className="relative py-24 sm:py-32">
       <div className="container-page">
@@ -616,7 +724,14 @@ function Services() {
               Soluções completas para cada ambiente.
             </h2>
           </div>
-          <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-sm font-semibold text-[#2ECC71] hover:text-[#7DFFB3]">
+          <a
+            href={waLink("Olá! Gostaria de tirar dúvidas sobre os serviços da Bioprag.")}
+            target="_blank"
+            rel="noreferrer"
+            data-click-location="secao_servicos"
+            data-cta-label="tirar_duvidas"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-[#2ECC71] hover:text-[#7DFFB3]"
+          >
             Tirar dúvidas <ArrowRight className="h-4 w-4" />
           </a>
         </div>
@@ -626,11 +741,14 @@ function Services() {
             const Icon = s.icon;
             return (
               <Reveal key={i} delay={(i % 4) * 0.06}>
-                <a
-                  href={WHATSAPP_URL}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="group relative block h-[260px] w-full overflow-hidden rounded-2xl border border-[#1C3D22] transition-all hover:border-[#2ECC71]"
+                <button
+                  type="button"
+                  onClick={() => {
+                    setOpenService(s);
+                    pushTrackingEvent("service_card_open", { service_name: s.title });
+                  }}
+                  aria-label={`Ver detalhes do serviço ${s.title}`}
+                  className="group relative block h-[260px] w-full overflow-hidden rounded-2xl border border-[#1C3D22] text-left transition-all hover:border-[#2ECC71] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#2ECC71]"
                 >
                   <img
                     src={s.img}
@@ -645,19 +763,59 @@ function Services() {
                   <div className="absolute inset-x-0 bottom-0 p-5">
                     <h3 className="font-display text-base font-bold leading-tight text-[#F0F4F0]">{s.title}</h3>
                     <p className="mt-1 text-xs text-[#D5E5D5]/85">{s.short}</p>
-                    <div className="mt-2 inline-flex items-center gap-1.5 text-[11px] font-semibold text-[#2ECC71] opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                    <div className="mt-2 inline-flex items-center gap-1.5 text-[11px] font-semibold text-[#2ECC71] transition-opacity duration-500 sm:opacity-0 sm:group-hover:opacity-100">
                       Saiba mais <ArrowRight className="h-3 w-3" />
                     </div>
                   </div>
-                </a>
+                </button>
               </Reveal>
             );
           })}
         </div>
       </div>
+
+      {openService && (
+        <InfoModal
+          eyebrow="Serviço"
+          title={openService.title}
+          onClose={() => setOpenService(null)}
+          footer={
+            <a
+              href={waLink(
+                `Olá! Gostaria de solicitar uma avaliação para o serviço de ${openService.title} da Bioprag.`,
+              )}
+              target="_blank"
+              rel="noreferrer"
+              data-click-location="modal_servico"
+              data-cta-label="solicitar_avaliacao_servico"
+              data-service-name={openService.title}
+              className="inline-flex w-full items-center justify-center gap-2.5 rounded-lg bg-[#2ECC71] px-6 py-3.5 text-sm font-bold text-[#06180D] transition-all hover:brightness-110"
+            >
+              <WhatsAppIcon className="h-5 w-5" /> Solicitar avaliação deste serviço
+            </a>
+          }
+        >
+          <p className="text-sm leading-relaxed text-[#C7D8C7]">{openService.desc}</p>
+          <h3 className="mt-6 text-xs font-semibold uppercase tracking-[0.18em] text-[#2ECC71]">Onde se aplica</h3>
+          <p className="mt-2 text-sm leading-relaxed text-[#8FA98F]">{openService.aplicacao}</p>
+          <h3 className="mt-6 text-xs font-semibold uppercase tracking-[0.18em] text-[#2ECC71]">O que está incluído</h3>
+          <ul className="mt-3 space-y-2.5">
+            {openService.inclui.map((item) => (
+              <li key={item} className="flex items-start gap-2.5 text-sm text-[#C7D8C7]">
+                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#2ECC71]" /> {item}
+              </li>
+            ))}
+          </ul>
+          <p className="mt-6 rounded-lg border border-[#1C3D22] bg-[#0A1A0F] p-4 text-xs leading-relaxed text-[#8FA98F]">
+            O método, os produtos e a periodicidade são definidos após a vistoria técnica, conforme o ambiente,
+            o tipo de ocorrência e as normas sanitárias aplicáveis.
+          </p>
+        </InfoModal>
+      )}
     </section>
   );
 }
+
 
 function Method() {
   return (
@@ -773,7 +931,6 @@ function Regional() {
             {[
               { v: 5, l: "regiões" },
               { v: 40, l: "anos" },
-              { v: 100, l: "% documentado", s: "" },
             ].map((s, i) => (
               <div key={i}>
                 <div className="font-display text-3xl font-bold text-[#2ECC71]">
@@ -782,7 +939,12 @@ function Regional() {
                 <div className="mt-1 text-xs uppercase tracking-wider text-[#8FA98F]">{s.l}</div>
               </div>
             ))}
+            <div>
+              <div className="font-display text-xl font-bold text-[#2ECC71]">Laudo técnico</div>
+              <div className="mt-1 text-xs uppercase tracking-wider text-[#8FA98F]">em todo atendimento</div>
+            </div>
           </div>
+
         </Reveal>
         <Reveal delay={0.15}>
           <div className="relative aspect-square overflow-hidden rounded-2xl border border-[#1C3D22] bg-[#0F2415] p-8">
@@ -934,11 +1096,11 @@ function ContactSection() {
                 rel="noreferrer"
                 onClick={() =>
                   pushTrackingEvent("route_click", {
-                    link_url: UNIDADES[unidade].directions,
-                    link_text: "Como chegar",
-                    location_name: unidade === "matriz" ? "Matriz — Conchas" : "Filial — Campinas",
+                    click_location: "secao_unidades",
+                    location_name: unidade === "matriz" ? "matriz_conchas" : "filial_campinas",
                   })
                 }
+
                 className="absolute bottom-4 left-4 inline-flex items-center gap-2 rounded-lg bg-[#2ECC71] px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-[#06180D] shadow-lg transition-all hover:bg-[#7DFFB3]"
               >
                 <Navigation className="h-3.5 w-3.5" /> Como chegar
@@ -965,16 +1127,32 @@ function ContactSection() {
                 <Phone className="mt-0.5 h-5 w-5 shrink-0 text-[#2ECC71]" />
                 <div>
                   <div className="text-xs uppercase tracking-[0.14em] text-[#8FA98F]">Telefone</div>
-                  <div className="text-sm font-medium text-[#F0F4F0]">{PHONE_DISPLAY}</div>
+                  <a
+                    href="tel:+551438454011"
+                    data-click-location="secao_contato"
+                    className="text-sm font-medium text-[#F0F4F0] transition-colors hover:text-[#2ECC71]"
+                  >
+                    {PHONE_DISPLAY}
+                  </a>
                 </div>
               </div>
               <div className="flex items-start gap-3 rounded-lg border border-[#1C3D22] bg-[#0F2415] p-4">
                 <WhatsAppIcon className="mt-0.5 h-5 w-5 shrink-0 text-[#25D366]" />
                 <div>
                   <div className="text-xs uppercase tracking-[0.14em] text-[#8FA98F]">WhatsApp</div>
-                  <div className="text-sm font-medium text-[#F0F4F0]">{WHATSAPP_DISPLAY}</div>
+                  <a
+                    href={waLink("Olá! Vim pelo site da Bioprag e gostaria de atendimento.")}
+                    target="_blank"
+                    rel="noreferrer"
+                    data-click-location="secao_contato"
+                    data-cta-label="numero_whatsapp"
+                    className="text-sm font-medium text-[#F0F4F0] transition-colors hover:text-[#2ECC71]"
+                  >
+                    {WHATSAPP_DISPLAY}
+                  </a>
                 </div>
               </div>
+
               <div className="flex items-start gap-3 rounded-lg border border-[#1C3D22] bg-[#0F2415] p-4 sm:col-span-2">
                 <Mail className="mt-0.5 h-5 w-5 shrink-0 text-[#2ECC71]" />
                 <div className="min-w-0">
@@ -1014,13 +1192,16 @@ function ContactSection() {
                 Solicitar avaliação <ArrowRight className="h-4 w-4" />
               </button>
               <a
-                href={WHATSAPP_URL}
+                href={waLink("Olá! Vim pelo site da Bioprag e gostaria de atendimento.")}
                 target="_blank"
                 rel="noreferrer"
+                data-click-location="secao_contato"
+                data-cta-label="falar_agora"
                 className="mt-3 inline-flex w-full items-center justify-center gap-2.5 rounded-lg border border-[#25D366]/40 px-6 py-3.5 font-sans text-sm font-semibold text-[#7DFFB3] transition-colors hover:bg-[#25D366]/10"
               >
                 <WhatsAppIcon className="h-5 w-5" /> Falar agora no WhatsApp
               </a>
+
             </div>
           </Reveal>
 
@@ -1077,9 +1258,12 @@ function ContactSection() {
                 </div>
                 <div className="mt-8 flex flex-wrap justify-center gap-3 lg:justify-start">
                   <a
-                    href={WHATSAPP_URL}
+                    href={waLink("Olá! Gostaria de saber como obter o Selo Bioprag de Segurança.")}
                     target="_blank"
                     rel="noreferrer"
+                    data-click-location="secao_selo"
+                    data-cta-label="falar_com_especialista_selo"
+
                     className="inline-flex items-center gap-2 rounded-full bg-[#2ECC71] px-7 py-4 font-display text-sm font-bold uppercase tracking-wider text-[#06180D] transition-all hover:bg-[#7DFFB3] glow-green"
                   >
                     Falar com especialista <ArrowRight className="h-4 w-4" />
@@ -1096,27 +1280,64 @@ function ContactSection() {
   );
 }
 
+type Segment = {
+  icon: typeof Home;
+  title: string;
+  desc: string;
+  image: string;
+  ambientes: string;
+  entrega: string[];
+};
+
+const SEGMENTS: Segment[] = [
+  {
+    icon: Home,
+    title: "Residencial",
+    desc: "Proteção discreta e segura para sua família. Tratamentos técnicos que consideram pets, crianças e o ambiente do lar.",
+    image: segResidencial,
+    ambientes: "Casas, apartamentos, quintais, áreas de serviço, forros e caixas d'água.",
+    entrega: [
+      "Vistoria técnica antes de qualquer aplicação",
+      "Produtos registrados na ANVISA aplicados por equipe treinada",
+      "Orientações claras de segurança para moradores e animais",
+      "Laudo técnico do atendimento realizado",
+      "Agendamento em horário combinado com o cliente",
+    ],
+  },
+  {
+    icon: Building2,
+    title: "Comercial",
+    desc: "Lojas, escritórios, restaurantes e redes. Controle preventivo com documentação para auditorias sanitárias.",
+    image: segComercial,
+    ambientes: "Restaurantes, mercados, padarias, escritórios, clínicas, hotéis e condomínios.",
+    entrega: [
+      "Plano de controle adequado à rotina do estabelecimento",
+      "Execução em horários que não interrompem a operação",
+      "Documentação técnica para fiscalização sanitária",
+      "Mapa de pontos de monitoramento quando aplicável",
+      "Programação de reavaliações periódicas",
+    ],
+  },
+  {
+    icon: Factory,
+    title: "Industrial",
+    desc: "Indústrias alimentícias, farmacêuticas e logísticas. Programas alinhados a requisitos de BPF, APPCC e auditorias sanitárias.",
+    image: segIndustrial,
+    ambientes: "Plantas industriais, áreas de produção, armazéns, centros de distribuição e áreas externas.",
+    entrega: [
+      "Programa de manejo integrado de pragas documentado",
+      "Mapa de dispositivos e registros de monitoramento",
+      "Procedimentos e laudos organizados para auditoria",
+      "Equipe com treinamento de biossegurança e EPI completo",
+      "Cronograma de visitas técnicas definido com a operação",
+    ],
+  },
+];
+
 function Segments() {
-  const items = [
-    {
-      icon: Home,
-      title: "Residencial",
-      desc: "Proteção discreta e segura para sua família. Tratamentos eficazes que respeitam pets, crianças e o ambiente do lar.",
-      image: segResidencial,
-    },
-    {
-      icon: Building2,
-      title: "Comercial",
-      desc: "Lojas, escritórios, restaurantes e redes. Controle preventivo com documentação completa para auditorias sanitárias.",
-      image: segComercial,
-    },
-    {
-      icon: Factory,
-      title: "Industrial",
-      desc: "Indústrias alimentícias, farmacêuticas e logísticas. Programas em conformidade com BPF, APPCC, AIB e exigências sanitárias.",
-      image: segIndustrial,
-    },
-  ];
+  const items = SEGMENTS;
+  const [openSegment, setOpenSegment] = useState<Segment | null>(null);
+
 
   return (
     <section id="atendimento" className="relative isolate overflow-hidden py-24 sm:py-32">
@@ -1177,23 +1398,61 @@ function Segments() {
                 <div className="p-6">
                   <h3 className="font-display text-2xl font-bold text-[#F0F4F0]">{it.title}</h3>
                   <p className="mt-3 text-sm leading-relaxed text-[#8FA98F]">{it.desc}</p>
-                  <a
-                    href={WHATSAPP_URL}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#2ECC71] transition-colors hover:text-[#7DFFB3]"
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setOpenSegment(it);
+                      pushTrackingEvent("segment_card_open", { segment_name: it.title });
+                    }}
+                    aria-label={`Ver detalhes do atendimento ${it.title}`}
+                    className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#2ECC71] transition-colors hover:text-[#7DFFB3] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#2ECC71]"
                   >
-                    Solicitar atendimento <ArrowRight className="h-4 w-4" />
-                  </a>
+                    Ver detalhes <ArrowRight className="h-4 w-4" />
+                  </button>
                 </div>
               </article>
             </Reveal>
           ))}
         </div>
       </div>
+
+      {openSegment && (
+        <InfoModal
+          eyebrow="Atendimento"
+          title={openSegment.title}
+          onClose={() => setOpenSegment(null)}
+          footer={
+            <a
+              href={waLink(
+                `Olá! Gostaria de solicitar uma avaliação para atendimento ${openSegment.title.toLowerCase()} da Bioprag.`,
+              )}
+              target="_blank"
+              rel="noreferrer"
+              data-click-location="modal_segmento"
+              data-cta-label={`solicitar_atendimento_${openSegment.title.toLowerCase()}`}
+              className="inline-flex w-full items-center justify-center gap-2.5 rounded-lg bg-[#2ECC71] px-6 py-3.5 text-sm font-bold text-[#06180D] transition-all hover:brightness-110"
+            >
+              <WhatsAppIcon className="h-5 w-5" /> Solicitar atendimento
+            </a>
+          }
+        >
+          <p className="text-sm leading-relaxed text-[#C7D8C7]">{openSegment.desc}</p>
+          <h3 className="mt-6 text-xs font-semibold uppercase tracking-[0.18em] text-[#2ECC71]">Ambientes atendidos</h3>
+          <p className="mt-2 text-sm leading-relaxed text-[#8FA98F]">{openSegment.ambientes}</p>
+          <h3 className="mt-6 text-xs font-semibold uppercase tracking-[0.18em] text-[#2ECC71]">Como entregamos</h3>
+          <ul className="mt-3 space-y-2.5">
+            {openSegment.entrega.map((item) => (
+              <li key={item} className="flex items-start gap-2.5 text-sm text-[#C7D8C7]">
+                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#2ECC71]" /> {item}
+              </li>
+            ))}
+          </ul>
+        </InfoModal>
+      )}
     </section>
   );
 }
+
 
 function FinalCTA() {
   return (
@@ -1227,9 +1486,11 @@ function FinalCTA() {
           </p>
           <div className="mt-10 flex flex-wrap justify-center gap-3">
             <a
-              href={WHATSAPP_URL}
+              href={waLink("Olá! Gostaria de falar com um especialista da Bioprag.")}
               target="_blank"
               rel="noreferrer"
+              data-click-location="cta_final"
+              data-cta-label="iniciar_conversa"
               className="inline-flex items-center gap-2.5 rounded-lg bg-[#25D366] px-7 py-4 font-display text-base font-bold text-white transition-all hover:scale-[1.02] hover:bg-[#1FBA58] glow-green"
             >
               <WhatsAppIcon className="h-5 w-5" />
@@ -1237,6 +1498,8 @@ function FinalCTA() {
             </a>
             <a
               href={`tel:+551438454011`}
+              data-click-location="cta_final"
+
               className="inline-flex items-center gap-2 rounded-lg border border-[#F0F4F0]/30 px-7 py-4 text-base font-semibold text-[#F0F4F0] hover:bg-[#F0F4F0]/5"
             >
               <Phone className="h-4 w-4" /> {PHONE_DISPLAY}
@@ -1302,8 +1565,9 @@ function Footer() {
           <h4 className="font-display text-sm font-bold uppercase tracking-wider text-[#F0F4F0]">Contato</h4>
           <ul className="mt-4 space-y-2.5 text-sm text-[#8FA98F]">
             <li className="flex items-start gap-2"><MapPin className="mt-0.5 h-4 w-4 text-[#2ECC71]" /> {ADDRESS}</li>
-            <li className="flex items-center gap-2"><Phone className="h-4 w-4 text-[#2ECC71]" /> {PHONE_DISPLAY}</li>
-            <li className="flex items-center gap-2"><WhatsAppIcon className="h-4 w-4 text-[#25D366]" /> {WHATSAPP_DISPLAY}</li>
+            <li className="flex items-center gap-2"><Phone className="h-4 w-4 text-[#2ECC71]" /> <a href="tel:+551438454011" data-click-location="rodape" className="hover:text-[#2ECC71] transition-colors">{PHONE_DISPLAY}</a></li>
+            <li className="flex items-center gap-2"><WhatsAppIcon className="h-4 w-4 text-[#25D366]" /> <a href={waLink("Olá! Vim pelo site da Bioprag e gostaria de atendimento.")} target="_blank" rel="noreferrer" data-click-location="rodape" data-cta-label="numero_whatsapp" className="hover:text-[#2ECC71] transition-colors">{WHATSAPP_DISPLAY}</a></li>
+
             <li className="flex items-center gap-2"><Mail className="h-4 w-4 text-[#2ECC71]" /> <a href={`mailto:${EMAIL}`} className="hover:text-[#2ECC71] transition-colors">{EMAIL}</a></li>
           </ul>
         </div>
@@ -1322,10 +1586,13 @@ function Footer() {
 function FloatingWhatsApp() {
   return (
     <a
-      href={WHATSAPP_URL}
+      href={waLink("Olá! Vim pelo site da Bioprag e gostaria de atendimento.")}
       target="_blank"
       rel="noreferrer"
+      data-click-location="botao_flutuante"
+      data-cta-label="whatsapp_flutuante"
       aria-label="Falar com especialista no WhatsApp"
+
       className="group fixed bottom-6 right-6 z-50 grid h-16 w-16 place-items-center rounded-full bg-[#25D366] text-white shadow-[0_12px_40px_-8px_rgba(37,211,102,0.8)] ring-4 ring-[#25D366]/25 transition-transform hover:scale-105 animate-pulse-soft"
     >
       <WhatsAppIcon className="h-9 w-9" />

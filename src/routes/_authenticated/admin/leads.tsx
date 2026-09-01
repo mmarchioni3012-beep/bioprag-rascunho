@@ -429,6 +429,8 @@ function LeadsAdmin() {
             <dl className="mt-6 grid grid-cols-2 gap-3 text-sm">
               {[
                 ["Telefone", selected.phone],
+                ["Telefone alternativo", selected.phone_alt ?? "—"],
+
                 ["E-mail", selected.email ?? "—"],
                 ["Cidade", selected.city],
                 ["Bairro", selected.neighborhood ?? "—"],
@@ -446,6 +448,9 @@ function LeadsAdmin() {
                 ["Landing page", selected.landing_page ?? "—"],
                 ["Consentimento marketing", selected.marketing_consent ? "Sim" : "Não"],
                 ["Aviso de privacidade", selected.privacy_acknowledged ? "Aceito" : "—"],
+                ["Versão do aviso", selected.consent_version ?? "—"],
+                ["Chegada do lead", selected.arrived_at ? new Date(selected.arrived_at).toLocaleString("pt-BR") : "—"],
+
               ].map(([k, v]) => (
                 <div key={String(k)} className="rounded-lg border border-[#132A19] bg-[#08150D] p-3">
                   <dt className="text-[11px] uppercase tracking-wider text-[#8FA98F]">{k}</dt>
