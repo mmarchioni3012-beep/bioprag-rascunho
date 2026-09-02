@@ -432,10 +432,46 @@ function LeadsAdmin() {
                 <h2 className="font-display text-xl font-extrabold">{selected.name}</h2>
                 <p className="text-xs text-[#8FA98F]">Recebido em {fmtDate(selected.created_at)}</p>
               </div>
-              <button onClick={() => setSelectedId(null)} className="rounded-md border border-[#1C3D22] px-3 py-1.5 text-sm text-[#8FA98F]">
-                Fechar
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setConfirmDelete(true)}
+                  className="rounded-md border border-red-500/40 bg-red-500/10 px-3 py-1.5 text-sm font-semibold text-red-300 hover:bg-red-500/20"
+                >
+                  Excluir
+                </button>
+                <button onClick={() => setSelectedId(null)} className="rounded-md border border-[#1C3D22] px-3 py-1.5 text-sm text-[#8FA98F]">
+                  Fechar
+                </button>
+              </div>
             </div>
+
+            {confirmDelete && (
+              <div className="mt-4 rounded-lg border border-red-500/40 bg-red-500/10 p-4">
+                <p className="text-sm font-semibold text-red-200">Excluir este lead definitivamente?</p>
+                <p className="mt-1 text-xs text-red-200/80">
+                  Esta ação remove os dados do lead do banco e não pode ser desfeita. Se quiser apenas tirá-lo da lista,
+                  use a opção “Arquivar lead”.
+                </p>
+                {removeMutation.isError && (
+                  <p className="mt-2 text-xs text-red-300">Não foi possível excluir. Tente novamente.</p>
+                )}
+                <div className="mt-3 flex gap-2">
+                  <button
+                    disabled={removeMutation.isPending}
+                    onClick={() => removeMutation.mutate(selected.id)}
+                    className="rounded-md bg-red-500 px-3 py-1.5 text-sm font-bold text-white disabled:opacity-60"
+                  >
+                    {removeMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
+                  </button>
+                  <button
+                    onClick={() => setConfirmDelete(false)}
+                    className="rounded-md border border-[#1C3D22] px-3 py-1.5 text-sm text-[#8FA98F]"
+                  >
+                    Cancelar
+                  </button>
+                </div>
+              </div>
+            )}
 
             <dl className="mt-6 grid grid-cols-2 gap-3 text-sm">
               {[
