@@ -83,6 +83,7 @@ function LeadsAdmin() {
   });
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [showNew, setShowNew] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
 
   const access = useQuery({ queryKey: ["admin-access"], queryFn: () => fetchAccess({ data: undefined }) });
 
