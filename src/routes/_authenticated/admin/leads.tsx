@@ -127,6 +127,15 @@ function LeadsAdmin() {
     },
   });
 
+  const removeMutation = useMutation({
+    mutationFn: (id: string) => removeLead({ data: { id } } as never),
+    onSuccess: () => {
+      setConfirmDelete(false);
+      setSelectedId(null);
+      void queryClient.invalidateQueries({ queryKey: ["leads"] });
+    },
+  });
+
   const kpis = useMemo(() => {
     const total = leads.length;
     const withWa = leads.filter((l) => l.whatsapp_received_at).length;
