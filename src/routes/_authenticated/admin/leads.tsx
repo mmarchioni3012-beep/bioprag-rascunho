@@ -62,6 +62,7 @@ function LeadsAdmin() {
   const fetchLeads = useServerFn(listLeads);
   const fetchEvents = useServerFn(listLeadEvents);
   const saveLead = useServerFn(updateLead);
+  const removeLead = useServerFn(deleteLead);
 
   const [filters, setFilters] = useState({
     from: "",
