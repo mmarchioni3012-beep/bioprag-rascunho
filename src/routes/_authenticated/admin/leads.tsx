@@ -85,6 +85,11 @@ function LeadsAdmin() {
   const [showNew, setShowNew] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
 
+  // Fecha a confirmação de exclusão ao trocar de lead.
+  useEffect(() => {
+    setConfirmDelete(false);
+  }, [selectedId]);
+
   const access = useQuery({ queryKey: ["admin-access"], queryFn: () => fetchAccess({ data: undefined }) });
 
   const leadsQuery = useQuery({
