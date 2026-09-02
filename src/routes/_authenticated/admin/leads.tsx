@@ -4,7 +4,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { useMemo, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import type { Tables } from "@/integrations/supabase/types";
-import { listLeads, listLeadEvents, updateLead, getMyAdminAccess } from "@/lib/admin-leads.functions";
+import { listLeads, listLeadEvents, updateLead, deleteLead, getMyAdminAccess } from "@/lib/admin-leads.functions";
 import { NewLeadDialog } from "@/components/admin/NewLeadDialog";
 import {
   ADDRESS_STATUS_LABEL,
