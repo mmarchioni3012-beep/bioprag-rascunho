@@ -389,3 +389,33 @@ export const updateLead = createServerFn({ method: "POST" })
 
     return row;
   });
+
+export const deleteLead = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((input: unknown) => z.object({ id: z.string().uuid() }).parse(input))
+  .handler(async ({ data, context }) => {
+    await assertAdmin(context.supabase as never, context.userId);
+
+    const { data: lead } = await context.supabase
+      .from("leads")
+      .select("id, name, phone, short_protocol")
+      .eq("id", data.id)
+      .maybeSingle();
+
+    const { error } = await context.supabase.from("leads").delete().eq("id", data.id);
+    if (error) throw new Error(error.message);
+
+    // Registro de auditoria: o lead é removido, mas a exclusão fica documentada.
+    await context.supabase.from("lead_events").insert({
+      lead_id: null,
+      event_type: "lead_deleted",
+      event_data: {
+        by_user: context.userId,
+        by_name: adminName(context.claims as unknown as Record<string, unknown>),
+        deleted_lead_id: data.id,
+        short_protocol: lead?.short_protocol ?? null,
+      },
+    } as never);
+
+    return { success: true };
+  });
